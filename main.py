@@ -1,11 +1,10 @@
 import MetaTrader5 as mt5
 import time
 
-from config import cargar_credenciales
-from database import cargar_mapa_a_ram, guardar_ram_a_disco, obtener_vinculo, eliminar_vinculo, cargar_historial, agregar_a_historial
-from trading import (cambiar_cuenta, obtener_estado_maestro, sincronizar_inicio, 
-                     ejecutar_apertura, ejecutar_modificacion, ejecutar_cierre)
-from interfaz import PropSyncUI
+from modules.config import cargar_credenciales
+from modules.database import cargar_mapa_a_ram, guardar_ram_a_disco, cargar_historial, agregar_a_historial, obtener_vinculo, eliminar_vinculo
+from modules.trading import cambiar_cuenta, obtener_estado_maestro, sincronizar_inicio, ejecutar_apertura, ejecutar_modificacion, ejecutar_cierre
+from modules.interfaz import PropSyncUI
 
 # --- VARIABLES GLOBALES DE ESTADO ---
 app = None

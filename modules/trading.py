@@ -1,7 +1,8 @@
 import MetaTrader5 as mt5
 import time
 import math
-from database import guardar_vinculo, eliminar_vinculo, obtener_vinculo
+# Correccion: Importacion desde la carpeta modules
+from modules.database import guardar_vinculo, eliminar_vinculo, obtener_vinculo
 
 # [CRITERIO ACADEMICO: 2f - Mejoras en IT y OT]
 # Este modulo representa la capa de Tecnologia de Operaciones (OT). Interactua con la API del broker 
@@ -90,8 +91,6 @@ def ejecutar_apertura(op, s_cfg, eq_m, db_ram, log_func):
             action = mt5.TRADE_ACTION_DEAL
 
     # [CRITERIO ACADEMICO: 5i - Seguridad y proteccion]
-    # Se impone un "deviation" (slippage) para evitar ejecuciones financieras a precios alterados 
-    # por alta volatilidad de mercado, protegiendo la integridad del capital (OT Security).
     req = {
         "action": action, "symbol": symbol, "volume": vol,
         "type": tipo, "price": precio, 
@@ -201,8 +200,6 @@ def ejecutar_cierre(t_m, vinculo, id_s, db_ram, log_func):
         res = mt5.order_send(req)
     else:
         # [CRITERIO ACADEMICO: 5b - Gestion del dato]
-        # Correccion de anomalias: Si el servidor OT rechaza la orden (ej. SL tocado previamente),
-        # se asegura la limpieza de la base de datos IT para mantener la sincronia.
         log_func(f"[LIMPIEZA] Ticket {t_s} inexistente en servidor OT. Desvinculando en IT.")
         db_ram = eliminar_vinculo(db_ram, id_s, t_m)
         return db_ram, 1
@@ -222,8 +219,6 @@ def ejecutar_cierre(t_m, vinculo, id_s, db_ram, log_func):
         return db_ram, 1
 
 # [CRITERIO ACADEMICO: 2g - Tecnologias Habilitadoras Digitales (THD)]
-# Sincronizacion inicial aplicando conceptos de RPA (Robotic Process Automation).
-# El software lee el estado crudo del servidor (OT) y mapea las bases de datos (IT) de forma autonoma.
 def obtener_estado_maestro():
     lista = []
     t_info = mt5.terminal_info()

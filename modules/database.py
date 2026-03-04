@@ -1,12 +1,10 @@
 import json
 import os
 
-FILE_DB = 'mapa_operaciones.json'
-FILE_HISTORY = 'historial_operaciones.json'
+FILE_DB = os.path.join("data", "mapa_operaciones.json")
+FILE_HISTORY = os.path.join("data", "historial_operaciones.json")
 
 # [CRITERIO ACADEMICO: 5b - Ciclo de vida del dato (Generacion y Extraccion)]
-# Fase de inicializacion: Se recupera la persistencia del disco a la memoria RAM 
-# para garantizar alta disponibilidad y baja latencia durante el proceso de copiado (IT/OT).
 def cargar_mapa_a_ram():
     mapa = {}
     if os.path.exists(FILE_DB): 
@@ -18,15 +16,12 @@ def cargar_mapa_a_ram():
     return mapa
 
 # [CRITERIO ACADEMICO: 5f - Almacenamiento local (Edge Computing)]
-# Por cuestiones de latencia y latencia transaccional, la base de datos se guarda en disco local.
-# En futuras versiones, podria plantearse una integracion hibrida en la nube para auditorias.
 def guardar_ram_a_disco(db_ram):
+    if not os.path.exists("data"): os.makedirs("data")
     with open(FILE_DB, 'w') as f: 
         json.dump(db_ram, f, indent=4)
 
 # [CRITERIO ACADEMICO: 5b - Consistencia e integridad de los datos]
-# El mapa de operaciones mantiene la relacion matematica estricta y bidireccional entre 
-# el ticket de la cuenta maestra y el ticket esclavo. Evita operaciones huerfanas (Integridad Referencial).
 def guardar_vinculo(db_ram, id_esclava, ticket_maestro, ticket_esclavo, sl, tp, price, volumen):
     t_str = str(ticket_maestro)
     
@@ -48,8 +43,6 @@ def guardar_vinculo(db_ram, id_esclava, ticket_maestro, ticket_esclavo, sl, tp, 
     return db_ram
 
 # [CRITERIO ACADEMICO: 5b - Ciclo de vida del dato (Eliminacion)]
-# Fase de purga: Cuando una operacion se cierra en el entorno OT (MetaTrader),
-# se elimina su vinculo de la base de datos viva para no sobrecargar la RAM.
 def eliminar_vinculo(db_ram, id_esclava, ticket_maestro):
     t_str = str(ticket_maestro)
     registro_existe = 0
@@ -73,8 +66,6 @@ def obtener_vinculo(db_ram, id_esclava, ticket_maestro):
     return None
 
 # [CRITERIO ACADEMICO: 5b - Ciclo de vida del dato (Archivo e Historico)]
-# Fase de Archivo: Generacion de registros inmutables de transacciones pasadas.
-# Estos datos alimentaran las tecnologias analiticas (Business Intelligence) en el panel de Estadisticas.
 def cargar_historial():
     if not os.path.exists(FILE_HISTORY): 
         return []
@@ -87,5 +78,6 @@ def cargar_historial():
 def agregar_a_historial(registro):
     historial = cargar_historial()
     historial.append(registro)
+    if not os.path.exists("data"): os.makedirs("data")
     with open(FILE_HISTORY, 'w') as f: 
         json.dump(historial, f, indent=4)

@@ -1,6 +1,6 @@
 import customtkinter as ctk
-from config import guardar_credenciales, guardar_empresas
-from ui_components import ToolTip
+from modules.config import guardar_credenciales, guardar_empresas
+from modules.ui_components import ToolTip
 
 # [CRITERIO ACADEMICO: 5i - Seguridad y regulacion]
 # Se gestionan credenciales aplicando principios de ofuscacion visual.

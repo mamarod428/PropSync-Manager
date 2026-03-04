@@ -31,8 +31,6 @@ Independientemente del metodo de instalacion elegido, debe activar el acceso alg
 
 ## Metodos de Instalacion
 
-El evaluador puede optar por cualquiera de las siguientes dos vias para ejecutar el software:
-
 ### Metodo A: Ejecucion mediante Visual Studio Code (Entorno de Desarrollo)
 Recomendado para revisar la arquitectura, el codigo fuente y la estructura de modulos.
 
@@ -43,7 +41,7 @@ Recomendado para revisar la arquitectura, el codigo fuente y la estructura de mo
    - Abra la carpeta del proyecto: **Archivo** > **Abrir carpeta...**
 3. **Instalacion de Dependencias**: Abra una nueva terminal en VS Code (**Terminal** > **Nueva terminal**) y ejecute:
    ```bash
-   pip install MetaTrader5 customtkinter pillow
+   pip install MetaTrader5 customtkinter pillow matplotlib
 4.  **Ejecucion**: En el explorador de archivos de la izquierda, abra **main.py** y presione el boton **Play** (ejecutar) en la esquina superior derecha o presione `F5`.
 
 ### Metodo B: Ejecucion mediante Archivo Portable (.exe)

@@ -1,10 +1,10 @@
 import json
 import os
 
-FILE_SECRETS = 'secrets.json'
-FILE_DB = 'mapa_operaciones.json'
-FILE_HISTORY = 'historial_operaciones.json'
-FILE_FIRMS = 'prop_firms.json'
+# [CRITERIO ACADEMICO: 5b - Ciclo de vida del dato]
+# Definicion de rutas relativas para la persistencia en la carpeta de datos.
+FILE_SECRETS = os.path.join("data", "secrets.json")
+FILE_FIRMS = os.path.join("data", "prop_firms.json")
 
 def cargar_credenciales():
     config_cargada = None
@@ -14,6 +14,7 @@ def cargar_credenciales():
     return config_cargada
 
 def guardar_credenciales(nueva_config):
+    if not os.path.exists("data"): os.makedirs("data")
     with open(FILE_SECRETS, 'w') as f:
         json.dump(nueva_config, f, indent=4)
 
@@ -32,5 +33,6 @@ def cargar_empresas():
     return default_firms
 
 def guardar_empresas(data):
+    if not os.path.exists("data"): os.makedirs("data")
     with open(FILE_FIRMS, 'w') as f:
         json.dump(data, f, indent=4)

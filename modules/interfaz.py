@@ -1,19 +1,17 @@
 import customtkinter as ctk
 import os
 from PIL import Image
-from config import cargar_empresas
-from ui_components import ToolTip, TutorialWindow
-from tab_dashboard import TabDashboard
-from tab_estadisticas import TabEstadisticas
-from tab_configuracion import TabConfiguracion
-from tab_notificaciones import TabNotificaciones
+from modules.config import cargar_empresas
+from modules.ui_components import ToolTip, TutorialWindow
+from modules.tab_dashboard import TabDashboard
+from modules.tab_estadisticas import TabEstadisticas
+from modules.tab_configuracion import TabConfiguracion
+from modules.tab_notificaciones import TabNotificaciones
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 # [CRITERIO ACADEMICO: Patrón MVC (Controlador Principal)] 
-# Clase que orquesta la logica y actua de puente entre el motor OT (MT5) 
-# y los componentes modulares de la interfaz IT.
 class PropSyncUI(ctk.CTk):
     def __init__(self, config_inicial, cb_iniciar, cb_detener):
         super().__init__()
@@ -23,9 +21,10 @@ class PropSyncUI(ctk.CTk):
         self.resizable(True, True)
         self.minsize(1150, 750)
 
-        icono_nombre = 'propsync_icon.ico'
-        if os.path.exists(icono_nombre):
-            try: self.wm_iconbitmap(icono_nombre)
+        # RUTA CORREGIDA: Apuntando a assets/
+        ruta_icono = os.path.join("assets", "propsync_icon.ico")
+        if os.path.exists(ruta_icono):
+            try: self.wm_iconbitmap(ruta_icono)
             except Exception as e: error_ignorado = 1
 
         self.config = config_inicial
@@ -63,10 +62,11 @@ class PropSyncUI(ctk.CTk):
         self.sidebar = ctk.CTkFrame(self, width=260, corner_radius=0, fg_color="#11151a")
         self.sidebar.pack(side="left", fill="y")
 
-        ruta_icono = 'propsync_icon.ico'
-        if os.path.exists(ruta_icono):
+        # RUTA CORREGIDA: Apuntando a assets/
+        ruta_icono_logo = os.path.join("assets", "propsync_icon.ico")
+        if os.path.exists(ruta_icono_logo):
             try:
-                img_logo = ctk.CTkImage(Image.open(ruta_icono), size=(90, 90))
+                img_logo = ctk.CTkImage(Image.open(ruta_icono_logo), size=(90, 90))
                 self.lbl_img_logo = ctk.CTkLabel(self.sidebar, text="", image=img_logo)
                 self.lbl_img_logo.pack(pady=(30, 10))
             except Exception as e: error_img_ignorado = 1
@@ -94,7 +94,7 @@ class PropSyncUI(ctk.CTk):
         self.card_global = ctk.CTkFrame(self.sidebar, fg_color="#1e272e", corner_radius=10, border_width=1, border_color="#2f3640")
         self.card_global.pack(fill="x", padx=20, pady=5)
         
-        self.lbl_resumen_prof_global = ctk.CTkLabel(self.card_global, text="Beneficio Flotante Global:\n$0.00", font=ctk.CTkFont(size=15, weight="bold"), text_color="#2ecc71")
+        self.lbl_resumen_prof_global = ctk.CTkLabel(self.card_global, text="Beneficio Global:\n$0.00", font=ctk.CTkFont(size=15, weight="bold"), text_color="#2ecc71")
         self.lbl_resumen_prof_global.pack(pady=(15, 10))
         
         self.lbl_resumen_eq_global = ctk.CTkLabel(self.card_global, text="Equidad Global:\n$0.00", font=ctk.CTkFont(size=15, weight="bold"), text_color="#f1c40f")

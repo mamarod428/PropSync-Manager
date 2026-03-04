@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from ui_components import ToolTip
+from modules.ui_components import ToolTip
 
 def obtener_nombre_tipo(tipo_int):
     if tipo_int == 0: return "BUY"
@@ -329,7 +329,7 @@ class TabDashboard(ctk.CTkScrollableFrame):
         prof_global = equidad_global_simulada - self.app.bal_master - sum([s.get('live_balance', s.get('initial_balance', 0)) for s in self.app.config.get('slaves', [])])
         c_prof_glob = "#2ecc71" if prof_global >= 0 else "#e74c3c"
         
-        self.app.lbl_resumen_prof_global.configure(text=f"Beneficio Flotante Global:\n${prof_global:,.2f}", text_color=c_prof_glob)
+        self.app.lbl_resumen_prof_global.configure(text=f"Beneficio Global:\n${prof_global:,.2f}", text_color=c_prof_glob)
         self.app.lbl_resumen_eq_global.configure(text=f"Equidad Global:\n${equidad_global_simulada:,.2f}")
 
     def _dibujar_tabla_operaciones(self, ops_actuales):
