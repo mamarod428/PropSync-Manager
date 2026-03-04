@@ -56,9 +56,8 @@ Recomendado para una evaluacion funcional directa sin configurar entornos de pro
 
 3.  Haga doble clic sobre el ejecutable. El programa cargara todas las dependencias internamente y mostrara la interfaz de control de forma automatica.
 
-* * * * *
 ------------------------
-Guia de Puesta en Marcha
+## Guia de Puesta en Marcha
 
 Una vez iniciada la aplicacion, siga este procedimiento para iniciar la sincronizacion:
 
