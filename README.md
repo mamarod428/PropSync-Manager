@@ -51,3 +51,28 @@ Dado que el software actua como un puente tecnologico, requiere que la terminal 
 5. Ejecute el siguiente comando para instalar las librerias necesarias para la interfaz y la conexion financiera:
    ```bash
    pip install MetaTrader5 customtkinter pillow
+
+
+## 3. Ejecucion del Software
+
+Con la terminal **MetaTrader 5** abierta y conectada a su cuenta, regrese a la terminal de comandos. Ejecute el archivo principal del proyecto:
+    ```bash
+    python main.py
+
+## Guia de  Puesta en Marcha
+------------------------
+
+Para poner en funcionamiento el sistema de sincronizacion por primera vez, siga este procedimiento:
+
+1.  **Configuracion Maestra**: Acceda a la pestaña **Configuracion de Red**. En el primer panel, introduzca el numero de cuenta (**Login**), su contraseña y el servidor de su broker (estos datos se encuentran en el correo de bienvenida de su cuenta de trading). Introduzca el **Balance Inicial** real de su cuenta para que el sistema calcule los riesgos correctamente y haga clic en **Aplicar Cambios**.
+
+2.  **Definicion de Reglas**: Cambie a la subpestaña **Base de Datos de Firmas**. Aqui debe registrar los limites de su cuenta (ejemplo: **5.0** para un 5% de perdida diaria permitida). Haga clic en **Guardar Parametros**.
+
+3.  **Registro de Nodos**: Vuelva a la pestaña anterior y añada los datos de una segunda cuenta (**Esclava**). Introduzca un identificador (ejemplo: **Nodo_01**). Use el boton **Calcular Factor** para que el software determine automaticamente el lotaje proporcional basandose en la equidad de ambas cuentas. Haga clic en **Registrar Nodo**.
+
+4.  **Activacion**: Dirijase al panel lateral izquierdo de la aplicacion y pulse el boton verde **Iniciar Servicio**. El sistema realizara una validacion de los archivos JSON de base de datos y comenzara la vigilancia activa de la red.
+
+Licencia
+--------
+
+Este software se distribuye bajo la licencia Open Source **MIT**.
