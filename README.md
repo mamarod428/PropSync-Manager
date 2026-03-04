@@ -29,9 +29,9 @@ Independientemente del metodo de instalacion elegido, debe activar el acceso alg
 
 ---
 
-## Metodos de Instalacion
+## Instalacion
 
-### Metodo A: Ejecucion mediante Visual Studio Code (Entorno de Desarrollo)
+### Ejecucion mediante Visual Studio Code (Entorno de Desarrollo)
 Recomendado para revisar la arquitectura, el codigo fuente y la estructura de modulos.
 
 1. **Instalacion de Python**: Descargue e instale Python 3.11+ desde `python.org` (Es fundamental marcar la casilla **Add Python to PATH** durante el proceso).
@@ -43,16 +43,6 @@ Recomendado para revisar la arquitectura, el codigo fuente y la estructura de mo
    ```bash
    pip install MetaTrader5 customtkinter pillow matplotlib
 4.  **Ejecucion**: En el explorador de archivos de la izquierda, abra **main.py** y presione el boton **Play** (ejecutar) en la esquina superior derecha o presione `F5`.
-
-### Metodo B: Ejecucion mediante Archivo Portable (.exe)
-
-Recomendado para una evaluacion funcional directa sin configurar entornos de programacion.
-
-1.  Localice el archivo **PropSync_Manager.exe** en la carpeta raiz de la entrega.
-
-2.  Asegurese de que la terminal **MetaTrader 5** este abierta.
-
-3.  Haga doble clic sobre el ejecutable. El programa cargara todas las dependencias internamente y mostrara la interfaz de control de forma automatica.
 
 ------------------------
 ## Guia de Puesta en Marcha
