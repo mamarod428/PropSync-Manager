@@ -19,7 +19,6 @@ El software utiliza patrones de ingenieria modernos para garantizar la separacio
 * **Plataforma Financiera**: Terminal MetaTrader 5 instalada (descargable desde metatrader5.com).
 
 
-
 ### Configuracion Critica en MetaTrader 5
 Independientemente del metodo de instalacion elegido, debe activar el acceso algoritmico en MT5 para permitir la comunicacion con el software:
 1. Abra su terminal **MetaTrader 5**.

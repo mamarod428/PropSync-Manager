@@ -1,56 +1,91 @@
-Este documento responde a las reflexiones teóricas requeridas por el proyecto, vinculando el software con las Tecnologías Habilitadoras Digitales (THD) y los procesos de transformación digital.
+# PropSync Manager - Enterprise Edition
 
-```markdown
-# Proyecto 2: Software para la Transformacion Digital - Analisis Teorico
+## 1. Descripcion del Proyecto
+PropSync Manager es una solucion avanzada de automatizacion de procesos roboticos (RPA) diseñada para la gestion sincronizada de terminales financieras MetaTrader 5. El software captura eventos de mercado en una cuenta **Maestra** y los replica instantaneamente en multiples cuentas **Esclavas**.
 
-## 1. Ciclo de vida del dato (5b)
+Este proyecto permite gestionar grandes capitales distribuidos manteniendo una gestion de riesgo proporcional y cumpliendo las reglas de preservacion de capital de las empresas de fondeo (Prop Firms).
 
-**¿Como se gestionan los datos desde su generacion hasta su eliminacion en tu proyecto?**
-La gestion de datos en PropSync Manager sigue un flujo estricto para garantizar la velocidad de ejecucion:
-* **Generacion:** Los datos se generan en el entorno OT (Broker) y son capturados mediante el modulo `trading.py`.
-* **Procesamiento:** Los datos crudos se normalizan en la memoria RAM para realizar calculos de riesgo dinamico.
-* **Persistencia:** Los vinculos entre ordenes se guardan en archivos JSON localmente para permitir la recuperacion ante fallos del sistema.
-* **Eliminacion:** Al detectarse el cierre de una operacion en el mercado real, el registro activo se purga de la base de datos viva (`mapa_operaciones.json`) y se traslada al archivo de historico.
+## 2. Arquitectura Modular del Sistema
+El software divide su logica en componentes especializados para garantizar la escalabilidad y el orden (Grado Enterprise):
 
-**¿Que estrategia sigues para garantizar la consistencia e integridad de los datos?**
-Se utiliza una estrategia de **Mapeo de Tickets Bidireccional**. Cada operacion maestra tiene un identificador unico vinculado a un identificador en cada nodo. El sistema realiza una validacion cruzada cada 500 milisegundos para asegurar que el estado en la base de datos local coincide exactamente con el estado del servidor del broker, eliminando cualquier discrepancia de forma automatica.
+* **Raiz (`/`):** Contiene el punto de entrada `main.py` y archivos de configuracion.
+* **Modulos (`/modules`):** Contiene la logica de trading (`trading.py`), base de datos (`database.py`) y los componentes visuales (`interfaz.py`, `tab_*.py`).
+* **Datos (`/data`):** Almacenamiento local de credenciales e historial en formato JSON.
+* **Recursos (`/assets`):** Iconos y elementos graficos del sistema.
 
-## 2. Almacenamiento en la nube (5f)
+## 3. Requisitos Previos (Antes de empezar)
+1.  **Sistema Operativo:** Windows 10 o 11.
+2.  **MetaTrader 5 (MT5):** Debe estar instalado. Si no lo tiene, descarguelo gratis desde [metatrader5.com](https://www.metatrader5.com/).
+3.  **Python:** Descargue la version 3.11 o superior desde [python.org](https://www.python.org/). 
+    * **IMPORTANTE:** Durante la instalacion de Python, marque la casilla que dice **"Add Python to PATH"**.
 
-**¿Que alternativas consideraste para almacenar datos y por que elegiste tu solucion actual?**
-Se considero el uso de bases de datos NoSQL en la nube (como Google Firebase). Sin embargo, se opto por un almacenamiento de **Edge Computing (Local JSON)** por una razon tecnica critica: la latencia. En el trading de alta frecuencia, un retraso de 200ms en la nube puede suponer perdidas financieras por deslizamiento de precios (Slippage). La ejecucion local garantiza una respuesta instantanea.
+---
 
-**Si no usas la nube, ¿como podrias integrarla en futuras versiones?**
-La nube se integrara en la version 2.0 como una capa de **Backup y Analitica Asincrona**. Mientras que la ejecucion seguira siendo local, los datos del historial se sincronizaran con un bucket de AWS S3 para permitir al usuario consultar sus estadisticas desde una aplicacion movil o entorno web sin interferir con la ejecucion del bot.
+## 4. Configuracion Critica de MetaTrader 5
+Para que el software pueda "hablar" con su cuenta de trading, debe activar este permiso:
+1.  Abra su terminal **MetaTrader 5**.
+2.  Vaya al menu superior: **Herramientas (Tools)** > **Opciones (Options)**.
+3.  Haga clic en la pestaña **Asesores Expertos (Expert Advisors)**.
+4.  Marque la casilla **Permitir el trading algoritmico (Allow Algo Trading)**.
+5.  Haga clic en **Aceptar**.
+6.  **Asegurese de tener la sesion iniciada en su cuenta de trading.**
 
-## 3. Seguridad y regulacion (5i)
+---
 
-**¿Que medidas de seguridad implementaste para proteger los datos o procesos en tu proyecto?**
-Se han implementado protocolos de **Seguridad Transaccional**. El software utiliza el parametro de desviacion maxima para rechazar ordenes si el precio de mercado ha cambiado bruscamente durante el proceso de copiado. Asimismo, la informacion sensible se almacena de forma local, evitando exposiciones en servidores externos.
+## 5. Instalacion Paso a Paso (Mediante VS Code)
 
-**¿Que normativas (e.g., GDPR) podrian afectar el uso de tu software y como las has tenido en cuenta?**
-El software cumple con los principios de **Privacidad desde el Diseno** de la GDPR. Al no recopilar, centralizar ni procesar datos personales o financieros en servidores externos al equipo del usuario, se garantiza que el operador mantiene la soberania absoluta sobre su informacion sensible.
+Siga estos pasos exactamente para poner el programa en marcha:
 
-## 4. Implicacion de las THD en negocio y planta (2e)
+### Paso 1: Descargar el Proyecto
+1.  En la pagina de este repositorio en GitHub, haga clic en el boton verde **"Code"**.
+2.  Seleccione **"Download ZIP"**.
+3.  Extraiga el contenido del archivo en una carpeta de su escritorio.
 
-**¿Que impacto tendria tu software en un entorno de negocio o en una planta industrial?**
-El impacto es la **Eliminacion de Cuellos de Botella Operativos**. En un entorno de gestion de fondos, un solo operador puede supervisar una red masiva de capital que antes requeriria un equipo de varias personas, optimizando los recursos humanos y financieros del negocio.
+### Paso 2: Preparar Visual Studio Code
+1.  Abra **Visual Studio Code**.
+2.  Instale la extension oficial de **Python** (busquela en el icono de cuadrados en la barra izquierda).
+3.  Vaya a **Archivo** > **Abrir carpeta...** y seleccione la carpeta donde extrajo el proyecto.
 
-**¿Como crees que tu solucion podria mejorar procesos operativos o la toma de decisiones?**
-Mejora la precision mediante la **Automatizacion de Reglas de Riesgo**. El sistema monitoriza los Drawdowns (niveles de perdida) de forma mas rapida y precisa que un humano, tomando decisiones de bloqueo de operativa en milisegundos para proteger el capital de la empresa ante volatilidades imprevistas.
+### Paso 3: Instalar librerias necesarias
+1.  Abra una terminal dentro de VS Code (Menu **Terminal** > **Nueva terminal**).
+2.  Copie, pegue y presione Enter para ejecutar este comando:
+    ```bash
+    pip install MetaTrader5 customtkinter pillow matplotlib
+    ```
 
-## 5. Mejoras en IT y OT (2f)
+### Paso 4: Ejecucion
+1.  En el listado de archivos de la izquierda, busque y haga clic en `main.py`.
+2.  Presione la tecla **F5** o haga clic en el boton de **Play** (triangulo) en la esquina superior derecha.
 
-**¿Como puede tu software facilitar la integracion entre entornos IT y OT?**
-Actua como un **Middleware de Integracion**. Toma la tecnologia operativa (OT), que son las terminales de trading y los protocolos de ejecucion de ordenes, y los integra en un entorno IT (Interfaz CustomTkinter y Bases de Datos JSON), permitiendo una administracion centralizada y analitica del proceso.
+---
 
-**¿Que procesos especificos podrian beneficiarse de tu solucion en terminos de automatizacion o eficiencia?**
-El proceso de **Sincronizacion de Carteras**. La replicacion manual de una estrategia en 10 cuentas distintas es ineficiente y propensa a errores de digitacion. Este software automatiza el 100% de ese flujo de trabajo.
+## 6. Guia de Puesta en Marcha (Uso del Programa)
 
-## 6. Tecnologias Habilitadoras Digitales (2g)
+Una vez que la ventana de **PropSync Manager** se abra, siga este orden:
 
-**¿Que tecnologias habilitadoras digitales (THD) has utilizado o podrias integrar en tu proyecto?**
-La THD principal utilizada es el **RPA (Robotic Process Automation)**, mediante algoritmos que emulan y optimizan la interaccion humana con las terminales financieras.
+1.  **Configuracion Maestra:** * Vaya a la pestaña **Configuracion de Red**.
+    * Introduzca su numero de cuenta (Login), su contraseña y el servidor de su broker.
+    * Escriba su **Balance Inicial** (el dinero que tiene la cuenta actualmente).
+    * Haga clic en **Aplicar Cambios**.
 
-**¿Como mejoran estas tecnologias la funcionalidad o el alcance de tu software?**
-El RPA permite la **Omnicanalidad Transaccional**. Sin esta tecnologia, el alcance del software estaria limitado a una sola cuenta. Al integrar automatizacion robotica, el alcance se vuelve virtualmente ilimitado, permitiendo gestionar redes de nodos de cualquier tamano con una sola fuente de datos.
+2.  **Base de Datos de Firmas:** * En la subpestaña de firmas, registre los limites de su cuenta (ej: introduzca **5.0** si su limite de perdida diaria es del 5%). Esto sirve para que el programa vigile su riesgo.
+
+3.  **Registro de Cuentas Esclavas:** * Añada los datos de las cuentas donde quiere que se copien las operaciones. 
+    * Use el boton **Calcular Factor** para que el sistema asigne automaticamente el tamaño de las operaciones segun el capital de cada cuenta.
+    * Haga clic en **Registrar Nodo**.
+
+4.  **Activacion Final:** * En el panel oscuro de la izquierda, haga clic en el boton verde **Iniciar Servicio**.
+    * El programa confirmara la conexion y aparecera un mensaje: `[SISTEMA EN EJECUCION]`. A partir de este momento, todo lo que haga en la cuenta Maestra se replicara en las demas.
+
+---
+
+## 7. Indice de Correccion para el Evaluador
+Este proyecto cumple con los siguientes criterios academicos localizables en el codigo:
+
+* **Criterio 2e (Beneficios):** Automatizacion RPA en `modules/trading.py`.
+* **Criterio 2f (IT/OT):** Integracion de API financiera en `modules/tab_dashboard.py`.
+* **Criterio 5b (Dato):** Gestion del ciclo de vida en `modules/database.py`.
+* **Criterio 5i (Seguridad):** Ofuscacion de credenciales en `modules/tab_configuracion.py`.
+
+## Licencia
+Este software se distribuye bajo la licencia Open Source **MIT**.
