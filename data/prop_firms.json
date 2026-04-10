@@ -1,0 +1,26 @@
+{
+    "FTMO": {
+        "dd_diario": 5.0,
+        "dd_total": 10.0,
+        "target_f1": 10.0,
+        "target_f2": 5.0
+    },
+    "WSF": {
+        "dd_diario": 4.0,
+        "dd_total": 8.0,
+        "target_f1": 8.0,
+        "target_f2": 5.0
+    },
+    "Axi Select": {
+        "dd_diario": 10.0,
+        "dd_total": 10.0,
+        "target_f1": 7.0,
+        "target_f2": 7.0
+    },
+    "FunderPro": {
+        "dd_diario": 5.0,
+        "dd_total": 10.0,
+        "target_f1": 10.0,
+        "target_f2": 5.0
+    }
+}

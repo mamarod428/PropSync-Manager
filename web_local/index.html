@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropSync Enterprise Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    
+    <div id="auth-view" class="auth-container">
+        <div class="login-box">
+            <div class="login-header">
+                <img src="propsync_icon.ico" alt="Logo PropSync" class="brand-logo-large">
+                <h2 class="brand-title">PropSync Enterprise</h2>
+                <p class="brand-subtitle">Terminal Analitica Hibrida</p>
+            </div>
+            
+            <input type="text" id="email" placeholder="Usuario o correo electronico">
+            <input type="password" id="password" placeholder="Clave de acceso">
+            
+            <div class="auth-buttons">
+                <button onclick="loginLocal()" class="btn-primary">Inicializar Motor RPA</button>
+                <button onclick="registroLocal()" class="btn-secondary" style="margin-top: 12px;">Crear Cuenta Administrativa</button>
+            </div>
+            <p id="auth-msg" class="auth-message"></p>
+        </div>
+    </div>
+
+    <div id="dashboard-view" class="layout-wrapper" style="display: none;">
+        
+        <div id="sidebar" class="sidebar">
+            <div class="brand-section">
+                <img src="propsync_icon.ico" alt="Logo" class="brand-logo-small">
+                <div class="brand-text">
+                    <h2>PropSync</h2>
+                    <p>Edge Node</p>
+                </div>
+            </div>
+            
+            <div class="status-badge" id="sys-status">SISTEMA DETENIDO</div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn active" onclick="mostrarTab('tab-dash', this)">Panel Analitico</button>
+                <button class="nav-btn" onclick="mostrarTab('tab-stats', this)">Historial Backtest</button>
+                <button class="nav-btn" onclick="mostrarTab('tab-config', this)">Topologia de Red</button>
+                <button class="nav-btn" onclick="mostrarTab('tab-logs', this)">Terminal Motor</button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="btn-toggle-motor" onclick="toggleMotor()" class="btn-logout">Apagar Sistema</button>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="top-bar">
+                <button class="hamburger-btn" onclick="toggleSidebar()">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </button>
+                <div class="top-bar-title" id="current-tab-title">Panel Analitico Global</div>
+            </div>
+
+            <div class="content-area">
+                
+                <!-- PANEL ANALITICO -->
+                <div id="tab-dash" class="tab-content">
+                    
+                    <div class="node-balances-container" id="node-balances-grid">
+                    </div>
+
+                    <h2 class="section-title">Metricas de Ejecucion en Tiempo Real</h2>
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <h3>Balance Base (Master)</h3>
+                            <h2 id="kpi-balance" class="text-neutral">$0.00</h2>
+                        </div>
+                        <div class="kpi-card highlight-card">
+                            <h3>Equidad Flotante (Live)</h3>
+                            <h2 id="kpi-equity" class="text-neutral">$0.00</h2>
+                        </div>
+                        <div class="kpi-card highlight-card">
+                            <h3>P/L Flotante (Activo)</h3>
+                            <h2 id="kpi-floating-pnl" class="text-neutral">$0.00</h2>
+                        </div>
+                        <div class="kpi-card">
+                            <h3>Beneficio Neto (Cerrado)</h3>
+                            <h2 id="kpi-profit" class="text-neutral">$0.00</h2>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Analisis de Backtesting Avanzado</h2>
+                    <div class="kpi-grid-small">
+                        <div class="kpi-card-small">
+                            <h3>Win Rate</h3>
+                            <h2 id="kpi-winrate" class="text-neutral">0.0%</h2>
+                        </div>
+                        <div class="kpi-card-small">
+                            <h3>Profit Factor</h3>
+                            <h2 id="kpi-pf" class="text-neutral">0.00</h2>
+                        </div>
+                        <div class="kpi-card-small">
+                            <h3>Total Ops</h3>
+                            <h2 id="kpi-trades" class="text-neutral">0</h2>
+                        </div>
+                        <div class="kpi-card-small">
+                            <h3>Gross Profit</h3>
+                            <h2 id="kpi-gross-profit" class="text-success">$0.00</h2>
+                        </div>
+                        <div class="kpi-card-small">
+                            <h3>Gross Loss</h3>
+                            <h2 id="kpi-gross-loss" class="text-danger">$0.00</h2>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-box main-chart">
+                            <h3>Curva de Equidad Acumulada</h3>
+                            <div class="canvas-wrapper"><canvas id="equityChart"></canvas></div>
+                        </div>
+                        
+                        <div class="chart-box side-chart">
+                            <h3>Distribucion de Direccionalidad</h3>
+                            <div class="canvas-wrapper"><canvas id="directionChart"></canvas></div>
+                        </div>
+                        
+                        <div class="chart-box side-chart">
+                            <h3>Asignacion por Activo (Simbolos)</h3>
+                            <div class="canvas-wrapper"><canvas id="symbolChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HISTORIAL BACKTEST -->
+                <div id="tab-stats" class="tab-content" style="display: none;">
+                    <div class="table-container">
+                        <table id="tabla-historial" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Ticket</th>
+                                    <th>Simbolo</th>
+                                    <th>Direccion</th>
+                                    <th>P/L Final ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CONFIGURACION DE RED -->
+                <div id="tab-config" class="tab-content" style="display: none;">
+                    <h2 class="section-title">Nodo Origen (Master)</h2>
+                    <div class="form-grid">
+                        <input type="number" id="m_login" placeholder="Login MT5">
+                        <input type="password" id="m_pass" placeholder="Password MT5">
+                        <input type="text" id="m_server" placeholder="Servidor (Broker)">
+                        <input type="number" id="m_bal" placeholder="Balance Base Asignado ($)">
+                        <button onclick="guardarMaestra()" class="btn-primary span-full">Asegurar Credenciales Maestras</button>
+                    </div>
+
+                    <h2 class="section-title">Anadir / Modificar Nodo Destino (Slave)</h2>
+                    <div class="form-grid">
+                        <input type="text" id="s_id" placeholder="Identificador Unico (Ej: Nodo_01)">
+                        <input type="number" id="s_login" placeholder="Login MT5">
+                        <input type="password" id="s_pass" placeholder="Password MT5">
+                        <input type="text" id="s_server" placeholder="Servidor (Broker)">
+                        <input type="number" id="s_bal" placeholder="Balance Base Asignado ($)">
+                        <input type="number" id="s_risk" placeholder="Multiplicador de Riesgo (Ej: 1.0)">
+                        <button onclick="guardarEsclava()" class="btn-warning span-full">Acoplar Nodo a la Red</button>
+                    </div>
+                    
+                    <h2 class="section-title">Mapa de Nodos Activos</h2>
+                    <div class="table-container">
+                        <table id="tabla-esclavas" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Identificador</th>
+                                    <th>Login MT5</th>
+                                    <th>Balance Asignado</th>
+                                    <th>Riesgo</th>
+                                    <th>Mantenimiento</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CONSOLA TERMINAL -->
+                <div id="tab-logs" class="tab-content" style="display: none;">
+                    <textarea id="system-console" readonly></textarea>
+                    <button onclick="document.getElementById('system-console').value=''" class="btn-secondary" style="margin-top: 15px; width: auto;">Limpiar Bufer Visual</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

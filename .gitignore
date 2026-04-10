@@ -1,0 +1,5 @@
+secrets.json
+data/credenciales.json
+data/mapa_operaciones.json
+__pycache__/
+*.pyc
