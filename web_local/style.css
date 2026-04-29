@@ -78,7 +78,7 @@ body { background-color: var(--bg-deep); color: var(--text-main); height: 100vh;
 .text-warning { color: var(--warning) !important; }
 .text-neutral { color: var(--text-main) !important; }
 
-/* VISTA LOGIN */
+/* LOGIN VIEW */
 .auth-container { display: flex; justify-content: center; align-items: center; height: 100vh; background: radial-gradient(circle at center, var(--bg-panel) 0%, var(--bg-main) 100%); }
 .login-box { background: var(--bg-card); padding: 40px; border-radius: 12px; border: 1px solid var(--border-color); width: 100%; max-width: 400px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 .login-header { text-align: center; margin-bottom: 30px; }
@@ -89,7 +89,7 @@ body { background-color: var(--bg-deep); color: var(--text-main); height: 100vh;
 .login-box input:focus { outline: none; border-color: var(--brand); }
 .auth-message { text-align: center; margin-top: 15px; font-weight: 600; font-size: 13px; min-height: 20px; }
 
-/* BOTONES */
+/* BUTTONS */
 button { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; padding: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 .btn-primary { background: var(--brand); color: white; width: 100%; }
 .btn-primary:hover { background: var(--brand-hover); box-shadow: 0 4px 12px rgba(47, 129, 247, 0.2); }
@@ -100,7 +100,7 @@ button { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; fo
 .btn-logout { background: transparent; border: 1px solid var(--danger); color: var(--danger); width: 100%; }
 .btn-logout:hover { background: var(--danger); color: white; }
 
-/* LAYOUT PRINCIPAL */
+/* MAIN LAYOUT */
 .layout-wrapper { display: flex; height: 100vh; width: 100%; overflow: hidden; }
 
 /* SIDEBAR COLLAPSIBLE */
@@ -161,7 +161,7 @@ button { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; fo
 .tab-content { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding-bottom: var(--space-xl); min-width: 0; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* COMPONENTES DEL DASHBOARD */
+/* DASHBOARD COMPONENTS */
 .section-title { font-size: 16px; color: var(--text-main); margin: 30px 0 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
 
 .node-balances-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px; }
@@ -195,7 +195,7 @@ button { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; fo
 .canvas-wrapper { position: relative; flex: 1; min-height: 220px; display: flex; justify-content: center; align-items: center; }
 .main-chart { grid-column: span 2; min-height: 380px; }
 
-/* TABLAS Y FORMULARIOS */
+/* TABLES AND FORMS */
 .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
 .form-grid input { padding: 14px 16px; background: var(--bg-deep); border: 1px solid var(--border-color); color: white; border-radius: var(--radius-sm); font-size: 14px; transition: all 0.3s var(--ease-smooth); }
 .form-grid input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-glow); outline: none; }
@@ -289,7 +289,7 @@ button { border: none; border-radius: 6px; font-weight: 600; cursor: pointer; fo
 
 
 
-/* CONSOLA */
+/* CONSOLE */
 #system-console { width: 100%; flex: 1; min-height: 300px; background: #0A0A0A; color: var(--success); font-family: 'Consolas', monospace; font-size: 13px; padding: 20px; border: 1px solid var(--border-color); border-radius: 10px; resize: none; line-height: 1.5; display: block; }
 
 /* --- CONFIG REQUIRED: Modo de Bloqueo Visual --- */

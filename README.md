@@ -10,7 +10,7 @@
 [![Demo](https://img.shields.io/badge/Demo-Netlify-00C7B7.svg)](https://propsync-manager.netlify.app)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
 
-[**Live UI Demo**](https://propsync-manager.netlify.app) · [**Documentation**](docs/) · [**Contributing**](CONTRIBUTING.md) · [**Wiki**](wiki/)
+[**Live UI Demo**](https://propsync-manager.netlify.app) · [**Documentation**](docs/) · [**Contributing**](CONTRIBUTING.md) · [**Wiki**](wiki/) · [**LinkedIn Update**](https://www.linkedin.com/posts/manuel-amado-rodriguez-b72064407_fintech-algorithmictrading-opensource-share-7455203935151337472--yq-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGfE94YBgc7QFfZ_t0tg8mg9wsTYvWsFgmI)
 
 </div>
 

@@ -11,7 +11,7 @@ let masterNetProfitAtStart = null;
 let masterNetProfitTotal = 0; 
 let masterFloatingProfit = 0; 
 
-// Cache de prop firms cargadas desde Supabase
+// Cache of prop firms loaded from Supabase
 let supabaseFirms = [];
 
 
@@ -101,14 +101,14 @@ window.exportarLogs = async function() {
         text += el.innerText + "\n";
     });
     if(!text) {
-        log_sys("[ERROR] No hay logs para exportar.");
+        log_sys("[ERROR] No logs to export.");
         return;
     }
     
-    // Usamos el bridge de Python para un guardado nativo mas robusto
+    // Use the Python bridge for a more robust native save
     const res = await window.pywebview.api.guardar_logs_en_archivo(text);
     if(res.status === 'error') {
-        log_sys("[ERROR] Fallo al exportar logs: " + res.message);
+        log_sys("[ERROR] Failed to export logs: " + res.message);
     }
 };
 
@@ -142,6 +142,14 @@ async function loginLocal() {
         statusBadge.style.background = "rgba(35, 134, 54, 0.1)";
         statusBadge.style.borderColor = "var(--success)";
         statusBadge.style.color = "var(--success)";
+
+        // Sync motor state
+        motorActivo = true;
+        const btnToggle = document.getElementById('btn-toggle-motor');
+        if (btnToggle) {
+            btnToggle.innerText = "Shutdown System";
+            btnToggle.className = "btn-logout";
+        }
         
         mostrarTab('tab-dash', document.querySelector('.nav-btn'));
         iniciarTelemetria(); 
@@ -241,7 +249,7 @@ function renderPropFirmsList(firms) {
     const listDiv = document.getElementById('prop-firms-list');
     if (!listDiv) return;
     if (firms.length === 0) {
-        listDiv.innerHTML = '<p style="color:var(--text-muted); font-size:13px;">Sin datos. Sin conexion a Supabase o base vacia.</p>';
+        listDiv.innerHTML = '<p style="color:var(--text-muted); font-size:13px;">No data. No connection to Supabase or empty database.</p>';
         return;
     }
     listDiv.innerHTML = firms.map(f => `
@@ -573,14 +581,14 @@ async function actualizarDashboard() {
     renderLocalPropFirmTracker(config);
     updateLocalPropMetrics(config, historial, flotante, peakEquity);
 
-    // NUEVO: Calcular Capital Total Gestionado
+    // NEW: Calculate Total Managed Capital
     let totalEquity = flotante.equity;
     if(config.slaves) {
         config.slaves.forEach(s => {
             let baseBal = parseFloat(s.initial_balance);
             let factor = parseFloat(s.risk_factor || 1.0);
             
-            // Lógica Sesión-Base: Solo sumamos beneficio generado desde que se abrió el motor
+            // Session-Base Logic: We only add profit generated since the engine was started
             let sessionPnl = (netProfit - masterNetProfitAtStart); 
             let slaveEq = baseBal + ((sessionPnl + flotante.profit) * factor);
             totalEquity += slaveEq;
@@ -834,7 +842,7 @@ function updateLocalPropMetrics(config, historial, flotante, peakEquity) {
             dd = peakEquity - currentEquity;
         }
 
-        // Beneficio Sesión: Solo lo capturado desde el inicio del programa
+        // Session Profit: Only what was captured since the program started
         const sessionNet = net + flotante.profit - (masterNetProfitAtStart || (net + flotante.profit));
 
         const scaledNet = sessionNet * riskFactor;
@@ -975,7 +983,7 @@ async function toggleMotor() {
     const statusBadge = document.getElementById('sys-status');
     
     if (motorActivo) {
-        // Apagar
+        // Shutdown
         await window.pywebview.api.apagar_motor();
         motorActivo = false;
         
@@ -988,9 +996,9 @@ async function toggleMotor() {
         statusBadge.style.color = "var(--danger)";
         log_sys("[SYSTEM] Engine stopped by user.");
     } else {
-        // Encender
+        // Start
         const res = await window.pywebview.api.encender_motor();
-        if (res === "ok") {
+        if (res && res.status === "ok") {
             motorActivo = true;
             btn.innerText = "Shutdown System";
             btn.className = "btn-logout"; // Turn red
@@ -1000,7 +1008,39 @@ async function toggleMotor() {
             statusBadge.style.borderColor = "var(--success)";
             statusBadge.style.color = "var(--success)";
         } else {
-            alert("Error starting the engine. Check your MT5 terminal.");
+            const errorMsg = (res && res.message) ? res.message : "Check your MT5 terminal.";
+            alert("Error starting the engine: " + errorMsg);
         }
     }
 }
+
+// --- AUTO-CALC RISK MULTIPLIER ---
+/**
+ * Calculates and updates the risk factor input based on the ratio 
+ * between the master account balance and the slave account balance.
+ */
+function autoCalculateRisk() {
+    const mBalInput = document.getElementById('m_bal');
+    const sBalInput = document.getElementById('s_bal');
+    const sRiskInput = document.getElementById('s_risk');
+
+    if (!mBalInput || !sBalInput || !sRiskInput) return;
+
+    const mBal = parseFloat(mBalInput.value);
+    const sBal = parseFloat(sBalInput.value);
+
+    if (!isNaN(mBal) && !isNaN(sBal) && mBal !== 0) {
+        // Calculate the ratio (Slave / Master)
+        const multiplier = (sBal / mBal).toFixed(2);
+        sRiskInput.value = multiplier;
+    }
+}
+
+// Initialize listeners for real-time calculation
+document.addEventListener('DOMContentLoaded', () => {
+    const sBalInput = document.getElementById('s_bal');
+    const mBalInput = document.getElementById('m_bal');
+    
+    if (sBalInput) sBalInput.addEventListener('input', autoCalculateRisk);
+    if (mBalInput) mBalInput.addEventListener('input', autoCalculateRisk);
+});

@@ -761,7 +761,7 @@ function startClock() {
             month: 'short',
             year: 'numeric'
         };
-        clockEl.textContent = now.toLocaleDateString('es-ES', options) + '  ' + now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+        clockEl.textContent = now.toLocaleDateString('en-US', options) + '  ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
     }
 
     updateClock();

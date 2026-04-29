@@ -243,5 +243,12 @@
         "type": "SELL",
         "profit": -89.91,
         "time_close": 1777420574.0540347
+    },
+    {
+        "ticket": "56440616281",
+        "symbol": "GBPUSD",
+        "type": "SELL",
+        "profit": -65.0,
+        "time_close": 1777458006.303
     }
 ]

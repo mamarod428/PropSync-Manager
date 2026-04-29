@@ -95,4 +95,4 @@ This devlog documents the development journey of PropSync Manager. Each entry de
 
 ---
 
-*This devlog is also shared on [LinkedIn](https://linkedin.com) as a professional development post series.*
+*This devlog is also shared on [LinkedIn](https://www.linkedin.com/posts/manuel-amado-rodriguez-b72064407_fintech-algorithmictrading-opensource-share-7455203935151337472--yq-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGfE94YBgc7QFfZ_t0tg8mg9wsTYvWsFgmI) as a professional development post series.*

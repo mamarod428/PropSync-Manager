@@ -23,14 +23,14 @@ import os
 from supabase import create_client
 from modules.config import cargar_secrets
 
-# --- RUTAS ABSOLUTAS DINÁMICAS ---
+# --- DYNAMIC ABSOLUTE PATHS ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR_DATA = os.path.join(BASE_DIR, "data")
 
 FILE_DB = os.path.join(DIR_DATA, "mapa_operaciones.json")
 FILE_HISTORY = os.path.join(DIR_DATA, "historial_operaciones.json")
 
-# --- CONFIGURACIÓN CLOUD (CENTRALIZADA) ---
+# --- CLOUD CONFIGURATION (CENTRALIZED) ---
 secrets = cargar_secrets()
 URL_NUBE = secrets.get("SUPABASE_URL", "")
 KEY_NUBE = secrets.get("SUPABASE_KEY", "")
@@ -230,13 +230,13 @@ def obtener_tickets_nube(user_email: str) -> list:
         A list of ticket ID strings. Returns an empty list if Supabase is
         unavailable or the query fails.
     """
-    """Obtiene una lista de todos los tickets ya registrados en la nube para este usuario"""
+    """Obtains a list of all tickets already registered in the cloud for this user"""
     tickets = []
     if estado_conexion == 1:
         try:
-            # Traemos solo la columna 'ticket' para ahorrar ancho de banda
+            # We bring only the 'ticket' column to save bandwidth
             res = cliente_nube.table("trades").select("ticket").eq("user_email", user_email).execute()
-            # Usamos una lista de comprension para extraer los IDs
+            # We use a list comprehension to extract the IDs
             tickets = [str(item['ticket']) for item in res.data]
         except Exception:
             error_nube = 1
@@ -250,20 +250,20 @@ def sincronizar_historial_con_nube() -> None:
     This ensures eventual consistency between the local edge store and the
     cloud analytics layer without uploading duplicates.
     """
-    """Compara el historial local con el de la nube y sube lo que falta"""
+    """Compares the local history with the cloud history and uploads what is missing"""
     if estado_conexion == 1:
         user_email = os.environ.get("PROPSYNC_USER_EMAIL", "default@propsync.com")
         historial_local = cargar_historial()
         tickets_en_nube = obtener_tickets_nube(user_email)
         
-        # Filtramos las operaciones que NO están en la nube
-        # No usamos 'continue' ni 'break', usamos lógica de filtrado
+        # We filter operations that are NOT in the cloud
+        # We don't use 'continue' or 'break', we use filtering logic
         operaciones_pendientes = [
             op for op in historial_local 
             if str(op.get("ticket")) not in tickets_en_nube
         ]
         
-        # Si hay pendientes, las subimos una a una
+        # If there are pending items, we upload them one by one
         if len(operaciones_pendientes) > 0:
             registrar_en_lote_nube(operaciones_pendientes, user_email)
 
@@ -278,7 +278,7 @@ def registrar_en_lote_nube(lista_ops: list, email: str) -> None:
             :func:`agregar_a_historial`).
         email: The authenticated user's email to tag each record with.
     """
-    """Sube una lista de operaciones a Supabase"""
+    """Uploads a list of operations to Supabase"""
     for op in lista_ops:
         try:
             data_nube = {
@@ -293,7 +293,7 @@ def registrar_en_lote_nube(lista_ops: list, email: str) -> None:
         except Exception:
             error_subida = 1
 
-# --- NUEVAS OPERACIONES PROP FIRM & CLOUD CONFIG ---
+# --- NEW PROP FIRM OPERATIONS & CLOUD CONFIG ---
 def fetch_prop_firms() -> list:
     """Fetches all prop firm records from the Supabase ``prop_firms`` table.
 

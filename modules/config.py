@@ -15,8 +15,8 @@ import json
 import os
 import base64
 
-# --- RUTAS ABSOLUTAS DINÁMICAS ---
-# __file__ es config.py. Subimos dos niveles: modules/ -> PropSync-Manager/
+# --- DYNAMIC ABSOLUTE PATHS ---
+# __file__ is config.py. We go up two levels: modules/ -> PropSync-Manager/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR_DATA = os.path.join(BASE_DIR, "data")
 
@@ -199,9 +199,9 @@ def cargar_secrets() -> dict:
             with open(FILE_SECRETS_NUBE, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except Exception as e:
-            print(f">>> Fallo al leer secrets.json: {str(e)}")
+            print(f">>> Failed to read secrets.json: {str(e)}")
             return {"SUPABASE_URL": "", "SUPABASE_KEY": ""}
     else:
-        print(f">>> No se encuentra secrets.json en: {FILE_SECRETS_NUBE}")
+        print(f">>> secrets.json not found at: {FILE_SECRETS_NUBE}")
         
     return {"SUPABASE_URL": "", "SUPABASE_KEY": ""}

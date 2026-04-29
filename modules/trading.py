@@ -90,13 +90,13 @@ def verificar_credenciales_mt5(login: int, password: str, server: str) -> dict:
         return {"valido": False, "codigo": err["codigo"], "tipo": err["tipo"], "mensaje": err["mensaje"]}
 
 
-# [CRITERIO ACADEMICO: 2f - Mejoras en IT y OT]
-# Este modulo representa la capa de Tecnologia de Operaciones (OT). Interactua con la API del broker
-# para enviar sentencias criticas de transaccion con latencias de milisegundos.
+# [ACADEMIC CRITERION: 2f - IT and OT Improvements]
+# This module represents the Operational Technology (OT) layer. It interacts with the broker's API
+# to send critical transaction statements with millisecond latencies.
 
-# [CRITERIO ACADEMICO: 2e - Beneficios operativos]
-# Automatizacion critica: Automatiza el salto asincrono entre instancias financieras (logins),
-# una tarea que manualmente tomaria minutos, reducida a menos de 0.5 segundos (RPA).
+# [ACADEMIC CRITERION: 2e - Operational Benefits]
+# Critical Automation: Automates the asynchronous jump between financial instances (logins),
+# a task that would manually take minutes, reduced to less than 0.5 seconds (RPA).
 def cambiar_cuenta(datos_cuenta: dict, login_actual: int) -> int:
     """Switches the active MT5 session to the specified account.
 

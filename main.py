@@ -31,7 +31,7 @@ from modules.trading import (cambiar_cuenta, obtener_estado_maestro, sincronizar
                              ejecutar_apertura, ejecutar_modificacion, ejecutar_cierre,
                              verificar_credenciales_mt5)
 
-# --- CONFIGURACIÓN CLOUD ---
+# --- CLOUD CONFIGURATION ---
 secrets = cargar_secrets()
 URL_NUBE = secrets.get("SUPABASE_URL", "")
 KEY_NUBE = secrets.get("SUPABASE_KEY", "")
@@ -43,15 +43,16 @@ if URL_NUBE != "":
     except Exception:
         error_conexion = 1
 
-# --- VARIABLES GLOBALES DE ESTADO ---
+# --- GLOBAL STATE VARIABLES ---
 bot_activo = 0
 cuenta_conectada = 0
 memoria_db = {}
 tickets_maestros_abiertos = []
 app_config = None
 window = None
+hilo_motor = None  # Thread handle for the trading loop
 
-# Variables flotantes para el Dashboard
+# Floating variables for the Dashboard
 eq_master_global = 0.0
 bal_master_global = 0.0
 profit_master_global = 0.0
@@ -103,7 +104,18 @@ def iniciar_motor_trading() -> dict:
         * ``{'status': 'config_error', 'message': str}`` — credentials missing.
         * ``{'status': 'mt5_error', 'tipo': str, 'message': str}`` — MT5 failure with category.
     """
-    global bot_activo, cuenta_conectada, memoria_db, tickets_maestros_abiertos, app_config
+    global bot_activo, cuenta_conectada, memoria_db, tickets_maestros_abiertos, app_config, hilo_motor
+    global _stat_ciclos, _stat_replicaciones, _stat_errores, _stat_ultimo_sync
+
+    # Prevent starting if already active
+    if bot_activo == 1:
+        return {"status": "ok"}
+
+    # Reset statistics
+    _stat_ciclos = 0
+    _stat_replicaciones = 0
+    _stat_errores = 0
+    _stat_ultimo_sync = ""
 
     # ── 1. Validate config ────────────────────────────────────────────────────────────
     if not app_config or not app_config.get('master') or app_config['master'].get('login') == "":
@@ -148,20 +160,31 @@ def iniciar_motor_trading() -> dict:
     n_ops = len(tickets_maestros_abiertos)
     registrar_log(f"[SYSTEM] RPA Engine started. {n_ops} operation(s) detected on master.")
 
-    threading.Thread(target=ciclo_trading_recursivo, daemon=True).start()
+    hilo_motor = threading.Thread(target=ciclo_trading_recursivo, daemon=True)
+    hilo_motor.start()
     return {"status": "ok"}
 
 def detener_motor_trading() -> None:
     """Stops the trading loop and shuts down the MT5 connection.
 
     Sets ``bot_activo`` to 0, which causes :func:`ciclo_trading_recursivo`
-    to exit its ``while`` loop on the next iteration, then calls
-    ``mt5.shutdown()`` to release the terminal connection.
+    to exit its ``while`` loop on the next iteration, then waits for the
+    thread to finish before calling ``mt5.shutdown()``.
     """
-    global bot_activo
+    global bot_activo, cuenta_conectada, hilo_motor
+    if bot_activo == 0:
+        return
+
     bot_activo = 0
-    registrar_log("[SYSTEM] RPA Engine stopped.")
+    registrar_log("[SYSTEM] Stopping RPA Engine...")
+
+    # Wait for the thread to exit gracefully (max 3s)
+    if hilo_motor and hilo_motor.is_alive():
+        hilo_motor.join(timeout=3.0)
+    
     mt5.shutdown()
+    cuenta_conectada = 0  # Important: Reset so next start forces re-login
+    registrar_log("[SYSTEM] RPA Engine stopped.")
 
 def ciclo_trading_recursivo() -> None:
     """Event-driven trading synchronisation loop (runs in a daemon thread).
@@ -191,7 +214,7 @@ def ciclo_trading_recursivo() -> None:
     while bot_activo == 1:
         _stat_ciclos += 1
 
-        # ── 1. Asegurar sesión MAESTRA activa ─────────────────────────────────────
+        # ── 1. Ensure active MASTER session ─────────────────────────────────────
         if cuenta_conectada != master_login:
             cuenta_conectada = cambiar_cuenta(app_config['master'], cuenta_conectada)
         if cuenta_conectada == 0:
@@ -199,7 +222,7 @@ def ciclo_trading_recursivo() -> None:
             time.sleep(RECONNECT_S)
             continue
 
-        # ── 2. Leer estado MAESTRA (sin cambio de cuenta) ──────────────────────────
+        # ── 2. Read MASTER state (without account switch) ──────────────────────────
         inf = mt5.account_info()
         if inf:
             eq_master_global     = inf.equity
@@ -209,7 +232,7 @@ def ciclo_trading_recursivo() -> None:
         ops_actuales = obtener_estado_maestro()
         t_acts = [str(op['ticket']) for op in ops_actuales]
 
-        # ── 3. Detectar operaciones CERRADAS en maestra ────────────────────────────
+        # ── 3. Detect CLOSED operations on master ────────────────────────────
         for t_ant in tickets_maestros_abiertos:
             if t_ant not in t_acts:
                 deals = mt5.history_deals_get(position=int(t_ant))
@@ -230,31 +253,31 @@ def ciclo_trading_recursivo() -> None:
 
         tickets_maestros_abiertos = t_acts
 
-        # ── 4. Calcular tareas para esclavas ────────────────────────────────────────
+        # ── 4. Calculate tasks for slaves ────────────────────────────────────────
         hay_trabajo = 0
         c_ram       = 0
         tareas = {s['id']: [] for s in app_config['slaves']}
 
-        # 4a. Nuevas aperturas o modificaciones detectadas en maestra
+        # 4a. New openings or modifications detected on master
         for op in ops_actuales:
             for s in app_config['slaves']:
                 s_id = s['id']
                 vin  = obtener_vinculo(memoria_db, s_id, op['ticket'])
 
                 if not vin:
-                    # Ticket sin registro — operación genuinamente nueva (abierta MIENTRAS el bot corre)
+                    # Ticket without record — genuinely new operation (opened WHILE the bot is running)
                     tareas[s_id].append({"tipo": "NUEVA", "datos": op, "cfg": s})
                     hay_trabajo = 1
                 elif vin['slave_ticket'] == 0:
-                    # Pendiente de replicar (orden pendiente pre-existente o apertura fallida anterior)
+                    # Pending replication (pre-existing pending order or previous failed opening)
                     tareas[s_id].append({"tipo": "NUEVA", "datos": op, "cfg": s})
                     hay_trabajo = 1
                 elif vin['slave_ticket'] == -1:
-                    # Pre-existente al arranque (MERCADO). NO replicar apertura.
-                    # Solo detectar cambios en SL/TP para sincronizarlos
+                    # Pre-existing at startup (MARKET). DO NOT replicate opening.
+                    # Only detect SL/TP changes to synchronize them
                     pass
                 elif vin['slave_ticket'] > 0:
-                    # Ya replicada exitosamente — comprobar si hubo modificación SL/TP/precio
+                    # Already successfully replicated — check if SL/TP/price modification occurred
                     d_sl = abs(op['sl']    - vin['sl'])    > 0.00001
                     d_tp = abs(op['tp']    - vin['tp'])    > 0.00001
                     d_pr = abs(op['price'] - vin['price']) > 0.00001 if op['categoria'] == "PENDIENTE" else False
@@ -262,7 +285,7 @@ def ciclo_trading_recursivo() -> None:
                         tareas[s_id].append({"tipo": "MOD", "datos": op, "vinculo": vin})
                         hay_trabajo = 1
 
-        # 4b. Operaciones cerradas en maestra que aún tienen vinculo en esclavas
+        # 4b. Operations closed on master that still have a link on slaves
         for s in app_config['slaves']:
             s_id = s['id']
             if s_id in memoria_db:
@@ -277,12 +300,12 @@ def ciclo_trading_recursivo() -> None:
                             memoria_db = eliminar_vinculo(memoria_db, s_id, t_g)
                             c_ram = 1
 
-        # ── 5. Ejecutar tareas en esclavas ——— SOLO si hay trabajo ───────────────
+        # ── 5. Execute tasks on slaves ——— ONLY if there is work ───────────────
         if hay_trabajo == 1:
             for s_cfg in app_config['slaves']:
                 s_id  = s_cfg['id']
                 
-                # Ignorar nodos aislados
+                # Ignore isolated nodes
                 if s_cfg.get('aislado', False):
                     continue
 
@@ -290,11 +313,11 @@ def ciclo_trading_recursivo() -> None:
                 if not m_tar:
                     continue
 
-                # Cambiar a esta esclava
+                # Change to this slave
                 cuenta_conectada = cambiar_cuenta(s_cfg, cuenta_conectada)
 
                 if cuenta_conectada == int(s_cfg['login']):
-                    s_cfg['fallos_conexion'] = 0 # Resetear contador
+                    s_cfg['fallos_conexion'] = 0 # Reset counter
                     for t in m_tar:
                         ex = 0
                         if   t['tipo'] == "NUEVA":
@@ -314,7 +337,7 @@ def ciclo_trading_recursivo() -> None:
                     else:
                         registrar_log(f"[ERROR] Could not connect to node {s_id} (attempt {fallos}/3). Invalid credentials or unreachable server.")
 
-            # Volver a maestra INMEDIATAMENTE tras terminar con esclavas
+            # Switch back to master IMMEDIATELY after finishing with slaves
             cuenta_conectada = cambiar_cuenta(app_config['master'], cuenta_conectada)
 
             if c_ram == 1:
@@ -324,16 +347,16 @@ def ciclo_trading_recursivo() -> None:
             import datetime
             _stat_ultimo_sync = datetime.datetime.now().strftime("%H:%M:%S")
 
-            # Sin pausa — re-sondeamos maestra de inmediato para detectar más cambios en cascada
+            # No pause — we re-poll master immediately to detect more cascading changes
 
         else:
-            # Sin cambios: pausa de baja latencia antes del próximo sondeo
+            # No changes: low latency pause before next poll
             if c_ram == 1:
                 guardar_ram_a_disco(memoria_db)
             time.sleep(POLL_IDLE_S)
 
 
-# --- CLASE API PARA JAVASCRIPT ---
+# --- JAVASCRIPT API CLASS ---
 class BridgeAPI:
     """JavaScript-to-Python API bridge exposed via pywebview.
 
@@ -378,7 +401,7 @@ class BridgeAPI:
         """
         global supabase, URL_NUBE, KEY_NUBE
         try:
-            # 1. Forzamos la lectura para ver si el JSON realmente pasa a Python
+            # 1. We force reading to see if the JSON actually reaches Python
             s_dict = cargar_secrets()
             URL_NUBE = s_dict.get("SUPABASE_URL", "")
             KEY_NUBE = s_dict.get("SUPABASE_KEY", "")
@@ -386,28 +409,28 @@ class BridgeAPI:
             if URL_NUBE == "" or KEY_NUBE == "":
                 return {"status": "error", "message": "Python detected the JSON but did not find the 'SUPABASE_URL' keys. Is there an extra comma?"}
             
-            # 2. Forzamos la creación del cliente para capturar errores de URL
+            # 2. We force the creation of the client to capture URL errors
             if not supabase:
                 supabase = create_client(URL_NUBE, KEY_NUBE)
                 
-            # 3. Intentamos el Login
+            # 3. We attempt Login
             res = supabase.auth.sign_in_with_password({"email": email, "password": password})
             os.environ["PROPSYNC_USER_EMAIL"] = res.user.email
             
-            # 4. Intentamos iniciar el motor de trading
+            # 4. We attempt to start the trading engine
             resultado_motor = iniciar_motor_trading()
             
             if resultado_motor["status"] == "ok":
                 return {"status": "success", "email": res.user.email}
             elif resultado_motor["status"] == "mt5_error":
-                # Auth nube OK pero MT5 fallo — informamos al frontend
+                # Cloud auth OK but MT5 failed — inform the frontend
                 return {
                     "status": "mt5_error",
                     "email": res.user.email,
                     "message": resultado_motor["message"]
                 }
             else:
-                # config_error u otro
+                # config_error or other
                 return {
                     "status": "mt5_error",
                     "email": res.user.email,
@@ -678,13 +701,13 @@ class BridgeAPI:
             upload_user_config(email, app_config)
             registrar_log("[CLOUD] Edge configuration synced to Supabase.")
 
-# --- LANZAMIENTO ---
+# --- LAUNCH ---
 if __name__ == "__main__":
     app_config = cargar_credenciales()
-    config_nula = 0
-    if not app_config: config_nula = 1
+    config_null = 0
+    if not app_config: config_null = 1
         
-    if config_nula == 1:
+    if config_null == 1:
         app_config = {
             "master": {"login": "", "password": "", "server": "", "initial_balance": 100000}, 
             "slaves": []
@@ -692,7 +715,7 @@ if __name__ == "__main__":
         
     api = BridgeAPI()
     
-    # Crear y lanzar la ventana web local
+    # Create and launch the local web window
     window = webview.create_window(
             'PropSync Edge Engine', 
             'web_local/index.html', 
