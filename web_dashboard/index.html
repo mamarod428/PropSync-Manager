@@ -1,113 +1,805 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="PropSync Cloud — Telemetría en tiempo real y auditoría financiera para infraestructura Edge de MetaTrader 5.">
     <title>PropSync Cloud Analytics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-    
-    <div id="auth-view" class="auth-split-layout">
-        <div class="auth-brand-side">
-            <div class="brand-content">
-                <div class="logo-wrapper">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #3B82F6;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                </div>
-                <h1>PropSync Cloud</h1>
-                <p>Telemetría en tiempo real y auditoría financiera para tu infraestructura Edge de MetaTrader 5.</p>
-                
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        <span>Sincronización OT/IT sin latencia</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        <span>Analítica de riesgo centralizada</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        <span>Trazabilidad de operaciones inmutable</span>
-                    </div>
-                </div>
-            </div>
-            <div class="abstract-glow"></div>
-        </div>
 
-        <div class="auth-form-side">
-            <div class="login-container">
-                <div class="login-header-mobile">
-                    <h2 class="brand-title">Bienvenido de nuevo</h2>
-                    <p class="brand-subtitle">Inicia sesión para acceder a tu panel de control.</p>
-                </div>
-                
-                <div class="input-group">
-                    <label for="email">Correo Electrónico Corporativo</label>
-                    <input type="email" id="email" placeholder="admin@propsync.com" autocomplete="email">
-                </div>
-                
-                <div class="input-group">
-                    <label for="password">Clave de Acceso</label>
-                    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
-                </div>
-                
-                <button onclick="loginCloud()" class="btn-primary login-btn">
-                    Acceder al Dashboard
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
-                
-                <p id="auth-msg" class="auth-message"></p>
-            </div>
-        </div>
+<body>
+
+    <!-- ============================================================
+         LOADING OVERLAY
+         ============================================================ -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner-ring"></div>
+        <p class="loading-text">Syncing data…</p>
     </div>
 
-    <div id="dashboard-view" class="layout-wrapper" style="display: none;">
-        <div id="sidebar" class="sidebar">
-            <div class="brand-section">
-                <div class="brand-text">
-                    <h2>PropSync</h2>
-                    <p>Cloud Node</p>
+    <!-- ============================================================
+         LANDING PAGE (auth-view)
+         ============================================================ -->
+    <div id="auth-view" class="landing-page" style="overflow-y:auto; height:100vh;">
+
+        <!-- ── STICKY NAVBAR ── -->
+        <nav class="lp-nav">
+            <div class="lp-nav-brand">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand)">
+                    <path
+                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+                <span>PropSync</span>
+            </div>
+            <div class="lp-nav-actions">
+                <a href="https://github.com/mamarod428/PropSync-Manager" target="_blank" rel="noopener"
+                    class="lp-btn-github">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    GitHub
+                </a>
+                <div class="lp-auth-dropdown-wrapper">
+                    <button class="lp-btn-access" onclick="toggleAuthDropdown()">
+                        Access Dashboard
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </button>
+                    <div id="auth-dropdown" class="lp-auth-dropdown hidden">
+                        <div class="lp-auth-dropdown-inner">
+                            <!-- Tab switcher -->
+                            <div class="lp-auth-tabs">
+                                <button class="lp-auth-tab active" id="tab-login-btn" onclick="switchAuthTab('login')">Login</button>
+                                <button class="lp-auth-tab" id="tab-reg-btn" onclick="switchAuthTab('register')">Create Account</button>
+                            </div>
+
+                            <!-- LOGIN PANEL -->
+                            <div id="auth-panel-login">
+                                <div class="lp-input-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" placeholder="admin@propsync.com" autocomplete="email">
+                                </div>
+                                <div class="lp-input-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+                                </div>
+                                <button id="login-button" onclick="loginCloud()" class="lp-btn-login">
+                                    Login
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </button>
+                            </div>
+
+                            <!-- REGISTER PANEL -->
+                            <div id="auth-panel-register" style="display:none;">
+                                <div class="lp-input-group">
+                                    <label for="reg-email">Email Address</label>
+                                    <input type="email" id="reg-email" placeholder="you@email.com" autocomplete="email">
+                                </div>
+                                <div class="lp-input-group">
+                                    <label for="reg-password">Password</label>
+                                    <input type="password" id="reg-password" placeholder="Minimum 6 characters" autocomplete="new-password">
+                                </div>
+                                <div class="lp-input-group">
+                                    <label for="reg-confirm">Confirm Password</label>
+                                    <input type="password" id="reg-confirm" placeholder="Repeat password" autocomplete="new-password">
+                                </div>
+                                <button id="register-button" onclick="registroCloud()" class="lp-btn-login" style="background:var(--success);">
+                                    Create Free Account
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                                </button>
+                            </div>
+
+                            <p id="auth-msg" class="auth-message" style="margin-top:10px;"></p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="status-badge" style="color: #3B82F6; border-color: #3B82F6; background: rgba(59, 130, 246, 0.1);">CONEXIÓN NUBE ACTIVA</div>
+        </nav>
+
+        <!-- ── HERO SECTION ── -->
+        <section class="lp-hero">
+            <div class="lp-hero-badge lp-animate-fadein" style="animation-delay:0.1s">
+                <span class="lp-badge-dot"></span>
+                Open Source · MetaTrader 5 · Prop Firm Ready
+            </div>
+            <h1 class="lp-hero-title lp-animate-fadein" style="animation-delay:0.2s">
+                Sync. Analyze.<br><span class="lp-gradient-text">Scale your Trading.</span>
+            </h1>
+            <p class="lp-hero-subtitle lp-animate-fadein" style="animation-delay:0.3s">
+                PropSync is an MT5 account network management platform with real-time telemetry, Prop Firm tracking and zero-latency cloud-local sync.
+            </p>
+            <div class="lp-hero-ctas lp-animate-fadein" style="animation-delay:0.4s">
+                <button class="lp-btn-primary"
+                    onclick="toggleAuthDropdown(); document.querySelector('.lp-auth-dropdown-wrapper').scrollIntoView({behavior:'smooth', block:'center'})">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                        <polyline points="10 17 15 12 10 7" />
+                        <line x1="15" y1="12" x2="3" y2="12" />
+                    </svg>
+                    Start for Free
+                </button>
+                <a href="https://github.com/Manuel-Prog/PropSync-Manager" target="_blank" rel="noopener"
+                    class="lp-btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    View on GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- ── DEMO PREVIEW ── -->
+        <section class="lp-demo-section lp-animate-fadein" style="animation-delay:0.5s">
+            <div class="lp-demo-label">
+                <span class="lp-live-dot"></span>
+                Live Preview — Demo data (FTMO / Phase 1)
+            </div>
+
+            <!-- KPI mini-strip -->
+            <div class="lp-demo-kpis" id="demo-kpis">
+                <div class="lp-demo-kpi">
+                    <span class="lp-demo-kpi-label">Net Profit</span>
+                    <span class="lp-demo-kpi-val text-success" id="dk-profit">—</span>
+                </div>
+                <div class="lp-demo-kpi">
+                    <span class="lp-demo-kpi-label">Win Rate</span>
+                    <span class="lp-demo-kpi-val" id="dk-winrate">—</span>
+                </div>
+                <div class="lp-demo-kpi">
+                    <span class="lp-demo-kpi-label">Trades</span>
+                    <span class="lp-demo-kpi-val" id="dk-trades">—</span>
+                </div>
+                <div class="lp-demo-kpi">
+                    <span class="lp-demo-kpi-label">Max Drawdown</span>
+                    <span class="lp-demo-kpi-val text-warning" id="dk-dd">—</span>
+                </div>
+                <div class="lp-demo-kpi">
+                    <span class="lp-demo-kpi-label">Profit Factor</span>
+                    <span class="lp-demo-kpi-val" id="dk-pf">—</span>
+                </div>
+            </div>
+
+            <!-- Prop Firm Tracker Card -->
+            <div class="lp-demo-tracker-card">
+                <div class="lp-demo-tracker-header">
+                    <div class="lp-demo-tracker-badge">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        FTMO · Phase 1 (100K)
+                    </div>
+                    <span class="lp-demo-chip">PROP FIRM TRACKER</span>
+                </div>
+                <div class="lp-demo-tracker-rows">
+                    <div class="lp-tracker-row">
+                        <div class="lp-tracker-label">
+                            <span>🎯 Profit Target (8%)</span>
+                            <span class="lp-tracker-val text-success" id="dk-target-val">—</span>
+                        </div>
+                        <div class="lp-tracker-bar-bg">
+                            <div class="lp-tracker-bar-fill lp-bar-profit" id="dk-target-fill" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="lp-tracker-row">
+                        <div class="lp-tracker-label">
+                            <span>📅 Max Daily Drawdown (5%)</span>
+                            <span class="lp-tracker-val text-warning" id="dk-dd-daily">0.00%</span>
+                        </div>
+                        <div class="lp-tracker-bar-bg">
+                            <div class="lp-tracker-bar-fill lp-bar-daily" id="dk-dd-daily-fill" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="lp-tracker-row">
+                        <div class="lp-tracker-label">
+                            <span>⚠️ Max Total Drawdown (10%)</span>
+                            <span class="lp-tracker-val text-danger" id="dk-dd-total">0.00%</span>
+                        </div>
+                        <div class="lp-tracker-bar-bg">
+                            <div class="lp-tracker-bar-fill lp-bar-total" id="dk-dd-total-fill" style="width:0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Equity Chart -->
+            <div class="lp-demo-chart-box">
+                <div class="lp-demo-chart-header">
+                    <span>Equity Curve — Last 40 Trades</span>
+                    <span class="lp-demo-chip">DEMO</span>
+                </div>
+                <div class="lp-demo-chart-wrapper">
+                    <canvas id="demo-equity-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Trades table mini -->
+            <div class="lp-demo-trades-box">
+                <div class="lp-demo-chart-header">
+                    <span>Recent Trades</span>
+                    <span class="lp-demo-chip">10 / 104 total</span>
+                </div>
+                <table class="lp-demo-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket</th>
+                            <th>Symbol</th>
+                            <th>Dir.</th>
+                            <th>P/L ($)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="demo-trades-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ── FEATURES GRID ── -->
+        <section class="lp-features-section">
+            <div class="lp-section-header lp-animate-fadein">
+                <span class="lp-section-tag">Why PropSync?</span>
+                <h2>Everything you need to manage<br>your trading infrastructure</h2>
+            </div>
+            <div class="lp-features-grid">
+                <div class="lp-feature-card lp-animate-fadein" style="animation-delay:0.05s">
+                    <div class="lp-feature-icon" style="background:rgba(79,142,255,0.1);color:var(--brand)">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg>
+                    </div>
+                    <h3>Real-Time Telemetry</h3>
+                    <p>Monitor equity, floating P/L, drawdown, and execution stats with automatic updates from MT5.</p>
+                </div>
+                <div class="lp-feature-card lp-animate-fadein" style="animation-delay:0.1s">
+                    <div class="lp-feature-icon" style="background:rgba(245,158,11,0.1);color:var(--warning)">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        </svg>
+                    </div>
+                    <h3>Multi-Node Copytrade Network</h3>
+                    <p>Connect a master account with multiple slaves with configurable risk ratios and automatic trade replication.</p>
+                </div>
+                <div class="lp-feature-card lp-animate-fadein" style="animation-delay:0.15s">
+                    <div class="lp-feature-icon" style="background:rgba(16,185,129,0.1);color:var(--success)">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                    </div>
+                    <h3>Prop Firm Tracking</h3>
+                    <p>Manage your evaluated accounts with profit target progress bars and drawdown alerts for Phase 1, Phase 2, and Funded.</p>
+                </div>
+                <div class="lp-feature-card lp-animate-fadein" style="animation-delay:0.2s">
+                    <div class="lp-feature-icon" style="background:rgba(99,149,255,0.1);color:#a78bfa">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                    </div>
+                    <h3>Cloud & Local Dashboard</h3>
+                    <p>Access your metrics from any device via the cloud version (Netlify) or from your desktop terminal with pywebview.</p>
+                </div>
+                <div class="lp-feature-card lp-animate-fadein" style="animation-delay:0.25s">
+                    <div class="lp-feature-icon" style="background:rgba(239,68,68,0.1);color:var(--danger)">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    </div>
+                    <h3>Risk Control</h3>
+                    <p>Automatic calculation of recommended risk multiplier between accounts, with visual alerts when drawdown exceeds 85%.</p>
+                </div>
+                <div class="lp-feature-card lp-animate-fadein" style="animation-delay:0.3s">
+                    <div class="lp-feature-icon" style="background:rgba(16,185,129,0.08);color:#34d399">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <ellipse cx="12" cy="5" rx="9" ry="3" />
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                        </svg>
+                    </div>
+                    <h3>Supabase Sync</h3>
+                    <p>Trade history, configurations, and metrics synced to the cloud with your personal free Supabase account.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── HOW IT WORKS ── -->
+        <section class="lp-steps-section">
+            <div class="lp-section-header lp-animate-fadein">
+                <span class="lp-section-tag">How does it work?</span>
+                <h2>Setup and configuration<br>in under 10 minutes</h2>
+            </div>
+            <div class="lp-steps-grid">
+                <div class="lp-step lp-animate-fadein" style="animation-delay:0.05s">
+                    <div class="lp-step-num">01</div>
+                    <h4>Download from GitHub</h4>
+                    <p>Clone the repository and create a Python virtual environment. Install dependencies with
+                        <code>pip install -r requirements.txt</code>.</p>
+                </div>
+                <div class="lp-step-arrow">→</div>
+                <div class="lp-step lp-animate-fadein" style="animation-delay:0.1s">
+                    <div class="lp-step-num">02</div>
+                    <h4>Configure Your Accounts</h4>
+                    <p>Enter the MT5 credentials of your master and slave nodes from the Network Topology panel.</p>
+                </div>
+                <div class="lp-step-arrow">→</div>
+                <div class="lp-step lp-animate-fadein" style="animation-delay:0.15s">
+                    <div class="lp-step-num">03</div>
+                    <h4>Start the RPA Engine</h4>
+                    <p>Run <code>python main.py</code> to launch the local interface. The engine connects to MT5 and starts telemetry and auto-copying.</p>
+                </div>
+                <div class="lp-step-arrow">→</div>
+                <div class="lp-step lp-animate-fadein" style="animation-delay:0.2s">
+                    <div class="lp-step-num">04</div>
+                    <h4>Monitor from Anywhere</h4>
+                    <p>Access the cloud dashboard from your mobile device or browser to review real-time metrics and performance.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── BOTTOM CTA ── -->
+        <section class="lp-bottom-cta lp-animate-fadein">
+            <h2>Start syncing your<br>trading network today.</h2>
+            <p>100% open source. No subscriptions. No limits.</p>
+            <div class="lp-hero-ctas" style="margin-top:32px; justify-content:center;">
+                <button class="lp-btn-primary"
+                    onclick="toggleAuthDropdown(); window.scrollTo({top:0,behavior:'smooth'})">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                        <polyline points="10 17 15 12 10 7" />
+                        <line x1="15" y1="12" x2="3" y2="12" />
+                    </svg>
+                    Access Dashboard
+                </button>
+                <a href="https://github.com/Manuel-Prog/PropSync-Manager" target="_blank" rel="noopener"
+                    class="lp-btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    Installation via GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- ── FOOTER ── -->
+        <footer class="lp-footer">
+            <span>© 2025 PropSync · MIT License</span>
+            <span>Built with MetaTrader 5 · Python · Supabase</span>
+        </footer>
+
+    </div>
+
+
+
+    <!-- ============================================================
+         DASHBOARD VIEW
+         ============================================================ -->
+    <div id="dashboard-view" class="layout-wrapper" style="display: none;">
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="brand-section">
+                <svg class="brand-logo-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+                <div class="brand-text">
+                    <h2>PropSync</h2>
+                    <p>Cloud Analytics</p>
+                </div>
+            </div>
+            <div class="status-badge" id="cloud-status-badge"
+                style="color: var(--brand); border: 1px solid rgba(99,149,255,0.2); background: var(--brand-muted);">
+                CLOUD ACTIVE
+            </div>
+
+            <div class="nav-section-label">Navigation</div>
             <nav class="nav-menu">
-                <button class="nav-btn active" onclick="mostrarTab('tab-dash', this)">Panel Analítico</button>
-                <button class="nav-btn" onclick="mostrarTab('tab-stats', this)">Historial Backtest</button>
+                <button id="nav-tab-dash" class="nav-btn active" onclick="mostrarTab('tab-dash', this)">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    Analytics Dashboard
+                </button>
+                <button id="nav-tab-stats" class="nav-btn" onclick="mostrarTab('tab-stats', this)">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    History
+                </button>
+                <button id="nav-tab-config" class="nav-btn" onclick="mostrarTab('tab-config', this)">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                    </svg>
+                    Settings
+                </button>
             </nav>
             <div class="sidebar-footer">
-                <button onclick="logoutCloud()" class="btn-logout">Cerrar Sesión</button>
+                <button id="logout-button" onclick="logoutCloud()" class="btn-logout">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    Logout
+                </button>
             </div>
         </div>
 
+
+        <!-- Content Wrapper -->
         <div class="content-wrapper">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <button id="hamburger-toggle" class="hamburger-btn" onclick="toggleSidebar()">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </button>
+                <div class="top-bar-title" id="current-tab-title">Analytics Dashboard</div>
+                <div class="top-bar-right">
+                    <span class="top-bar-clock" id="top-bar-clock"></span>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
             <div class="content-area">
+
+                <!-- TAB: Dashboard Analytics -->
                 <div id="tab-dash" class="tab-content">
-                    <div class="kpi-grid-small">
-                        <div class="kpi-card-small"><h3>Beneficio Neto</h3><h2 id="kpi-profit" class="text-neutral">$0.00</h2></div>
-                        <div class="kpi-card-small"><h3>Win Rate</h3><h2 id="kpi-winrate" class="text-neutral">0.0%</h2></div>
-                        <div class="kpi-card-small"><h3>Total Ops</h3><h2 id="kpi-trades" class="text-neutral">0</h2></div>
+
+                    <!-- ── TREE TOPOLOGY (always top) ── -->
+                    <h2 class="section-title" style="margin-top:0; padding-top:0;">Active Node Network</h2>
+                    <div id="network-tree-container" class="network-tree-container">
+                        <!-- Generado dinámicamente desde app.js -->
                     </div>
-                    <div class="charts-grid">
-                        <div class="chart-box main-chart"><h3>Curva de Equidad Acumulada</h3><div class="canvas-wrapper"><canvas id="equityChart"></canvas></div></div>
-                        <div class="chart-box side-chart"><h3>Direccionalidad</h3><div class="canvas-wrapper"><canvas id="directionChart"></canvas></div></div>
-                        <div class="chart-box side-chart"><h3>Símbolos</h3><div class="canvas-wrapper"><canvas id="symbolChart"></canvas></div></div>
+
+                    <!-- ── PROP FIRM TRACKER (Solo en Analítica) ── -->
+                    <div id="prop-firm-tracker-section" class="hidden" style="margin-bottom: 2rem; width: 100%;">
+                        <h2 class="section-title">Seguimiento Prop Firm — Drawdown &amp; Targets</h2>
+                        <div id="prop-firm-tracker-grid" class="pft-grid"></div>
+                    </div>
+
+                    <!-- KPI Bento Grid -->
+                    <div class="kpi-grid" id="kpi-grid">
+                        <div class="kpi-card bento-span-2" id="kpi-card-profit">
+                            <div class="kpi-icon-header">
+                                <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                    <path d="M7 15h0M2 9.5h20" />
+                                </svg>
+                                <h3>Total Net Profit</h3>
+                            </div>
+                            <h2 id="kpi-profit" class="text-neutral">—</h2>
+                        </div>
+                        <div class="kpi-card" id="kpi-card-winrate">
+                            <div class="kpi-icon-header">
+                                <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                <h3>Win Rate</h3>
+                            </div>
+                            <h2 id="kpi-winrate" class="text-neutral">—</h2>
+                        </div>
+                        <div class="kpi-card" id="kpi-card-trades">
+                            <div class="kpi-icon-header">
+                                <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="20" x2="12" y2="10" />
+                                    <line x1="18" y1="20" x2="18" y2="4" />
+                                    <line x1="6" y1="20" x2="6" y2="16" />
+                                </svg>
+                                <h3>Total Trades</h3>
+                            </div>
+                            <h2 id="kpi-trades" class="text-neutral">—</h2>
+                        </div>
+                    </div>
+
+                    <!-- Metricas Profundas -->
+                    <h2 class="section-title">Deep Analytic Metrics</h2>
+                    <div class="kpi-grid-small">
+                        <div class="kpi-card-small">
+                            <div class="kpi-icon-header"><svg class="kpi-icon" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                </svg>
+                                <h3>Worst Trade</h3>
+                            </div>
+                            <h2 id="kpi-max-loss" class="text-danger">—</h2>
+                        </div>
+                        <div class="kpi-card-small">
+                            <div class="kpi-icon-header"><svg class="kpi-icon" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                </svg>
+                                <h3>Best Trade</h3>
+                            </div>
+                            <h2 id="kpi-max-win" class="text-success">—</h2>
+                        </div>
+                        <div class="kpi-card-small">
+                            <div class="kpi-icon-header"><svg class="kpi-icon" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M18 20V10M12 20V4M6 20v-6" />
+                                </svg>
+                                <h3>Max Drawdown</h3>
+                            </div>
+                            <h2 id="kpi-max-dd" class="text-warning">—</h2>
+                        </div>
+                        <div class="kpi-card-small">
+                            <div class="kpi-icon-header"><svg class="kpi-icon" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                                <h3>Win Streak</h3>
+                            </div>
+                            <h2 id="kpi-streak-w" class="text-neutral">—</h2>
+                        </div>
+                        <div class="kpi-card-small">
+                            <div class="kpi-icon-header"><svg class="kpi-icon" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="15" y1="9" x2="9" y2="15" />
+                                    <line x1="9" y1="9" x2="15" y2="15" />
+                                </svg>
+                                <h3>Lose Streak</h3>
+                            </div>
+                            <h2 id="kpi-streak-l" class="text-neutral">—</h2>
+                        </div>
+                    </div>
+
+
+                    <!-- Charts Grid: equity large + pies stacked -->
+                    <div class="charts-grid-new" id="charts-grid">
+                        <div class="chart-box chart-main-equity" id="chart-equity-box">
+                            <h3>Cumulative Equity Curve</h3>
+                            <div class="canvas-wrapper">
+                                <canvas id="equityChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="charts-pies-col">
+                            <div class="chart-box chart-pie-sm" id="chart-direction-box">
+                                <h3>Directionality</h3>
+                                <div class="canvas-wrapper canvas-wrapper-sm">
+                                    <canvas id="directionChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-box chart-pie-sm" id="chart-symbol-box">
+                                <h3>Symbol Distribution</h3>
+                                <div class="canvas-wrapper canvas-wrapper-sm">
+                                    <canvas id="symbolChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+
+
+                <!-- TAB: Trade History -->
                 <div id="tab-stats" class="tab-content" style="display: none;">
-                    <div class="table-container">
+                    <div class="table-container" id="history-table-container">
                         <table id="tabla-historial" class="data-table">
-                            <thead><tr><th>Ticket</th><th>Símbolo</th><th>Dirección</th><th>P/L Final ($)</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Ticket</th>
+                                    <th>Symbol</th>
+                                    <th>Direction</th>
+                                    <th>Final P/L ($)</th>
+                                </tr>
+                            </thead>
                             <tbody></tbody>
                         </table>
                     </div>
                 </div>
+
+                <!-- TAB: Configuración -->
+                <div id="tab-config" class="tab-content" style="display: none;">
+
+                    <div class="config-page-header">
+                        <div>
+                            <h1 class="config-page-title">Network Configuration</h1>
+                            <p class="config-page-subtitle">Manage and sync your Edge infrastructure credentials with the cloud platform.</p>
+                        </div>
+                    </div>
+
+                    <!-- Config Card: Nodo Maestro -->
+                    <div class="config-card">
+                        <div class="config-card-header">
+                            <div class="config-card-icon config-card-icon--master">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="config-card-title">Master Node (Source)</h3>
+                                <p class="config-card-desc">Main MT5 account from which trades will be replicated to the target nodes.</p>
+                            </div>
+                        </div>
+
+                        <div class="config-form-grid">
+                            <div class="config-field config-field--full">
+                                <label class="config-label">Account Type</label>
+                                <select id="cm_type" onchange="toggleCloudPropType()" class="config-select">
+                                    <option value="propio">💼 Own Capital (Live)</option>
+                                    <option value="demo">🧪 Demo / Simulation Mode</option>
+                                    <option value="fondeo">🏆 Evaluated Account (Prop Firm)</option>
+                                </select>
+                            </div>
+
+                            <div class="config-field config-field--full hidden" id="fondeo-row-cloud">
+                                <label class="config-label">Prop Firm</label>
+                                <select id="cm_prop_id" class="config-select config-select--warning"
+                                    onchange="checkCloudNewFirm()">
+                                    <option value="0">Loading firms...</option>
+                                </select>
+                            </div>
+
+                            <div class="config-field config-field--full hidden" id="phase-row-cloud">
+                                <label class="config-label">Current Evaluation Phase</label>
+                                <select id="cm_phase" class="config-select config-select--warning">
+                                    <option value="1">📋 Phase 1 — Challenge / Evaluation</option>
+                                    <option value="2">🎯 Phase 2 — Verification</option>
+                                    <option value="3">🚀 Funded Account (Funded / Live)</option>
+                                </select>
+                            </div>
+
+                            <div class="config-divider config-field--full"></div>
+
+                            <div class="config-field">
+                                <label class="config-label">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                    Login MT5
+                                </label>
+                                <input type="number" id="cm_login" placeholder="Ej: 12345678" class="config-input">
+                            </div>
+
+                            <div class="config-field">
+                                <label class="config-label">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                    MT5 Password
+                                </label>
+                                <input type="password" id="cm_pass" placeholder="••••••••••" class="config-input">
+                            </div>
+
+                            <div class="config-field">
+                                <label class="config-label">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <path
+                                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                    </svg>
+                                    Server (Broker)
+                                </label>
+                                <input type="text" id="cm_server" placeholder="Ex: ICMarkets-Demo02"
+                                    class="config-input">
+                            </div>
+
+                            <div class="config-field">
+                                <label class="config-label">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5">
+                                        <line x1="12" y1="1" x2="12" y2="23" />
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                    </svg>
+                                    Assigned Balance ($)
+                                </label>
+                                <input type="number" id="cm_bal" placeholder="Ex: 100000" class="config-input">
+                            </div>
+                        </div>
+
+                        <div class="config-card-footer">
+                            <button onclick="saveCloudConfig()" class="config-btn-primary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                    <polyline points="17 21 17 13 7 13 7 21" />
+                                    <polyline points="7 3 7 8 15 8" />
+                                </svg>
+                                Sync with Cloud
+                            </button>
+                            <p class="config-sync-hint">Changes are applied immediately on connected Edge devices.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
             </div>
         </div>
     </div>
+
+    <!-- MODAL PROP FIRM (Cloud) -->
+    <div id="cloud-prop-firm-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h3 class="modal-title">Register Global Prop Firm</h3>
+            <p class="modal-subtitle">This data will be available for all PropSync Cloud users.</p>
+            <div class="modal-field">
+                <label>Firm Name</label>
+                <input type="text" id="cpf_name" placeholder="Ex: FTMO, The Funded Trader...">
+            </div>
+            <div class="modal-field">
+                <label>Max Daily Drawdown (%)</label>
+                <input type="number" id="cpf_dd_diario" placeholder="Ex: 5.0">
+            </div>
+            <div class="modal-field">
+                <label>Max Total Drawdown (%)</label>
+                <input type="number" id="cpf_dd_total" placeholder="Ex: 10.0">
+            </div>
+            <div class="modal-field">
+                <label>Phase 1 Profit Target (%)</label>
+                <input type="number" id="cpf_target_f1" placeholder="Ex: 8.0">
+            </div>
+            <div class="modal-field">
+                <label>Phase 2 Profit Target (%)</label>
+                <input type="number" id="cpf_target_f2" placeholder="Ex: 5.0">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary"
+                    onclick="document.getElementById('cloud-prop-firm-modal').classList.add('hidden')">Cancel</button>
+                <button class="btn-primary" onclick="submitCloudNewFirm()">Register in Cloud</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
+
 </html>

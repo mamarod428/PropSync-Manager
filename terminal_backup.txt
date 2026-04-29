@@ -1,0 +1,2 @@
+﻿"                <!-- CONSOLA TERMINAL -->\n                <div id=\"tab-logs\" class=\"tab-content\" style=\"display: none;\">\n                    <!-- Status bar -->\n                    <div class=\"terminal-statusbar\">\n                        <div 
+<truncated 2251 bytes>

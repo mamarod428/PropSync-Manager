@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>modules.database API documentation</title>
+<meta name="description" content="Database management module — dual-tier persistence layer …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>modules.database</code></h1>
+</header>
+<section id="section-intro">
+<p>Database management module — dual-tier persistence layer.</p>
+<p>This module handles all data persistence for PropSync Manager using two
+complementary backends:</p>
+<ul>
+<li>
+<p><strong>Local JSON (Tier 1):</strong> Zero-latency edge storage for operational data
+(live trade map and closed trade history). All reads/writes during the
+trading loop operate on in-memory structures; disk writes happen only
+when a change is detected.</p>
+</li>
+<li>
+<p><strong>Supabase Cloud (Tier 2):</strong> Asynchronous backup and analytics. Cloud
+operations are always attempted but never block local execution.</p>
+</li>
+</ul>
+<p>Typical usage example::</p>
+<pre><code>db = cargar_mapa_a_ram()
+db = guardar_vinculo(db, 'slave_A', 98765, 12345, 1.0800, 1.0900, 1.0850, 0.5)
+guardar_ram_a_disco(db)
+</code></pre>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="modules.database.add_prop_firm"><code class="name flex">
+<span>def <span class="ident">add_prop_firm</span></span>(<span>data: dict) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_prop_firm(data: dict) -&gt; dict:
+    &#34;&#34;&#34;Inserts a new prop firm record into the Supabase ``prop_firms`` table.
+
+    Args:
+        data: A dict containing the prop firm configuration fields
+            (e.g., ``name``, ``dd_diario``, ``dd_total``, ``target_f1``).
+
+    Returns:
+        A result dict with ``status`` set to ``&#39;success&#39;`` and ``data`` on
+        success, or ``status`` set to ``&#39;error&#39;`` with a ``message`` on failure.
+    &#34;&#34;&#34;
+    if estado_conexion == 1:
+        try:
+            res = cliente_nube.table(&#34;prop_firms&#34;).insert(data).execute()
+            return {&#34;status&#34;: &#34;success&#34;, &#34;data&#34;: res.data}
+        except Exception as e:
+            return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+    return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;No cloud connection&#34;}</code></pre>
+</details>
+<div class="desc"><p>Inserts a new prop firm record into the Supabase <code>prop_firms</code> table.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>data</code></strong></dt>
+<dd>A dict containing the prop firm configuration fields
+(e.g., <code>name</code>, <code>dd_diario</code>, <code>dd_total</code>, <code>target_f1</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A result dict with <code>status</code> set to <code>'success'</code> and <code>data</code> on
+success, or <code>status</code> set to <code>'error'</code> with a <code>message</code> on failure.</p></div>
+</dd>
+<dt id="modules.database.agregar_a_historial"><code class="name flex">
+<span>def <span class="ident">agregar_a_historial</span></span>(<span>registro: dict) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def agregar_a_historial(registro: dict) -&gt; None:
+    &#34;&#34;&#34;Appends a closed trade record to the local history and syncs to Supabase.
+
+    Writes the record to ``data/historial_operaciones.json`` first (always),
+    then attempts to insert it into the Supabase ``trades`` table. Cloud
+    failure does not affect local persistence.
+
+    Args:
+        registro: A dict describing the closed trade::
+
+            {
+                &#34;ticket&#34;: str,
+                &#34;symbol&#34;: str,
+                &#34;type&#34;: &#34;BUY&#34; | &#34;SELL&#34;,
+                &#34;profit&#34;: float,
+                &#34;time_close&#34;: float  # Unix timestamp
+            }
+    &#34;&#34;&#34;
+    historial = cargar_historial()
+    historial.append(registro)
+    if not os.path.exists(DIR_DATA): os.makedirs(DIR_DATA)
+    try:
+        with open(FILE_HISTORY, &#39;w&#39;) as f: 
+            json.dump(historial, f, indent=4)
+    except Exception:
+        error_local = 1
+        
+    if estado_conexion == 1:
+        try:
+            usuario_actual = os.environ.get(&#34;PROPSYNC_USER_EMAIL&#34;, &#34;default@propsync.com&#34;)
+            data_nube = {
+                &#34;user_email&#34;: usuario_actual,
+                &#34;ticket&#34;: str(registro.get(&#34;ticket&#34;, &#34;0&#34;)),
+                &#34;symbol&#34;: registro.get(&#34;symbol&#34;, &#34;N/A&#34;),
+                &#34;type&#34;: registro.get(&#34;type&#34;, &#34;BUY&#34;),
+                &#34;profit&#34;: float(registro.get(&#34;profit&#34;, 0.0)),
+                &#34;time_close&#34;: str(registro.get(&#34;time_close&#34;, &#34;0&#34;))
+            }
+            cliente_nube.table(&#34;trades&#34;).insert(data_nube).execute()
+        except Exception:
+            error_sync = 1</code></pre>
+</details>
+<div class="desc"><p>Appends a closed trade record to the local history and syncs to Supabase.</p>
+<p>Writes the record to <code>data/historial_operaciones.json</code> first (always),
+then attempts to insert it into the Supabase <code>trades</code> table. Cloud
+failure does not affect local persistence.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>registro</code></strong></dt>
+<dd>
+<p>A dict describing the closed trade::</p>
+<p>{
+"ticket": str,
+"symbol": str,
+"type": "BUY" | "SELL",
+"profit": float,
+"time_close": float
+# Unix timestamp
+}</p>
+</dd>
+</dl></div>
+</dd>
+<dt id="modules.database.cargar_historial"><code class="name flex">
+<span>def <span class="ident">cargar_historial</span></span>(<span>) ‑> list</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cargar_historial() -&gt; list:
+    &#34;&#34;&#34;Loads the closed trade history from disk.
+
+    Returns:
+        A list of closed trade records. Each record is a dict with keys:
+        ``ticket``, ``symbol``, ``type``, ``profit``, ``time_close``.
+        Returns an empty list if the file does not exist or is corrupt.
+    &#34;&#34;&#34;
+    if not os.path.exists(FILE_HISTORY): 
+        return []
+    try:
+        with open(FILE_HISTORY, &#39;r&#39;) as f: 
+            return json.load(f)
+    except Exception: 
+        return []</code></pre>
+</details>
+<div class="desc"><p>Loads the closed trade history from disk.</p>
+<h2 id="returns">Returns</h2>
+<p>A list of closed trade records. Each record is a dict with keys:
+<code>ticket</code>, <code>symbol</code>, <code>type</code>, <code>profit</code>, <code>time_close</code>.
+Returns an empty list if the file does not exist or is corrupt.</p></div>
+</dd>
+<dt id="modules.database.cargar_mapa_a_ram"><code class="name flex">
+<span>def <span class="ident">cargar_mapa_a_ram</span></span>(<span>) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cargar_mapa_a_ram() -&gt; dict:
+    &#34;&#34;&#34;Loads the live trade map from disk into a RAM dictionary.
+
+    Reads ``data/mapa_operaciones.json``. If the file does not exist or is
+    corrupt, returns an empty dict so the trading loop can start fresh.
+
+    Returns:
+        A nested dict mapping slave IDs to their active trade links::
+
+            {
+                &#34;slave_A&#34;: {
+                    &#34;98765&#34;: {&#34;slave_ticket&#34;: 12345, &#34;sl&#34;: 1.08, &#34;tp&#34;: 1.09, ...}
+                }
+            }
+    &#34;&#34;&#34;
+    mapa = {}
+    if os.path.exists(FILE_DB): 
+        try:
+            with open(FILE_DB, &#39;r&#39;) as f: 
+                mapa = json.load(f)
+        except Exception:
+            mapa = {}
+    return mapa</code></pre>
+</details>
+<div class="desc"><p>Loads the live trade map from disk into a RAM dictionary.</p>
+<p>Reads <code>data/mapa_operaciones.json</code>. If the file does not exist or is
+corrupt, returns an empty dict so the trading loop can start fresh.</p>
+<h2 id="returns">Returns</h2>
+<p>A nested dict mapping slave IDs to their active trade links::</p>
+<pre><code>{
+    "slave_A": {
+        "98765": {"slave_ticket": 12345, "sl": 1.08, "tp": 1.09, ...}
+    }
+}
+</code></pre></div>
+</dd>
+<dt id="modules.database.download_user_config"><code class="name flex">
+<span>def <span class="ident">download_user_config</span></span>(<span>email: str) ‑> dict | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def download_user_config(email: str) -&gt; dict | None:
+    &#34;&#34;&#34;Downloads the user&#39;s application configuration from the Supabase cloud.
+
+    Args:
+        email: The authenticated user&#39;s email address.
+
+    Returns:
+        The configuration dict if found in Supabase, or ``None`` if the user
+        has no cloud backup or the cloud is unavailable.
+    &#34;&#34;&#34;
+    if estado_conexion == 1:
+        try:
+            res = cliente_nube.table(&#34;user_configs&#34;).select(&#34;config_json&#34;).eq(&#34;user_email&#34;, email).execute()
+            if res.data and len(res.data) &gt; 0:
+                return json.loads(res.data[0][&#34;config_json&#34;])
+        except Exception:
+            pass
+    return None</code></pre>
+</details>
+<div class="desc"><p>Downloads the user's application configuration from the Supabase cloud.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>email</code></strong></dt>
+<dd>The authenticated user's email address.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The configuration dict if found in Supabase, or <code>None</code> if the user
+has no cloud backup or the cloud is unavailable.</p></div>
+</dd>
+<dt id="modules.database.eliminar_vinculo"><code class="name flex">
+<span>def <span class="ident">eliminar_vinculo</span></span>(<span>db_ram: dict, id_esclava: str, ticket_maestro) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def eliminar_vinculo(db_ram: dict, id_esclava: str, ticket_maestro) -&gt; dict:
+    &#34;&#34;&#34;Removes a master-to-slave trade link from the RAM map.
+
+    Called when a master position is detected as closed. Cleans up the
+    in-memory state so the slave entry is no longer tracked.
+
+    Args:
+        db_ram: The current in-memory trade map.
+        id_esclava: The unique identifier of the slave node.
+        ticket_maestro: The ticket number of the closed master position.
+
+    Returns:
+        The updated RAM map with the link removed.
+    &#34;&#34;&#34;
+    t_str = str(ticket_maestro)
+    if id_esclava in db_ram:
+        if t_str in db_ram[id_esclava]:
+            del db_ram[id_esclava][t_str]
+    return db_ram</code></pre>
+</details>
+<div class="desc"><p>Removes a master-to-slave trade link from the RAM map.</p>
+<p>Called when a master position is detected as closed. Cleans up the
+in-memory state so the slave entry is no longer tracked.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>db_ram</code></strong></dt>
+<dd>The current in-memory trade map.</dd>
+<dt><strong><code>id_esclava</code></strong></dt>
+<dd>The unique identifier of the slave node.</dd>
+<dt><strong><code>ticket_maestro</code></strong></dt>
+<dd>The ticket number of the closed master position.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The updated RAM map with the link removed.</p></div>
+</dd>
+<dt id="modules.database.fetch_prop_firms"><code class="name flex">
+<span>def <span class="ident">fetch_prop_firms</span></span>(<span>) ‑> list</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fetch_prop_firms() -&gt; list:
+    &#34;&#34;&#34;Fetches all prop firm records from the Supabase ``prop_firms`` table.
+
+    Returns:
+        A list of prop firm dicts from Supabase, or an empty list if
+        the cloud is unavailable.
+    &#34;&#34;&#34;
+    if estado_conexion == 1:
+        try:
+            res = cliente_nube.table(&#34;prop_firms&#34;).select(&#34;*&#34;).execute()
+            return res.data
+        except Exception:
+            return []
+    return []</code></pre>
+</details>
+<div class="desc"><p>Fetches all prop firm records from the Supabase <code>prop_firms</code> table.</p>
+<h2 id="returns">Returns</h2>
+<p>A list of prop firm dicts from Supabase, or an empty list if
+the cloud is unavailable.</p></div>
+</dd>
+<dt id="modules.database.guardar_ram_a_disco"><code class="name flex">
+<span>def <span class="ident">guardar_ram_a_disco</span></span>(<span>db_ram: dict) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def guardar_ram_a_disco(db_ram: dict) -&gt; None:
+    &#34;&#34;&#34;Flushes the in-memory trade map to ``data/mapa_operaciones.json``.
+
+    Creates the ``data/`` directory if it does not exist. On write failure,
+    the error is silently ignored to prevent the trading loop from crashing.
+
+    Args:
+        db_ram: The in-memory trade map dict as managed by the trading loop.
+    &#34;&#34;&#34;
+    if not os.path.exists(DIR_DATA): os.makedirs(DIR_DATA)
+    try:
+        with open(FILE_DB, &#39;w&#39;) as f: 
+            json.dump(db_ram, f, indent=4)
+    except Exception:
+        error_guardado = 1</code></pre>
+</details>
+<div class="desc"><p>Flushes the in-memory trade map to <code>data/mapa_operaciones.json</code>.</p>
+<p>Creates the <code>data/</code> directory if it does not exist. On write failure,
+the error is silently ignored to prevent the trading loop from crashing.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>db_ram</code></strong></dt>
+<dd>The in-memory trade map dict as managed by the trading loop.</dd>
+</dl></div>
+</dd>
+<dt id="modules.database.guardar_vinculo"><code class="name flex">
+<span>def <span class="ident">guardar_vinculo</span></span>(<span>db_ram: dict,<br>id_esclava: str,<br>ticket_maestro: int,<br>ticket_esclavo: int,<br>sl: float,<br>tp: float,<br>price: float,<br>volumen: float) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def guardar_vinculo(db_ram: dict, id_esclava: str, ticket_maestro: int,
+                    ticket_esclavo: int, sl: float, tp: float,
+                    price: float, volumen: float) -&gt; dict:
+    &#34;&#34;&#34;Creates or updates a master-to-slave trade link in the RAM map.
+
+    Stores the relationship between a master account position and its
+    corresponding slave account order, including order parameters needed
+    for future modification detection.
+
+    Args:
+        db_ram: The current in-memory trade map.
+        id_esclava: The unique identifier of the slave node (e.g., &#39;slave_A&#39;).
+        ticket_maestro: The ticket number of the master position.
+        ticket_esclavo: The ticket number of the slave order (0 if rejected).
+        sl: Stop Loss level, rounded to 5 decimal places.
+        tp: Take Profit level, rounded to 5 decimal places.
+        price: Entry price or pending order price.
+        volumen: Lot size executed on the slave account.
+
+    Returns:
+        The updated RAM map with the new link recorded.
+    &#34;&#34;&#34;
+    t_str = str(ticket_maestro)
+    
+    if id_esclava not in db_ram:
+        db_ram[id_esclava] = {}
+    
+    db_ram[id_esclava][t_str] = {
+        &#34;slave_ticket&#34;: int(ticket_esclavo),
+        &#34;sl&#34;: round(float(sl), 5),
+        &#34;tp&#34;: round(float(tp), 5),
+        &#34;price&#34;: round(float(price), 5),
+        &#34;vol&#34;: float(volumen)
+    }
+    return db_ram</code></pre>
+</details>
+<div class="desc"><p>Creates or updates a master-to-slave trade link in the RAM map.</p>
+<p>Stores the relationship between a master account position and its
+corresponding slave account order, including order parameters needed
+for future modification detection.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>db_ram</code></strong></dt>
+<dd>The current in-memory trade map.</dd>
+<dt><strong><code>id_esclava</code></strong></dt>
+<dd>The unique identifier of the slave node (e.g., 'slave_A').</dd>
+<dt><strong><code>ticket_maestro</code></strong></dt>
+<dd>The ticket number of the master position.</dd>
+<dt><strong><code>ticket_esclavo</code></strong></dt>
+<dd>The ticket number of the slave order (0 if rejected).</dd>
+<dt><strong><code>sl</code></strong></dt>
+<dd>Stop Loss level, rounded to 5 decimal places.</dd>
+<dt><strong><code>tp</code></strong></dt>
+<dd>Take Profit level, rounded to 5 decimal places.</dd>
+<dt><strong><code>price</code></strong></dt>
+<dd>Entry price or pending order price.</dd>
+<dt><strong><code>volumen</code></strong></dt>
+<dd>Lot size executed on the slave account.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The updated RAM map with the new link recorded.</p></div>
+</dd>
+<dt id="modules.database.obtener_tickets_nube"><code class="name flex">
+<span>def <span class="ident">obtener_tickets_nube</span></span>(<span>user_email: str) ‑> list</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obtener_tickets_nube(user_email: str) -&gt; list:
+    &#34;&#34;&#34;Fetches the set of trade ticket IDs already stored in Supabase for a user.
+
+    Used by :func:`sincronizar_historial_con_nube` to determine which local
+    trades are missing from the cloud record.
+
+    Args:
+        user_email: The authenticated user&#39;s email address (used as the
+            row identifier in the ``trades`` table).
+
+    Returns:
+        A list of ticket ID strings. Returns an empty list if Supabase is
+        unavailable or the query fails.
+    &#34;&#34;&#34;
+    &#34;&#34;&#34;Obtiene una lista de todos los tickets ya registrados en la nube para este usuario&#34;&#34;&#34;
+    tickets = []
+    if estado_conexion == 1:
+        try:
+            # Traemos solo la columna &#39;ticket&#39; para ahorrar ancho de banda
+            res = cliente_nube.table(&#34;trades&#34;).select(&#34;ticket&#34;).eq(&#34;user_email&#34;, user_email).execute()
+            # Usamos una lista de comprension para extraer los IDs
+            tickets = [str(item[&#39;ticket&#39;]) for item in res.data]
+        except Exception:
+            error_nube = 1
+    return tickets</code></pre>
+</details>
+<div class="desc"><p>Fetches the set of trade ticket IDs already stored in Supabase for a user.</p>
+<p>Used by :func:<code><a title="modules.database.sincronizar_historial_con_nube" href="#modules.database.sincronizar_historial_con_nube">sincronizar_historial_con_nube()</a></code> to determine which local
+trades are missing from the cloud record.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>user_email</code></strong></dt>
+<dd>The authenticated user's email address (used as the
+row identifier in the <code>trades</code> table).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A list of ticket ID strings. Returns an empty list if Supabase is
+unavailable or the query fails.</p></div>
+</dd>
+<dt id="modules.database.obtener_vinculo"><code class="name flex">
+<span>def <span class="ident">obtener_vinculo</span></span>(<span>db_ram: dict, id_esclava: str, ticket_maestro) ‑> dict | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obtener_vinculo(db_ram: dict, id_esclava: str, ticket_maestro) -&gt; dict | None:
+    &#34;&#34;&#34;Retrieves the trade link for a given slave and master ticket pair.
+
+    Args:
+        db_ram: The current in-memory trade map.
+        id_esclava: The unique identifier of the slave node.
+        ticket_maestro: The ticket number of the master position to look up.
+
+    Returns:
+        A dict with keys ``slave_ticket``, ``sl``, ``tp``, ``price``, ``vol``
+        if the link exists, or ``None`` if no link is found.
+    &#34;&#34;&#34;
+    t_str = str(ticket_maestro)
+    if id_esclava in db_ram:
+        if isinstance(db_ram[id_esclava], dict):
+            return db_ram[id_esclava].get(t_str)
+    return None</code></pre>
+</details>
+<div class="desc"><p>Retrieves the trade link for a given slave and master ticket pair.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>db_ram</code></strong></dt>
+<dd>The current in-memory trade map.</dd>
+<dt><strong><code>id_esclava</code></strong></dt>
+<dd>The unique identifier of the slave node.</dd>
+<dt><strong><code>ticket_maestro</code></strong></dt>
+<dd>The ticket number of the master position to look up.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A dict with keys <code>slave_ticket</code>, <code>sl</code>, <code>tp</code>, <code>price</code>, <code>vol</code>
+if the link exists, or <code>None</code> if no link is found.</p></div>
+</dd>
+<dt id="modules.database.registrar_en_lote_nube"><code class="name flex">
+<span>def <span class="ident">registrar_en_lote_nube</span></span>(<span>lista_ops: list, email: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def registrar_en_lote_nube(lista_ops: list, email: str) -&gt; None:
+    &#34;&#34;&#34;Uploads a list of trade records to Supabase in sequence.
+
+    Individual insert failures are silently ignored so that one bad record
+    does not prevent the rest from being uploaded.
+
+    Args:
+        lista_ops: A list of trade record dicts (same format as
+            :func:`agregar_a_historial`).
+        email: The authenticated user&#39;s email to tag each record with.
+    &#34;&#34;&#34;
+    &#34;&#34;&#34;Sube una lista de operaciones a Supabase&#34;&#34;&#34;
+    for op in lista_ops:
+        try:
+            data_nube = {
+                &#34;user_email&#34;: email,
+                &#34;ticket&#34;: str(op.get(&#34;ticket&#34;, &#34;0&#34;)),
+                &#34;symbol&#34;: op.get(&#34;symbol&#34;, &#34;N/A&#34;),
+                &#34;type&#34;: op.get(&#34;type&#34;, &#34;BUY&#34;),
+                &#34;profit&#34;: float(op.get(&#34;profit&#34;, 0.0)),
+                &#34;time_close&#34;: str(op.get(&#34;time_close&#34;, &#34;0&#34;))
+            }
+            cliente_nube.table(&#34;trades&#34;).insert(data_nube).execute()
+        except Exception:
+            error_subida = 1</code></pre>
+</details>
+<div class="desc"><p>Uploads a list of trade records to Supabase in sequence.</p>
+<p>Individual insert failures are silently ignored so that one bad record
+does not prevent the rest from being uploaded.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>lista_ops</code></strong></dt>
+<dd>A list of trade record dicts (same format as
+:func:<code><a title="modules.database.agregar_a_historial" href="#modules.database.agregar_a_historial">agregar_a_historial()</a></code>).</dd>
+<dt><strong><code>email</code></strong></dt>
+<dd>The authenticated user's email to tag each record with.</dd>
+</dl></div>
+</dd>
+<dt id="modules.database.sincronizar_historial_con_nube"><code class="name flex">
+<span>def <span class="ident">sincronizar_historial_con_nube</span></span>(<span>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sincronizar_historial_con_nube() -&gt; None:
+    &#34;&#34;&#34;Uploads any locally stored trades that are missing from the Supabase cloud.
+
+    Compares the local ``historial_operaciones.json`` against the cloud
+    ``trades`` table for the current user, then bulk-uploads the difference.
+    This ensures eventual consistency between the local edge store and the
+    cloud analytics layer without uploading duplicates.
+    &#34;&#34;&#34;
+    &#34;&#34;&#34;Compara el historial local con el de la nube y sube lo que falta&#34;&#34;&#34;
+    if estado_conexion == 1:
+        user_email = os.environ.get(&#34;PROPSYNC_USER_EMAIL&#34;, &#34;default@propsync.com&#34;)
+        historial_local = cargar_historial()
+        tickets_en_nube = obtener_tickets_nube(user_email)
+        
+        # Filtramos las operaciones que NO están en la nube
+        # No usamos &#39;continue&#39; ni &#39;break&#39;, usamos lógica de filtrado
+        operaciones_pendientes = [
+            op for op in historial_local 
+            if str(op.get(&#34;ticket&#34;)) not in tickets_en_nube
+        ]
+        
+        # Si hay pendientes, las subimos una a una
+        if len(operaciones_pendientes) &gt; 0:
+            registrar_en_lote_nube(operaciones_pendientes, user_email)</code></pre>
+</details>
+<div class="desc"><p>Uploads any locally stored trades that are missing from the Supabase cloud.</p>
+<p>Compares the local <code>historial_operaciones.json</code> against the cloud
+<code>trades</code> table for the current user, then bulk-uploads the difference.
+This ensures eventual consistency between the local edge store and the
+cloud analytics layer without uploading duplicates.</p></div>
+</dd>
+<dt id="modules.database.upload_user_config"><code class="name flex">
+<span>def <span class="ident">upload_user_config</span></span>(<span>email: str, config_dict: dict) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def upload_user_config(email: str, config_dict: dict) -&gt; None:
+    &#34;&#34;&#34;Upserts the user&#39;s application configuration to the Supabase cloud.
+
+    Serialises ``config_dict`` to a JSON string and stores it in the
+    ``user_configs`` table, keyed by ``email``. This provides cloud backup
+    and enables configuration restore on a new machine.
+
+    Args:
+        email: The authenticated user&#39;s email address.
+        config_dict: The full application configuration dict (master + slaves).
+    &#34;&#34;&#34;
+    if estado_conexion == 1:
+        try:
+            cliente_nube.table(&#34;user_configs&#34;).upsert({
+                &#34;user_email&#34;: email,
+                &#34;config_json&#34;: json.dumps(config_dict)
+            }).execute()
+        except Exception:
+            pass</code></pre>
+</details>
+<div class="desc"><p>Upserts the user's application configuration to the Supabase cloud.</p>
+<p>Serialises <code>config_dict</code> to a JSON string and stores it in the
+<code>user_configs</code> table, keyed by <code>email</code>. This provides cloud backup
+and enables configuration restore on a new machine.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>email</code></strong></dt>
+<dd>The authenticated user's email address.</dd>
+<dt><strong><code>config_dict</code></strong></dt>
+<dd>The full application configuration dict (master + slaves).</dd>
+</dl></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="modules" href="index.html">modules</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="modules.database.add_prop_firm" href="#modules.database.add_prop_firm">add_prop_firm</a></code></li>
+<li><code><a title="modules.database.agregar_a_historial" href="#modules.database.agregar_a_historial">agregar_a_historial</a></code></li>
+<li><code><a title="modules.database.cargar_historial" href="#modules.database.cargar_historial">cargar_historial</a></code></li>
+<li><code><a title="modules.database.cargar_mapa_a_ram" href="#modules.database.cargar_mapa_a_ram">cargar_mapa_a_ram</a></code></li>
+<li><code><a title="modules.database.download_user_config" href="#modules.database.download_user_config">download_user_config</a></code></li>
+<li><code><a title="modules.database.eliminar_vinculo" href="#modules.database.eliminar_vinculo">eliminar_vinculo</a></code></li>
+<li><code><a title="modules.database.fetch_prop_firms" href="#modules.database.fetch_prop_firms">fetch_prop_firms</a></code></li>
+<li><code><a title="modules.database.guardar_ram_a_disco" href="#modules.database.guardar_ram_a_disco">guardar_ram_a_disco</a></code></li>
+<li><code><a title="modules.database.guardar_vinculo" href="#modules.database.guardar_vinculo">guardar_vinculo</a></code></li>
+<li><code><a title="modules.database.obtener_tickets_nube" href="#modules.database.obtener_tickets_nube">obtener_tickets_nube</a></code></li>
+<li><code><a title="modules.database.obtener_vinculo" href="#modules.database.obtener_vinculo">obtener_vinculo</a></code></li>
+<li><code><a title="modules.database.registrar_en_lote_nube" href="#modules.database.registrar_en_lote_nube">registrar_en_lote_nube</a></code></li>
+<li><code><a title="modules.database.sincronizar_historial_con_nube" href="#modules.database.sincronizar_historial_con_nube">sincronizar_historial_con_nube</a></code></li>
+<li><code><a title="modules.database.upload_user_config" href="#modules.database.upload_user_config">upload_user_config</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

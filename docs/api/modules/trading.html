@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>modules.trading API documentation</title>
+<meta name="description" content="MetaTrader 5 RPA trading engine — Operational Technology (OT) layer …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>modules.trading</code></h1>
+</header>
+<section id="section-intro">
+<p>MetaTrader 5 RPA trading engine — Operational Technology (OT) layer.</p>
+<p>This module implements the Robotic Process Automation core of PropSync Manager.
+It interacts directly with the MetaTrader 5 broker API to execute, modify, and
+close positions on slave accounts in response to events on the master account.</p>
+<p><strong>Latency target:</strong> All MT5 API calls complete within 50–200ms.</p>
+<p><strong>Account switching model:</strong> MT5 supports only one active login at a time.
+<code><a title="modules.trading.cambiar_cuenta" href="#modules.trading.cambiar_cuenta">cambiar_cuenta()</a></code> manages the login state and switches accounts as needed
+between master reads and slave writes.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="modules.trading.calcular_volumen"><code class="name flex">
+<span>def <span class="ident">calcular_volumen</span></span>(<span>symbol: str,<br>lot_maestro: float,<br>eq_maestra: float,<br>eq_esclava: float,<br>factor_riesgo: float) ‑> float</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calcular_volumen(symbol: str, lot_maestro: float, eq_maestra: float,
+                     eq_esclava: float, factor_riesgo: float) -&gt; float:
+    &#34;&#34;&#34;Calculates the proportional lot size for a slave account.
+
+    Args:
+        symbol: The trading instrument symbol (e.g., ``&#39;EURUSD&#39;``).
+        lot_maestro: The lot size of the master position.
+        eq_maestra: The current equity of the master account.
+        eq_esclava: The current equity of the slave account.
+        factor_riesgo: A user-defined multiplier.
+
+    Returns:
+        The normalised lot size as a float.
+    &#34;&#34;&#34;
+    if eq_maestra == 0:
+        return lot_maestro
+
+    ratio = eq_esclava / eq_maestra
+    lot_calculado = lot_maestro * ratio * factor_riesgo
+
+    info = mt5.symbol_info(symbol)
+    if not info:
+        return lot_maestro
+
+    step = info.volume_step
+    lot_normalizado = round(math.floor(lot_calculado / step) * step, 2)
+
+    if lot_normalizado &lt; info.volume_min:
+        lot_normalizado = info.volume_min
+    if lot_normalizado &gt; info.volume_max:
+        lot_normalizado = info.volume_max
+
+    return lot_normalizado</code></pre>
+</details>
+<div class="desc"><p>Calculates the proportional lot size for a slave account.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>symbol</code></strong></dt>
+<dd>The trading instrument symbol (e.g., <code>'EURUSD'</code>).</dd>
+<dt><strong><code>lot_maestro</code></strong></dt>
+<dd>The lot size of the master position.</dd>
+<dt><strong><code>eq_maestra</code></strong></dt>
+<dd>The current equity of the master account.</dd>
+<dt><strong><code>eq_esclava</code></strong></dt>
+<dd>The current equity of the slave account.</dd>
+<dt><strong><code>factor_riesgo</code></strong></dt>
+<dd>A user-defined multiplier.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The normalised lot size as a float.</p></div>
+</dd>
+<dt id="modules.trading.cambiar_cuenta"><code class="name flex">
+<span>def <span class="ident">cambiar_cuenta</span></span>(<span>datos_cuenta: dict, login_actual: int) ‑> int</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cambiar_cuenta(datos_cuenta: dict, login_actual: int) -&gt; int:
+    &#34;&#34;&#34;Switches the active MT5 session to the specified account.
+
+    Args:
+        datos_cuenta: Dict with ``login``, ``password``, ``server``.
+        login_actual: Currently logged-in account number (0 if none).
+
+    Returns:
+        The account number of the successfully logged-in account, or 0 on failure.
+    &#34;&#34;&#34;
+    login_deseado = int(datos_cuenta[&#39;login&#39;])
+    estado_login = 0
+
+    if login_actual == login_deseado:
+        estado_login = login_actual
+
+    if estado_login == 0:
+        inicializado = 0
+        if mt5.initialize():
+            inicializado = 1
+
+        if inicializado == 1:
+            exito = mt5.login(login=login_deseado, password=datos_cuenta[&#39;password&#39;], server=datos_cuenta[&#39;server&#39;])
+            if exito:
+                time.sleep(0.3)
+                estado_login = login_deseado
+
+    return estado_login</code></pre>
+</details>
+<div class="desc"><p>Switches the active MT5 session to the specified account.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>datos_cuenta</code></strong></dt>
+<dd>Dict with <code>login</code>, <code>password</code>, <code>server</code>.</dd>
+<dt><strong><code>login_actual</code></strong></dt>
+<dd>Currently logged-in account number (0 if none).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The account number of the successfully logged-in account, or 0 on failure.</p></div>
+</dd>
+<dt id="modules.trading.ejecutar_apertura"><code class="name flex">
+<span>def <span class="ident">ejecutar_apertura</span></span>(<span>op: dict, s_cfg: dict, eq_m: float, db_ram: dict, log_func) ‑> tuple</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ejecutar_apertura(op: dict, s_cfg: dict, eq_m: float,
+                      db_ram: dict, log_func) -&gt; tuple:
+    &#34;&#34;&#34;Replicates the opening of a master position on a slave account.
+
+    Args:
+        op: Master operation dict (symbol, ticket, type, volume, price, sl, tp, categoria).
+        s_cfg: Slave node config dict (id, login, password, server, risk_factor).
+        eq_m: Master account equity.
+        db_ram: Current in-memory trade map.
+        log_func: Logging callable.
+
+    Returns:
+        Tuple ``(db_ram, changed)`` — changed is 1 if a write occurred.
+    &#34;&#34;&#34;
+    symbol = op[&#39;symbol&#39;]
+    t_m = op[&#39;ticket&#39;]
+    id_s = s_cfg[&#39;id&#39;]
+
+    simbolo_ok = 0
+    if mt5.symbol_select(symbol, 1):
+        simbolo_ok = 1
+
+    if simbolo_ok == 0:
+        db_ram = guardar_vinculo(db_ram, id_s, t_m, 0, 0, 0, 0, 0)
+        return db_ram, 1
+
+    inf = mt5.account_info()
+    eq_s = 0.0
+    if inf:
+        eq_s = inf.equity
+
+    riesgo = s_cfg.get(&#39;risk_factor&#39;, 1.0)
+    vol = calcular_volumen(symbol, op[&#39;volume&#39;], eq_m, eq_s, riesgo)
+
+    log_func(f&#34;[ACCION] Abriendo {symbol} ({vol} lotes) en {id_s}...&#34;)
+
+    tipo = op[&#39;type&#39;]
+    precio = op[&#39;price&#39;]
+    action = mt5.TRADE_ACTION_PENDING
+
+    es_mercado = 0
+    if op[&#39;categoria&#39;] == &#34;MERCADO&#34;:
+        es_mercado = 1
+
+    if es_mercado == 1:
+        tick = mt5.symbol_info_tick(symbol)
+        if tick:
+            if tipo == 0:
+                tipo = mt5.ORDER_TYPE_BUY
+                precio = tick.ask
+            else:
+                tipo = mt5.ORDER_TYPE_SELL
+                precio = tick.bid
+            action = mt5.TRADE_ACTION_DEAL
+
+    # [CRITERIO ACADEMICO: 5i - Seguridad y proteccion]
+    req = {
+        &#34;action&#34;: action, &#34;symbol&#34;: symbol, &#34;volume&#34;: vol,
+        &#34;type&#34;: tipo, &#34;price&#34;: precio,
+        &#34;sl&#34;: op[&#39;sl&#39;], &#34;tp&#34;: op[&#39;tp&#39;],
+        &#34;deviation&#34;: 20, &#34;magic&#34;: 111,
+        &#34;comment&#34;: f&#34;Copy-{t_m}&#34;, &#34;type_time&#34;: mt5.ORDER_TIME_GTC, &#34;type_filling&#34;: mt5.ORDER_FILLING_FOK,
+    }
+
+    res = mt5.order_send(req)
+    apertura_exitosa = 0
+    if res:
+        if res.retcode == mt5.TRADE_RETCODE_DONE:
+            apertura_exitosa = 1
+
+    if apertura_exitosa == 1:
+        log_func(f&#34;[EXITO] Operacion confirmada (Ticket: {res.order}) en {id_s}.&#34;)
+        db_ram = guardar_vinculo(db_ram, id_s, t_m, res.order, op[&#39;sl&#39;], op[&#39;tp&#39;], res.price, vol)
+        return db_ram, 1
+    else:
+        if res is None:
+            err = mt5.last_error()
+            log_func(f&#34;[ERROR] Apertura rechazada en {id_s} (sin respuesta del broker, error interno: {err}).&#34;)
+        else:
+            log_func(f&#34;[ERROR] Apertura rechazada en {id_s} (MT5 retcode {res.retcode}: {res.comment}).&#34;)
+        db_ram = guardar_vinculo(db_ram, id_s, t_m, 0, op[&#39;sl&#39;], op[&#39;tp&#39;], op[&#39;price&#39;], 0)
+        return db_ram, 1</code></pre>
+</details>
+<div class="desc"><p>Replicates the opening of a master position on a slave account.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>op</code></strong></dt>
+<dd>Master operation dict (symbol, ticket, type, volume, price, sl, tp, categoria).</dd>
+<dt><strong><code>s_cfg</code></strong></dt>
+<dd>Slave node config dict (id, login, password, server, risk_factor).</dd>
+<dt><strong><code>eq_m</code></strong></dt>
+<dd>Master account equity.</dd>
+<dt><strong><code>db_ram</code></strong></dt>
+<dd>Current in-memory trade map.</dd>
+<dt><strong><code>log_func</code></strong></dt>
+<dd>Logging callable.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Tuple <code>(db_ram, changed)</code> — changed is 1 if a write occurred.</p></div>
+</dd>
+<dt id="modules.trading.ejecutar_cierre"><code class="name flex">
+<span>def <span class="ident">ejecutar_cierre</span></span>(<span>t_m: str, vinculo: dict, id_s: str, db_ram: dict, log_func) ‑> tuple</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ejecutar_cierre(t_m: str, vinculo: dict, id_s: str,
+                    db_ram: dict, log_func) -&gt; tuple:
+    &#34;&#34;&#34;Closes or removes a slave position when its master counterpart is closed.
+
+    Args:
+        t_m: Master ticket number as string (RAM map key).
+        vinculo: Trade link record for this master ticket.
+        id_s: Slave node identifier.
+        db_ram: Current in-memory trade map.
+        log_func: Logging callable.
+
+    Returns:
+        Tuple ``(db_ram, changed)`` — changed is always 1.
+    &#34;&#34;&#34;
+    t_s = int(vinculo[&#39;slave_ticket&#39;])
+
+    # If the slave ticket is non‑positive (0 means never opened, -1 is sentinel for pre‑existing master position),
+    # we should simply unlink the record without attempting any MT5 call that would raise an overflow.
+    if t_s &lt;= 0:
+        db_ram = eliminar_vinculo(db_ram, id_s, t_m)
+        log_func(f&#34;[LIMPIEZA] Ticket {t_s} no válido o preexistente, desvinculando localmente.&#34;)
+        return db_ram, 1
+
+    log_func(f&#34;[CIERRE] Solicitando cierre para ticket {t_s} en {id_s}.&#34;)
+
+    es_orden = mt5.orders_get(ticket=t_s)
+    es_pos = mt5.positions_get(ticket=t_s)
+
+    res = None
+    es_tipo_orden = 0
+    es_tipo_posicion = 0
+
+    if es_orden:
+        es_tipo_orden = 1
+    elif es_pos:
+        es_tipo_posicion = 1
+
+    if es_tipo_orden == 1:
+        res = mt5.order_send({&#34;action&#34;: mt5.TRADE_ACTION_REMOVE, &#34;order&#34;: t_s})
+    elif es_tipo_posicion == 1:
+        pos = es_pos[0]
+        tipo_c = mt5.ORDER_TYPE_SELL
+        if pos.type == mt5.ORDER_TYPE_SELL:
+            tipo_c = mt5.ORDER_TYPE_BUY
+
+        tick_info = mt5.symbol_info_tick(pos.symbol)
+        price_c = 0.0
+        if tick_info:
+            price_c = tick_info.bid
+            if tipo_c == mt5.ORDER_TYPE_BUY:
+                price_c = tick_info.ask
+
+        req = {
+            &#34;action&#34;: mt5.TRADE_ACTION_DEAL, &#34;symbol&#34;: pos.symbol, &#34;volume&#34;: pos.volume,
+            &#34;type&#34;: tipo_c, &#34;position&#34;: t_s, &#34;price&#34;: price_c, &#34;deviation&#34;: 20, &#34;magic&#34;: 111,
+            &#34;type_time&#34;: mt5.ORDER_TIME_GTC, &#34;type_filling&#34;: mt5.ORDER_FILLING_FOK
+        }
+        res = mt5.order_send(req)
+    else:
+        # [CRITERIO ACADEMICO: 5b - Gestion del dato]
+        log_func(f&#34;[LIMPIEZA] Ticket {t_s} inexistente en servidor OT. Desvinculando en IT.&#34;)
+        db_ram = eliminar_vinculo(db_ram, id_s, t_m)
+        return db_ram, 1
+
+    cierre_exitoso = 0
+    if res:
+        if res.retcode == mt5.TRADE_RETCODE_DONE:
+            cierre_exitoso = 1
+
+    if cierre_exitoso == 1:
+        log_func(f&#34;[EXITO] Operacion {t_s} cerrada en {id_s}.&#34;)
+        db_ram = eliminar_vinculo(db_ram, id_s, t_m)
+        return db_ram, 1
+    else:
+        if res is None:
+            err = mt5.last_error()
+            log_func(f&#34;[ERROR] Error al cerrar {t_s} (error interno: {err}). Desvinculando localmente.&#34;)
+        else:
+            log_func(f&#34;[ERROR] Error al cerrar {t_s} (MT5 retcode {res.retcode}: {res.comment}). Desvinculando.&#34;)
+        db_ram = eliminar_vinculo(db_ram, id_s, t_m)
+        return db_ram, 1</code></pre>
+</details>
+<div class="desc"><p>Closes or removes a slave position when its master counterpart is closed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>t_m</code></strong></dt>
+<dd>Master ticket number as string (RAM map key).</dd>
+<dt><strong><code>vinculo</code></strong></dt>
+<dd>Trade link record for this master ticket.</dd>
+<dt><strong><code>id_s</code></strong></dt>
+<dd>Slave node identifier.</dd>
+<dt><strong><code>db_ram</code></strong></dt>
+<dd>Current in-memory trade map.</dd>
+<dt><strong><code>log_func</code></strong></dt>
+<dd>Logging callable.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Tuple <code>(db_ram, changed)</code> — changed is always 1.</p></div>
+</dd>
+<dt id="modules.trading.ejecutar_modificacion"><code class="name flex">
+<span>def <span class="ident">ejecutar_modificacion</span></span>(<span>vinculo: dict, op: dict, id_s: str, db_ram: dict, log_func) ‑> tuple</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ejecutar_modificacion(vinculo: dict, op: dict, id_s: str,
+                          db_ram: dict, log_func) -&gt; tuple:
+    &#34;&#34;&#34;Replicates a SL/TP (or pending price) modification to a slave order.
+
+    Args:
+        vinculo: Current trade link record from the RAM map.
+        op: Updated master operation dict.
+        id_s: Slave node identifier.
+        db_ram: Current in-memory trade map.
+        log_func: Logging callable.
+
+    Returns:
+        Tuple ``(db_ram, changed)`` — changed is 1 if a write occurred.
+    &#34;&#34;&#34;
+    t_s = int(vinculo[&#39;slave_ticket&#39;])
+    ticket_valido = 0
+    if t_s != 0:
+        ticket_valido = 1
+
+    if ticket_valido == 1:
+        req = {&#34;symbol&#34;: op[&#39;symbol&#39;], &#34;sl&#34;: op[&#39;sl&#39;], &#34;tp&#34;: op[&#39;tp&#39;]}
+
+        es_pendiente = 0
+        if op[&#39;categoria&#39;] == &#34;PENDIENTE&#34;:
+            es_pendiente = 1
+
+        if es_pendiente == 1:
+            req[&#34;action&#34;] = mt5.TRADE_ACTION_MODIFY
+            req[&#34;order&#34;] = t_s
+            req[&#34;price&#34;] = op[&#39;price&#39;]
+            log_func(f&#34;[MODIFICACION] Actualizando precio de entrada y limites en ticket {t_s} ({id_s}).&#34;)
+        else:
+            req[&#34;action&#34;] = mt5.TRADE_ACTION_SLTP
+            req[&#34;position&#34;] = t_s
+            log_func(f&#34;[MODIFICACION] Actualizando limites SL/TP en ticket {t_s} ({id_s}).&#34;)
+
+        res = mt5.order_send(req)
+
+        mod_exitosa = 0
+        if res:
+            if res.retcode == mt5.TRADE_RETCODE_DONE:
+                mod_exitosa = 1
+            elif res.retcode == 10025:
+                mod_exitosa = 1
+
+        if mod_exitosa == 1:
+            log_func(f&#34;[EXITO] Modificacion confirmada en ticket {t_s}.&#34;)
+        else:
+            log_func(f&#34;[ADVERTENCIA] Rechazo de broker. Actualizando base de datos local para prevencion de bucles.&#34;)
+
+        p_save = op[&#39;price&#39;]
+        if es_pendiente == 0:
+            p_save = vinculo[&#39;price&#39;]
+
+        db_ram = guardar_vinculo(db_ram, id_s, op[&#39;ticket&#39;], t_s, op[&#39;sl&#39;], op[&#39;tp&#39;], p_save, vinculo[&#39;vol&#39;])
+        return db_ram, 1
+    return db_ram, 0</code></pre>
+</details>
+<div class="desc"><p>Replicates a SL/TP (or pending price) modification to a slave order.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>vinculo</code></strong></dt>
+<dd>Current trade link record from the RAM map.</dd>
+<dt><strong><code>op</code></strong></dt>
+<dd>Updated master operation dict.</dd>
+<dt><strong><code>id_s</code></strong></dt>
+<dd>Slave node identifier.</dd>
+<dt><strong><code>db_ram</code></strong></dt>
+<dd>Current in-memory trade map.</dd>
+<dt><strong><code>log_func</code></strong></dt>
+<dd>Logging callable.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Tuple <code>(db_ram, changed)</code> — changed is 1 if a write occurred.</p></div>
+</dd>
+<dt id="modules.trading.interpretar_error_mt5"><code class="name flex">
+<span>def <span class="ident">interpretar_error_mt5</span></span>(<span>) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interpretar_error_mt5() -&gt; dict:
+    &#34;&#34;&#34;Reads ``mt5.last_error()`` and returns a structured error dict.
+
+    Returns:
+        A dict with keys:
+
+        * ``codigo`` (int): raw MT5 error code.
+        * ``tipo`` (str): category — ``&#39;terminal&#39;``, ``&#39;red&#39;``, ``&#39;servidor&#39;``,
+          ``&#39;credencial&#39;``, ``&#39;cuenta&#39;``, or ``&#39;desconocido&#39;``.
+        * ``mensaje`` (str): human-readable Spanish description.
+    &#34;&#34;&#34;
+    err = mt5.last_error()
+    if not err:
+        return {&#34;codigo&#34;: -99, &#34;tipo&#34;: &#34;desconocido&#34;, &#34;mensaje&#34;: &#34;Error MT5 desconocido (sin detalles disponibles).&#34;}
+    code, desc = err[0], err[1] if len(err) &gt; 1 else &#34;&#34;
+    if code in _MT5_ERROR_MAP:
+        tipo, mensaje = _MT5_ERROR_MAP[code]
+    else:
+        desc_low = desc.lower()
+        if &#34;password&#34; in desc_low or &#34;invalid account&#34; in desc_low or &#34;authorization&#34; in desc_low:
+            tipo, mensaje = &#34;credencial&#34;, f&#34;Contraseña o número de cuenta incorrectos. (MT5: {desc})&#34;
+        elif &#34;connect&#34; in desc_low or &#34;network&#34; in desc_low:
+            tipo, mensaje = &#34;red&#34;, f&#34;Fallo de red al conectar con el servidor. (MT5: {desc})&#34;
+        elif &#34;server&#34; in desc_low:
+            tipo, mensaje = &#34;servidor&#34;, f&#34;Servidor no encontrado o inaccesible. (MT5: {desc})&#34;
+        else:
+            tipo, mensaje = &#34;desconocido&#34;, f&#34;Error MT5 {code}: {desc}&#34;
+    return {&#34;codigo&#34;: code, &#34;tipo&#34;: tipo, &#34;mensaje&#34;: mensaje}</code></pre>
+</details>
+<div class="desc"><p>Reads <code>mt5.last_error()</code> and returns a structured error dict.</p>
+<h2 id="returns">Returns</h2>
+<p>A dict with keys:</p>
+<ul>
+<li><code>codigo</code> (int): raw MT5 error code.</li>
+<li><code>tipo</code> (str): category — <code>'terminal'</code>, <code>'red'</code>, <code>'servidor'</code>,
+<code>'credencial'</code>, <code>'cuenta'</code>, or <code>'desconocido'</code>.</li>
+<li><code>mensaje</code> (str): human-readable Spanish description.</li>
+</ul></div>
+</dd>
+<dt id="modules.trading.obtener_estado_maestro"><code class="name flex">
+<span>def <span class="ident">obtener_estado_maestro</span></span>(<span>) ‑> list</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obtener_estado_maestro() -&gt; list:
+    &#34;&#34;&#34;Retrieves all currently open positions and pending orders from the master account.
+
+    Returns:
+        List of operation dicts with keys: ticket, symbol, type, volume, price, sl, tp, categoria.
+        Returns empty list if the terminal is not connected.
+    &#34;&#34;&#34;
+    lista = []
+    t_info = mt5.terminal_info()
+    terminal_ok = 0
+    if t_info:
+        if t_info.connected:
+            terminal_ok = 1
+
+    if terminal_ok == 1:
+        posiciones = mt5.positions_get()
+        hay_posiciones = 0
+        if posiciones:
+            hay_posiciones = 1
+
+        if hay_posiciones == 1:
+            for p in posiciones:
+                lista.append({&#34;ticket&#34;: p.ticket, &#34;symbol&#34;: p.symbol, &#34;type&#34;: p.type,
+                              &#34;volume&#34;: p.volume, &#34;price&#34;: p.price_open,
+                              &#34;sl&#34;: round(p.sl, 5), &#34;tp&#34;: round(p.tp, 5), &#34;categoria&#34;: &#34;MERCADO&#34;})
+
+        ordenes = mt5.orders_get()
+        hay_ordenes = 0
+        if ordenes:
+            hay_ordenes = 1
+
+        if hay_ordenes == 1:
+            for o in ordenes:
+                lista.append({&#34;ticket&#34;: o.ticket, &#34;symbol&#34;: o.symbol, &#34;type&#34;: o.type,
+                              &#34;volume&#34;: o.volume_current, &#34;price&#34;: round(o.price_open, 5),
+                              &#34;sl&#34;: round(o.sl, 5), &#34;tp&#34;: round(o.tp, 5), &#34;categoria&#34;: &#34;PENDIENTE&#34;})
+    return lista</code></pre>
+</details>
+<div class="desc"><p>Retrieves all currently open positions and pending orders from the master account.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>List</code> of <code>operation dicts with keys</code></dt>
+<dd>ticket, symbol, type, volume, price, sl, tp, categoria.</dd>
+</dl>
+<p>Returns empty list if the terminal is not connected.</p></div>
+</dd>
+<dt id="modules.trading.sincronizar_inicio"><code class="name flex">
+<span>def <span class="ident">sincronizar_inicio</span></span>(<span>cfg: dict, login_estado: int, db_ram: dict, log_func) ‑> tuple</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sincronizar_inicio(cfg: dict, login_estado: int, db_ram: dict, log_func) -&gt; tuple:
+    &#34;&#34;&#34;Initialises the RAM trade map by cross-referencing the current master state.
+
+    Called once when the trading engine starts to prevent duplicate opens on
+    first iteration.
+
+    Args:
+        cfg: Full application configuration dict (master + slaves).
+        login_estado: Current MT5 login state (0 if not connected).
+        db_ram: Existing in-memory trade map.
+        log_func: Logging callable.
+
+    Returns:
+        Tuple ``(login_estado, db_ram)`` with updated values.
+    &#34;&#34;&#34;
+    log_func(&#34;[SISTEMA] Verificando e inicializando estructura en memoria RAM.&#34;)
+    nuevo_estado = cambiar_cuenta(cfg[&#39;master&#39;], login_estado)
+
+    estado_ok = 0
+    if nuevo_estado != 0:
+        estado_ok = 1
+
+    if estado_ok == 1:
+        ops = obtener_estado_maestro()
+        for op in ops:
+            for s in cfg[&#39;slaves&#39;]:
+                vinculo_actual = obtener_vinculo(db_ram, s[&#39;id&#39;], op[&#39;ticket&#39;])
+                vinculo_nulo = 0
+                if not vinculo_actual:
+                    vinculo_nulo = 1
+                if vinculo_nulo == 1:
+                    # Pre-existing MARKET positions: mark with -1 so the loop
+                    # knows they existed before startup and must NOT be replicated.
+                    # Pre-existing PENDING orders: mark with 0 so they WILL be
+                    # replicated (user requirement).
+                    if op[&#39;categoria&#39;] == &#34;MERCADO&#34;:
+                        sentinel = -1   # &#34;already open, skip replication&#34;
+                    else:
+                        sentinel = 0    # &#34;pending order, replicate it&#34;
+                    db_ram = guardar_vinculo(db_ram, s[&#39;id&#39;], op[&#39;ticket&#39;], sentinel, op[&#39;sl&#39;], op[&#39;tp&#39;], op[&#39;price&#39;], 0)
+
+        log_func(&#34;[SISTEMA] Base de datos y mapeos sincronizados correctamente.&#34;)
+    return nuevo_estado, db_ram</code></pre>
+</details>
+<div class="desc"><p>Initialises the RAM trade map by cross-referencing the current master state.</p>
+<p>Called once when the trading engine starts to prevent duplicate opens on
+first iteration.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>cfg</code></strong></dt>
+<dd>Full application configuration dict (master + slaves).</dd>
+<dt><strong><code>login_estado</code></strong></dt>
+<dd>Current MT5 login state (0 if not connected).</dd>
+<dt><strong><code>db_ram</code></strong></dt>
+<dd>Existing in-memory trade map.</dd>
+<dt><strong><code>log_func</code></strong></dt>
+<dd>Logging callable.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Tuple <code>(login_estado, db_ram)</code> with updated values.</p></div>
+</dd>
+<dt id="modules.trading.verificar_credenciales_mt5"><code class="name flex">
+<span>def <span class="ident">verificar_credenciales_mt5</span></span>(<span>login: int, password: str, server: str) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verificar_credenciales_mt5(login: int, password: str, server: str) -&gt; dict:
+    &#34;&#34;&#34;Validates MT5 account credentials without starting the replication loop.
+
+    Args:
+        login: Numeric MT5 account number.
+        password: Account password (plaintext).
+        server: Broker server name (e.g., ``&#39;ICMarkets-Live&#39;``).
+
+    Returns:
+        A dict with keys ``valido`` (bool), ``codigo``, ``tipo``, ``mensaje``.
+    &#34;&#34;&#34;
+    if not mt5.initialize():
+        err = interpretar_error_mt5()
+        return {&#34;valido&#34;: False, &#34;codigo&#34;: err[&#34;codigo&#34;], &#34;tipo&#34;: err[&#34;tipo&#34;], &#34;mensaje&#34;: err[&#34;mensaje&#34;]}
+
+    ok = mt5.login(login=login, password=password, server=server)
+    if ok:
+        return {&#34;valido&#34;: True, &#34;codigo&#34;: 0, &#34;tipo&#34;: &#34;&#34;, &#34;mensaje&#34;: &#34;&#34;}
+    else:
+        err = interpretar_error_mt5()
+        if err[&#34;tipo&#34;] == &#34;desconocido&#34; or err[&#34;codigo&#34;] == 0:
+            info_check = mt5.account_info()
+            if info_check is None:
+                err[&#34;tipo&#34;] = &#34;credencial&#34;
+                err[&#34;mensaje&#34;] = (f&#34;Número de cuenta {login} no reconocido en el servidor &#39;{server}&#39;, &#34;
+                                  f&#34;o contraseña incorrecta.&#34;)
+        return {&#34;valido&#34;: False, &#34;codigo&#34;: err[&#34;codigo&#34;], &#34;tipo&#34;: err[&#34;tipo&#34;], &#34;mensaje&#34;: err[&#34;mensaje&#34;]}</code></pre>
+</details>
+<div class="desc"><p>Validates MT5 account credentials without starting the replication loop.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>login</code></strong></dt>
+<dd>Numeric MT5 account number.</dd>
+<dt><strong><code>password</code></strong></dt>
+<dd>Account password (plaintext).</dd>
+<dt><strong><code>server</code></strong></dt>
+<dd>Broker server name (e.g., <code>'ICMarkets-Live'</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A dict with keys <code>valido</code> (bool), <code>codigo</code>, <code>tipo</code>, <code>mensaje</code>.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="modules" href="index.html">modules</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="modules.trading.calcular_volumen" href="#modules.trading.calcular_volumen">calcular_volumen</a></code></li>
+<li><code><a title="modules.trading.cambiar_cuenta" href="#modules.trading.cambiar_cuenta">cambiar_cuenta</a></code></li>
+<li><code><a title="modules.trading.ejecutar_apertura" href="#modules.trading.ejecutar_apertura">ejecutar_apertura</a></code></li>
+<li><code><a title="modules.trading.ejecutar_cierre" href="#modules.trading.ejecutar_cierre">ejecutar_cierre</a></code></li>
+<li><code><a title="modules.trading.ejecutar_modificacion" href="#modules.trading.ejecutar_modificacion">ejecutar_modificacion</a></code></li>
+<li><code><a title="modules.trading.interpretar_error_mt5" href="#modules.trading.interpretar_error_mt5">interpretar_error_mt5</a></code></li>
+<li><code><a title="modules.trading.obtener_estado_maestro" href="#modules.trading.obtener_estado_maestro">obtener_estado_maestro</a></code></li>
+<li><code><a title="modules.trading.sincronizar_inicio" href="#modules.trading.sincronizar_inicio">sincronizar_inicio</a></code></li>
+<li><code><a title="modules.trading.verificar_credenciales_mt5" href="#modules.trading.verificar_credenciales_mt5">verificar_credenciales_mt5</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

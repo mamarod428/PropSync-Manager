@@ -1,91 +1,282 @@
-# PropSync Manager - Enterprise Edition
+# PropSync Manager
 
-## 1. Descripcion del Proyecto
-PropSync Manager es una solucion avanzada de automatizacion de procesos roboticos (RPA) diseñada para la gestion sincronizada de terminales financieras MetaTrader 5. El software captura eventos de mercado en una cuenta **Maestra** y los replica instantaneamente en multiples cuentas **Esclavas**.
+<div align="center">
 
-Este proyecto permite gestionar grandes capitales distribuidos manteniendo una gestion de riesgo proporcional y cumpliendo las reglas de preservacion de capital de las empresas de fondeo (Prop Firms).
+**Production-grade RPA engine for synchronizing MetaTrader 5 trading accounts.**
 
-## 2. Arquitectura Modular del Sistema
-El software divide su logica en componentes especializados para garantizar la escalabilidad y el orden (Grado Enterprise):
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
+[![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
+[![Demo](https://img.shields.io/badge/Demo-Netlify-00C7B7.svg)](https://propsync-manager.netlify.app)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
 
-* **Raiz (`/`):** Contiene el punto de entrada `main.py` y archivos de configuracion.
-* **Modulos (`/modules`):** Contiene la logica de trading (`trading.py`), base de datos (`database.py`) y los componentes visuales (`interfaz.py`, `tab_*.py`).
-* **Datos (`/data`):** Almacenamiento local de credenciales e historial en formato JSON.
-* **Recursos (`/assets`):** Iconos y elementos graficos del sistema.
+[**Live UI Demo**](https://propsync-manager.netlify.app) · [**Documentation**](docs/) · [**Contributing**](CONTRIBUTING.md) · [**Wiki**](wiki/)
 
-## 3. Requisitos Previos (Antes de empezar)
-1.  **Sistema Operativo:** Windows 10 o 11.
-2.  **MetaTrader 5 (MT5):** Debe estar instalado. Si no lo tiene, descarguelo gratis desde [metatrader5.com](https://www.metatrader5.com/).
-3.  **Python:** Descargue la version 3.11 o superior desde [python.org](https://www.python.org/). 
-    * **IMPORTANTE:** Durante la instalacion de Python, marque la casilla que dice **"Add Python to PATH"**.
+</div>
 
 ---
 
-## 4. Configuracion Critica de MetaTrader 5
-Para que el software pueda "hablar" con su cuenta de trading, debe activar este permiso:
-1.  Abra su terminal **MetaTrader 5**.
-2.  Vaya al menu superior: **Herramientas (Tools)** > **Opciones (Options)**.
-3.  Haga clic en la pestaña **Asesores Expertos (Expert Advisors)**.
-4.  Marque la casilla **Permitir el trading algoritmico (Allow Algo Trading)**.
-5.  Haga clic en **Aceptar**.
-6.  **Asegurese de tener la sesion iniciada en su cuenta de trading.**
+## 🎓 Evaluation Guide (For Academic Reviewers)
+
+If you are a professor or academic reviewer without prior knowledge of algorithmic trading, here is a quick summary of what this software achieves and how to evaluate it:
+
+1. **The Business Problem:** Traders managing capital for "Prop Firms" (companies that fund traders) often trade on 5-10 accounts simultaneously. Doing this manually is slow and prone to errors. If they make a mistake, they lose the funded account.
+2. **The Solution (This Software):** PropSync Manager is an RPA (Robotic Process Automation) tool. The human trades *only once* on a "Master" account. In less than 0.5 seconds, this Python engine detects the human's action and automatically copies the trade to all "Slave" accounts, calculating the exact proportional risk.
+3. **How to test it without trading knowledge:**
+   - You don't need to install trading platforms to see the interface. Click the **[Live UI Demo](https://propsync-manager.netlify.app)** link above. It demonstrates the cloud dashboard built for the firm's management.
+   - **Demo Account Access:** Log in to the web dashboard using the following credentials to view a pre-configured network of demo accounts and real trade history:
+     - **Email:** `admin@admin.com`
+     - **Password:** `pass@123`
+   - **Local Testing:** If you wish to run the desktop Python app locally, you will need the Supabase API keys to connect to the cloud backend. These keys have been provided in a **supplementary PDF attached to the project submission** (to avoid exposing secrets in version control). Copy the keys from the PDF into a `secrets.json` file as explained in the deployment instructions below.
+   - To review the academic requirements (rubrics 6a to 6k), please read the **[`preguntas.md`](preguntas.md)** file in the root directory, which contains a detailed strategic analysis of this software's impact on a company.
+   - For technical documentation, explore the **[Wiki](wiki/)** and the auto-generated **[API Docs](docs/api/)**.
 
 ---
 
-## 5. Instalacion Paso a Paso (Mediante VS Code)
+## What is PropSync Manager?
 
-Siga estos pasos exactamente para poner el programa en marcha:
+PropSync Manager is an open-source **Robotic Process Automation (RPA)** desktop application for algorithmic traders managing multiple MetaTrader 5 accounts. It captures every market event on a **Master account** and replicates it proportionally across any number of **Slave accounts** in under 500 milliseconds — without any manual intervention.
 
-### Paso 1: Descargar el Proyecto
-1.  En la pagina de este repositorio en GitHub, haga clic en el boton verde **"Code"**.
-2.  Seleccione **"Download ZIP"**.
-3.  Extraiga el contenido del archivo en una carpeta de su escritorio.
+### Why does it exist?
 
-### Paso 2: Preparar Visual Studio Code
-1.  Abra **Visual Studio Code**.
-2.  Instale la extension oficial de **Python** (busquela en el icono de cuadrados en la barra izquierda).
-3.  Vaya a **Archivo** > **Abrir carpeta...** y seleccione la carpeta donde extrajo el proyecto.
+Managing capital distributed across multiple prop-firm accounts (FTMO, We Study Forex, Axi Select, etc.) is operationally demanding:
 
-### Paso 3: Instalar librerias necesarias
-1.  Abra una terminal dentro de VS Code (Menu **Terminal** > **Nueva terminal**).
-2.  Copie, pegue y presione Enter para ejecutar este comando:
-    ```bash
-    pip install MetaTrader5 customtkinter pillow matplotlib
-    ```
+- A trader operating 5 funded accounts must manually replicate every trade, SL/TP modification, and closure × 5.
+- Human error in replication leads to divergent risk profiles across accounts.
+- Prop firm rules (max daily drawdown, profit targets) require constant per-account monitoring.
 
-### Paso 4: Ejecucion
-1.  En el listado de archivos de la izquierda, busque y haga clic en `main.py`.
-2.  Presione la tecla **F5** o haga clic en el boton de **Play** (triangulo) en la esquina superior derecha.
+PropSync Manager **eliminates this operational overhead entirely**, allowing a single operator to manage an arbitrarily large network of accounts with zero additional cognitive load.
 
 ---
 
-## 6. Guia de Puesta en Marcha (Uso del Programa)
+## Architecture Overview
 
-Una vez que la ventana de **PropSync Manager** se abra, siga este orden:
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     PropSync Manager                        │
+│                                                             │
+│  ┌──────────────┐    ┌───────────────┐    ┌─────────────┐  │
+│  │  Web UI Layer │    │  Python Engine │    │   MT5 OT   │  │
+│  │  (pywebview)  │◄──►│   (main.py)   │◄──►│    API     │  │
+│  │  HTML/CSS/JS  │    │               │    │  (broker)  │  │
+│  └──────────────┘    └───────┬───────┘    └─────────────┘  │
+│                              │                              │
+│              ┌───────────────┼───────────────┐             │
+│              ▼               ▼               ▼             │
+│       modules/config  modules/trading  modules/database    │
+│       (credentials)   (RPA engine)    (JSON + Supabase)   │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼ optional
+                     ┌─────────────────┐
+                     │  Cloud Layer    │
+                     │  (Supabase)     │
+                     │  auth + trades  │
+                     └─────────────────┘
+```
 
-1.  **Configuracion Maestra:** * Vaya a la pestaña **Configuracion de Red**.
-    * Introduzca su numero de cuenta (Login), su contraseña y el servidor de su broker.
-    * Escriba su **Balance Inicial** (el dinero que tiene la cuenta actualmente).
-    * Haga clic en **Aplicar Cambios**.
-
-2.  **Base de Datos de Firmas:** * En la subpestaña de firmas, registre los limites de su cuenta (ej: introduzca **5.0** si su limite de perdida diaria es del 5%). Esto sirve para que el programa vigile su riesgo.
-
-3.  **Registro de Cuentas Esclavas:** * Añada los datos de las cuentas donde quiere que se copien las operaciones. 
-    * Use el boton **Calcular Factor** para que el sistema asigne automaticamente el tamaño de las operaciones segun el capital de cada cuenta.
-    * Haga clic en **Registrar Nodo**.
-
-4.  **Activacion Final:** * En el panel oscuro de la izquierda, haga clic en el boton verde **Iniciar Servicio**.
-    * El programa confirmara la conexion y aparecera un mensaje: `[SISTEMA EN EJECUCION]`. A partir de este momento, todo lo que haga en la cuenta Maestra se replicara en las demas.
+**Execution model:** The trading loop runs in a dedicated daemon thread at 500ms intervals. All MT5 API calls, position validation, and slave replication happen here without blocking the UI. The pywebview bridge exposes a clean `BridgeAPI` for the JavaScript frontend to control the engine.
 
 ---
 
-## 7. Indice de Correccion para el Evaluador
-Este proyecto cumple con los siguientes criterios academicos localizables en el codigo:
+## Live Demo
 
-* **Criterio 2e (Beneficios):** Automatizacion RPA en `modules/trading.py`.
-* **Criterio 2f (IT/OT):** Integracion de API financiera en `modules/tab_dashboard.py`.
-* **Criterio 5b (Dato):** Gestion del ciclo de vida en `modules/database.py`.
-* **Criterio 5i (Seguridad):** Ofuscacion de credenciales en `modules/tab_configuracion.py`.
+> **[🌐 Open the UI Demo on Netlify →](https://propsync-manager.netlify.app)**
 
-## Licencia
-Este software se distribuye bajo la licencia Open Source **MIT**.
+The Netlify deployment shows the full dashboard interface. Full trading engine connectivity requires the local Python application running on Windows with MetaTrader 5.
+
+---
+
+## Prerequisites
+
+| Requirement | Version | Notes |
+|---|---|---|
+| **OS** | Windows 10/11 | MT5 is Windows-only |
+| **Python** | 3.11+ | [Download](https://www.python.org/) — check "Add to PATH" |
+| **MetaTrader 5** | Any recent | [Download free](https://www.metatrader5.com/) |
+| **Supabase account** | — | Optional — enables cloud sync & web dashboard |
+
+---
+
+## Deployment
+
+### Option A — Local (Recommended for full functionality)
+
+#### 1. Clone the repository
+```bash
+git clone https://github.com/mamarod428/PropSync-Manager.git
+cd PropSync-Manager
+```
+
+#### 2. Create and activate a virtual environment
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+#### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+#### 4. Configure credentials
+Create `secrets.json` in the project root (use `secrets.example.json` as template):
+```json
+{
+  "SUPABASE_URL": "https://your-project.supabase.co",
+  "SUPABASE_KEY": "your-anon-key"
+}
+```
+> **Note:** If you skip Supabase, leave both values as empty strings `""`. The app will run in local-only mode.
+
+#### 5. Configure MetaTrader 5
+1. Open **MetaTrader 5**.
+2. Go to **Tools → Options → Expert Advisors**.
+3. Enable **"Allow Algo Trading"**.
+4. Ensure you are logged in to at least one account.
+
+#### 6. Run the application
+```bash
+python main.py
+```
+
+---
+
+### Option B — DevContainer (VS Code)
+
+The repository includes a `.devcontainer` configuration for a consistent development environment.
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) VS Code extension.
+2. Open the project in VS Code.
+3. Press `F1` → **"Dev Containers: Reopen in Container"**.
+4. The container installs all Python dependencies automatically.
+
+> **Note:** MT5 API (`MetaTrader5` package) requires Windows. Use the DevContainer for development, code review, or working on the web dashboard only.
+
+---
+
+### Option C — Online Demo (Web Dashboard Only)
+
+The cloud dashboard is deployed at **[propsync-manager.netlify.app](https://propsync-manager.netlify.app)**.
+
+To deploy your own instance:
+1. Fork this repository.
+2. Connect it to [Netlify](https://netlify.com).
+3. Set **Publish directory** to `web_dashboard`.
+4. Configure your Supabase environment variables in Netlify's dashboard.
+
+---
+
+## Usage Guide
+
+### Initial Setup Workflow
+
+```
+1. Launch app → Login screen appears
+2. Enter Supabase email/password → App authenticates
+3. Go to "Network Configuration" tab
+   └─ Enter Master account: Login, Password, Server, Initial Balance
+   └─ Click "Apply Changes"
+4. Register Slave nodes
+   └─ Add each funded account (Login, Password, Server, Risk Factor)
+   └─ Click "Register Node"
+5. Click "START SERVICE" (green button, left panel)
+   └─ Confirm "[SYSTEM RUNNING]" message appears
+```
+
+### Example: Copying a trade from Master to 3 Slaves
+
+Once the service is running, open a position on your Master account in MetaTrader 5:
+
+```
+Master   → BUY 1.00 EURUSD @ 1.08520  SL: 1.08420  TP: 1.08720
+PropSync → detects new position within 500ms
+Slave A  → BUY 0.43 EURUSD @ 1.08521  (43% equity ratio, RF=1.0)
+Slave B  → BUY 0.21 EURUSD @ 1.08521  (21% equity ratio, RF=1.0)
+Slave C  → BUY 0.35 EURUSD @ 1.08522  (35% equity ratio, RF=1.0)
+```
+
+Lot sizes are calculated proportionally using the formula:
+```
+slave_lots = master_lots × (slave_equity / master_equity) × risk_factor
+```
+
+### Prop Firm Rule Monitoring
+
+In the **Prop Firm Database** section, register your account limits:
+
+| Firm | Daily DD | Total DD | Phase 1 Target | Phase 2 Target |
+|---|---|---|---|---|
+| FTMO | 5% | 10% | 10% | 5% |
+| We Study Forex | 4% | 8% | 8% | 5% |
+| Axi Select | 10% | 10% | 7% | 7% |
+
+The dashboard visualises current drawdown vs. limits in real time.
+
+---
+
+## Project Structure
+
+```
+PropSync-Manager/
+├── main.py               # Application entry point & BridgeAPI
+├── requirements.txt      # Python dependencies
+├── netlify.toml          # Netlify deployment config
+├── LICENSE               # MIT License
+├── CONTRIBUTING.md       # Contribution guide
+├── secrets.example.json  # Template for secrets.json
+│
+├── modules/
+│   ├── config.py         # Credential management (Base64 obfuscation)
+│   ├── trading.py        # MT5 RPA engine (open/modify/close)
+│   └── database.py       # JSON persistence + Supabase cloud sync
+│
+├── web_dashboard/        # Cloud web interface (Netlify demo)
+│   ├── index.html
+│   ├── app.js
+│   └── style.css
+│
+├── web_local/            # Local pywebview interface
+│   ├── index.html
+│   ├── app.js
+│   └── style.css
+│
+├── data/                 # Runtime data (gitignored)
+│   ├── credenciales.json
+│   ├── mapa_operaciones.json
+│   └── historial_operaciones.json
+│
+├── docs/                 # Auto-generated API documentation (GitHub Pages)
+│   └── api/
+│
+└── wiki/                 # Developer documentation & devlog
+    ├── Home.md
+    ├── Developer-Guide.md
+    ├── Devlog.md
+    └── Security-Guide.md
+```
+
+---
+
+## Technology Stack
+
+| Layer | Technology | Purpose |
+|---|---|---|
+| Desktop runtime | [pywebview](https://pywebview.flowrl.com/) | Chromium-based native window |
+| Trading API | [MetaTrader5](https://pypi.org/project/MetaTrader5/) | Broker OT interface |
+| Cloud backend | [Supabase](https://supabase.com/) | Auth, trade history, config sync |
+| Frontend | HTML5 / CSS3 / Vanilla JS | Dashboard UI |
+| Data persistence | JSON files | Edge computing (zero-latency reads) |
+| Documentation | pdoc3 | Auto-generated Python API docs |
+
+---
+
+## Contributing
+
+We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, coding standards, and ideas for future features.
+
+---
+
+## License
+
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.

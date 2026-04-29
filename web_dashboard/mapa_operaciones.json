@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "account": "DEMO-9982341",
+    "broker": "ICMarkets-Global",
+    "firm": "FTMO",
+    "phase": 1,
+    "initial_balance": 100000,
+    "target_profit_pct": 8.0,
+    "max_daily_dd_pct": 5.0,
+    "max_total_dd_pct": 10.0,
+    "period": "Q1 2025"
+  },
+  "nodes": [
+    { "id": "MASTER",  "login": 9982341, "server": "ICMarkets-Demo", "balance": 100000, "type": "fondeo" },
+    { "id": "Nodo_EU", "login": 4471820, "server": "Pepperstone-Demo", "balance": 50000, "type": "propio", "risk": 0.5 },
+    { "id": "Nodo_GC", "login": 8812300, "server": "FP-Markets-Live", "balance": 25000, "type": "propio", "risk": 0.25 }
+  ],
+  "kpis": {
+    "net_profit": 6243.80,
+    "win_rate": 67.3,
+    "total_trades": 104,
+    "max_drawdown_pct": 3.2,
+    "profit_factor": 1.84,
+    "avg_win": 183.40,
+    "avg_loss": -89.20,
+    "best_streak": 9,
+    "worst_streak": 3
+  },
+  "equity_curve": [
+    0, 280, 440, 210, 620, 980, 730, 1150, 1420, 1100,
+    1680, 1920, 1750, 2100, 2380, 2210, 2540, 2870, 2660, 3020,
+    2890, 3250, 3570, 3390, 3740, 4050, 3880, 4220, 4490, 4310,
+    4670, 4940, 4760, 5100, 5380, 5210, 5550, 5830, 5640, 5980,
+    6243
+  ],
+  "trades": [
+    { "ticket": 1001, "symbol": "EURUSD", "type": "BUY",  "profit":  320.40 },
+    { "ticket": 1002, "symbol": "GBPUSD", "type": "SELL", "profit": -89.20 },
+    { "ticket": 1003, "symbol": "XAUUSD", "type": "BUY",  "profit":  540.00 },
+    { "ticket": 1004, "symbol": "EURUSD", "type": "BUY",  "profit":  145.60 },
+    { "ticket": 1005, "symbol": "USDJPY", "type": "SELL", "profit": -112.30 },
+    { "ticket": 1006, "symbol": "GBPUSD", "type": "BUY",  "profit":  280.90 },
+    { "ticket": 1007, "symbol": "XAUUSD", "type": "SELL", "profit":  430.20 },
+    { "ticket": 1008, "symbol": "EURUSD", "type": "SELL", "profit": -67.50 },
+    { "ticket": 1009, "symbol": "USDCAD", "type": "BUY",  "profit":  195.40 },
+    { "ticket": 1010, "symbol": "GBPJPY", "type": "BUY",  "profit":  380.60 }
+  ],
+  "symbol_distribution": {
+    "EURUSD": 34,
+    "XAUUSD": 28,
+    "GBPUSD": 19,
+    "USDJPY": 12,
+    "USDCAD": 7
+  }
+}

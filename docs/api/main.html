@@ -1,0 +1,1435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>main API documentation</title>
+<meta name="description" content="PropSync Manager — application entry point and pywebview bridge …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>main</code></h1>
+</header>
+<section id="section-intro">
+<p>PropSync Manager — application entry point and pywebview bridge.</p>
+<p>This module serves two roles:</p>
+<ol>
+<li>
+<p><strong>Application bootstrap:</strong> Loads credentials, creates the <code><a title="main.BridgeAPI" href="#main.BridgeAPI">BridgeAPI</a></code>
+instance, and launches the pywebview window that renders the local
+web interface.</p>
+</li>
+<li>
+<p><strong>JS ←→ Python bridge:</strong> The <code><a title="main.BridgeAPI" href="#main.BridgeAPI">BridgeAPI</a></code> class exposes all Python
+capabilities (MT5 engine lifecycle, configuration persistence, telemetry)
+to the JavaScript frontend via the pywebview <code>js_api</code> mechanism.</p>
+</li>
+</ol>
+<p>Typical entry::</p>
+<pre><code>python main.py
+</code></pre>
+<p>The trading engine runs in a daemon thread (:func:<code><a title="main.ciclo_trading_recursivo" href="#main.ciclo_trading_recursivo">ciclo_trading_recursivo()</a></code>)
+and does not block the UI. All shared state is managed via module-level globals.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="main.ciclo_trading_recursivo"><code class="name flex">
+<span>def <span class="ident">ciclo_trading_recursivo</span></span>(<span>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ciclo_trading_recursivo() -&gt; None:
+    &#34;&#34;&#34;Event-driven trading synchronisation loop (runs in a daemon thread).
+
+    **Architecture:** The loop stays connected to the master account at all
+    times. Slave accounts are only accessed when a concrete change is detected
+    (new position, modification, or closure). After all slave operations are
+    completed, the loop switches back to master immediately — no time is
+    wasted cycling accounts when nothing has changed.
+
+    **Latency:** When a change is detected, replication to all slaves happens
+    in the same iteration with no artificial delay. An idle poll (no changes)
+    waits 150ms before re-checking master state.
+
+    The loop exits when :func:`detener_motor_trading` sets ``bot_activo`` to 0.
+    &#34;&#34;&#34;
+    global bot_activo, cuenta_conectada, memoria_db, tickets_maestros_abiertos, app_config
+    global eq_master_global, bal_master_global, profit_master_global
+    global _stat_ciclos, _stat_replicaciones, _stat_ultimo_sync
+
+    POLL_IDLE_S  = 0.15   # 150ms master-only poll when nothing changed
+    RECONNECT_S  = 2.0    # wait before retry on master connection loss
+    master_login = int(app_config[&#39;master&#39;][&#39;login&#39;])
+
+    registrar_log(&#34;[SISTEMA] ▶ Ciclo de replicación event-driven iniciado.&#34;)
+
+    while bot_activo == 1:
+        _stat_ciclos += 1
+
+        # ── 1. Asegurar sesión MAESTRA activa ─────────────────────────────────────
+        if cuenta_conectada != master_login:
+            cuenta_conectada = cambiar_cuenta(app_config[&#39;master&#39;], cuenta_conectada)
+        if cuenta_conectada == 0:
+            registrar_log(&#34;[WARN] Conexión maestra perdida. Reintentando en 2s...&#34;)
+            time.sleep(RECONNECT_S)
+            continue
+
+        # ── 2. Leer estado MAESTRA (sin cambio de cuenta) ──────────────────────────
+        inf = mt5.account_info()
+        if inf:
+            eq_master_global     = inf.equity
+            bal_master_global    = inf.balance
+            profit_master_global = inf.profit
+
+        ops_actuales = obtener_estado_maestro()
+        t_acts = [str(op[&#39;ticket&#39;]) for op in ops_actuales]
+
+        # ── 3. Detectar operaciones CERRADAS en maestra ────────────────────────────
+        for t_ant in tickets_maestros_abiertos:
+            if t_ant not in t_acts:
+                deals = mt5.history_deals_get(position=int(t_ant))
+                if deals and len(deals) &gt; 0:
+                    beneficio_total = sum(d.profit + d.swap + d.commission + d.fee for d in deals)
+                    simbolo  = deals[0].symbol
+                    tipo_str = &#34;SELL&#34; if deals[0].type == 1 else &#34;BUY&#34;
+                    registro = {
+                        &#34;ticket&#34;:     t_ant,
+                        &#34;symbol&#34;:     simbolo,
+                        &#34;type&#34;:       tipo_str,
+                        &#34;profit&#34;:     beneficio_total,
+                        &#34;time_close&#34;: time.time()
+                    }
+                    agregar_a_historial(registro)
+                    signo = &#34;+&#34; if beneficio_total &gt;= 0 else &#34;&#34;
+                    registrar_log(f&#34;[ACCION] OP {t_ant} ({tipo_str} {simbolo}) CERRADA. P/L: {signo}${beneficio_total:.2f}&#34;)
+
+        tickets_maestros_abiertos = t_acts
+
+        # ── 4. Calcular tareas para esclavas ────────────────────────────────────────
+        hay_trabajo = 0
+        c_ram       = 0
+        tareas = {s[&#39;id&#39;]: [] for s in app_config[&#39;slaves&#39;]}
+
+        # 4a. Nuevas aperturas o modificaciones detectadas en maestra
+        for op in ops_actuales:
+            for s in app_config[&#39;slaves&#39;]:
+                s_id = s[&#39;id&#39;]
+                vin  = obtener_vinculo(memoria_db, s_id, op[&#39;ticket&#39;])
+
+                if not vin:
+                    # Ticket sin registro — operación genuinamente nueva (abierta MIENTRAS el bot corre)
+                    tareas[s_id].append({&#34;tipo&#34;: &#34;NUEVA&#34;, &#34;datos&#34;: op, &#34;cfg&#34;: s})
+                    hay_trabajo = 1
+                elif vin[&#39;slave_ticket&#39;] == 0:
+                    # Pendiente de replicar (orden pendiente pre-existente o apertura fallida anterior)
+                    tareas[s_id].append({&#34;tipo&#34;: &#34;NUEVA&#34;, &#34;datos&#34;: op, &#34;cfg&#34;: s})
+                    hay_trabajo = 1
+                elif vin[&#39;slave_ticket&#39;] == -1:
+                    # Pre-existente al arranque (MERCADO). NO replicar apertura.
+                    # Solo detectar cambios en SL/TP para sincronizarlos
+                    pass
+                elif vin[&#39;slave_ticket&#39;] &gt; 0:
+                    # Ya replicada exitosamente — comprobar si hubo modificación SL/TP/precio
+                    d_sl = abs(op[&#39;sl&#39;]    - vin[&#39;sl&#39;])    &gt; 0.00001
+                    d_tp = abs(op[&#39;tp&#39;]    - vin[&#39;tp&#39;])    &gt; 0.00001
+                    d_pr = abs(op[&#39;price&#39;] - vin[&#39;price&#39;]) &gt; 0.00001 if op[&#39;categoria&#39;] == &#34;PENDIENTE&#34; else False
+                    if d_sl or d_tp or d_pr:
+                        tareas[s_id].append({&#34;tipo&#34;: &#34;MOD&#34;, &#34;datos&#34;: op, &#34;vinculo&#34;: vin})
+                        hay_trabajo = 1
+
+        # 4b. Operaciones cerradas en maestra que aún tienen vinculo en esclavas
+        for s in app_config[&#39;slaves&#39;]:
+            s_id = s[&#39;id&#39;]
+            if s_id in memoria_db:
+                for t_g in list(memoria_db[s_id].keys()):
+                    if t_g not in t_acts:
+                        datos   = memoria_db[s_id][t_g]
+                        t_esc   = datos.get(&#39;slave_ticket&#39;, 0)
+                        if t_esc != 0:
+                            tareas[s_id].append({&#34;tipo&#34;: &#34;CERRAR&#34;, &#34;t_maestro&#34;: t_g, &#34;vinculo&#34;: datos})
+                            hay_trabajo = 1
+                        else:
+                            memoria_db = eliminar_vinculo(memoria_db, s_id, t_g)
+                            c_ram = 1
+
+        # ── 5. Ejecutar tareas en esclavas ——— SOLO si hay trabajo ───────────────
+        if hay_trabajo == 1:
+            for s_cfg in app_config[&#39;slaves&#39;]:
+                s_id  = s_cfg[&#39;id&#39;]
+                
+                # Ignorar nodos aislados
+                if s_cfg.get(&#39;aislado&#39;, False):
+                    continue
+
+                m_tar = tareas[s_id]
+                if not m_tar:
+                    continue
+
+                # Cambiar a esta esclava
+                cuenta_conectada = cambiar_cuenta(s_cfg, cuenta_conectada)
+
+                if cuenta_conectada == int(s_cfg[&#39;login&#39;]):
+                    s_cfg[&#39;fallos_conexion&#39;] = 0 # Resetear contador
+                    for t in m_tar:
+                        ex = 0
+                        if   t[&#39;tipo&#39;] == &#34;NUEVA&#34;:
+                            memoria_db, ex = ejecutar_apertura(t[&#39;datos&#39;], s_cfg, eq_master_global, memoria_db, registrar_log)
+                        elif t[&#39;tipo&#39;] == &#34;MOD&#34;:
+                            memoria_db, ex = ejecutar_modificacion(t[&#39;vinculo&#39;], t[&#39;datos&#39;], s_id, memoria_db, registrar_log)
+                        elif t[&#39;tipo&#39;] == &#34;CERRAR&#34;:
+                            memoria_db, ex = ejecutar_cierre(t[&#39;t_maestro&#39;], t[&#39;vinculo&#39;], s_id, memoria_db, registrar_log)
+                        if ex == 1:
+                            c_ram = 1
+                else:
+                    fallos = s_cfg.get(&#39;fallos_conexion&#39;, 0) + 1
+                    s_cfg[&#39;fallos_conexion&#39;] = fallos
+                    if fallos &gt;= 3:
+                        s_cfg[&#39;aislado&#39;] = True
+                        registrar_log(f&#34;[CRITICO] Nodo {s_id} aislado de la red tras múltiples fallos. Revise las credenciales de MT5.&#34;)
+                    else:
+                        registrar_log(f&#34;[ERROR] No se pudo conectar al nodo {s_id} (intento {fallos}/3). Credenciales inválidas o servidor inaccesible.&#34;)
+
+            # Volver a maestra INMEDIATAMENTE tras terminar con esclavas
+            cuenta_conectada = cambiar_cuenta(app_config[&#39;master&#39;], cuenta_conectada)
+
+            if c_ram == 1:
+                guardar_ram_a_disco(memoria_db)
+
+            _stat_replicaciones += 1
+            import datetime
+            _stat_ultimo_sync = datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;)
+
+            # Sin pausa — re-sondeamos maestra de inmediato para detectar más cambios en cascada
+
+        else:
+            # Sin cambios: pausa de baja latencia antes del próximo sondeo
+            if c_ram == 1:
+                guardar_ram_a_disco(memoria_db)
+            time.sleep(POLL_IDLE_S)</code></pre>
+</details>
+<div class="desc"><p>Event-driven trading synchronisation loop (runs in a daemon thread).</p>
+<p><strong>Architecture:</strong> The loop stays connected to the master account at all
+times. Slave accounts are only accessed when a concrete change is detected
+(new position, modification, or closure). After all slave operations are
+completed, the loop switches back to master immediately — no time is
+wasted cycling accounts when nothing has changed.</p>
+<p><strong>Latency:</strong> When a change is detected, replication to all slaves happens
+in the same iteration with no artificial delay. An idle poll (no changes)
+waits 150ms before re-checking master state.</p>
+<p>The loop exits when :func:<code><a title="main.detener_motor_trading" href="#main.detener_motor_trading">detener_motor_trading()</a></code> sets <code>bot_activo</code> to 0.</p></div>
+</dd>
+<dt id="main.detener_motor_trading"><code class="name flex">
+<span>def <span class="ident">detener_motor_trading</span></span>(<span>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def detener_motor_trading() -&gt; None:
+    &#34;&#34;&#34;Stops the trading loop and shuts down the MT5 connection.
+
+    Sets ``bot_activo`` to 0, which causes :func:`ciclo_trading_recursivo`
+    to exit its ``while`` loop on the next iteration, then calls
+    ``mt5.shutdown()`` to release the terminal connection.
+    &#34;&#34;&#34;
+    global bot_activo
+    bot_activo = 0
+    registrar_log(&#34;[SISTEMA] Motor RPA detenido.&#34;)
+    mt5.shutdown()</code></pre>
+</details>
+<div class="desc"><p>Stops the trading loop and shuts down the MT5 connection.</p>
+<p>Sets <code>bot_activo</code> to 0, which causes :func:<code><a title="main.ciclo_trading_recursivo" href="#main.ciclo_trading_recursivo">ciclo_trading_recursivo()</a></code>
+to exit its <code>while</code> loop on the next iteration, then calls
+<code>mt5.shutdown()</code> to release the terminal connection.</p></div>
+</dd>
+<dt id="main.iniciar_motor_trading"><code class="name flex">
+<span>def <span class="ident">iniciar_motor_trading</span></span>(<span>) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def iniciar_motor_trading() -&gt; dict:
+    &#34;&#34;&#34;Initialises the MT5 connection and starts the trading loop thread.
+
+    Validates master credentials with :func:`verificar_credenciales_mt5` before
+    starting the loop, surfacing a specific error type (wrong login number,
+    wrong password, unreachable server, terminal not running).
+
+    Returns:
+        A dict with a ``status`` key:
+
+        * ``{&#39;status&#39;: &#39;ok&#39;}`` — engine started.
+        * ``{&#39;status&#39;: &#39;config_error&#39;, &#39;message&#39;: str}`` — credentials missing.
+        * ``{&#39;status&#39;: &#39;mt5_error&#39;, &#39;tipo&#39;: str, &#39;message&#39;: str}`` — MT5 failure with category.
+    &#34;&#34;&#34;
+    global bot_activo, cuenta_conectada, memoria_db, tickets_maestros_abiertos, app_config
+
+    # ── 1. Validate config ────────────────────────────────────────────────────────────
+    if not app_config or not app_config.get(&#39;master&#39;) or app_config[&#39;master&#39;].get(&#39;login&#39;) == &#34;&#34;:
+        registrar_log(&#34;[ERROR] Parámetros de cuenta Maestra ausentes en la configuración.&#34;)
+        return {&#34;status&#34;: &#34;config_error&#34;, &#34;message&#34;: &#34;Credenciales de cuenta Maestra no configuradas.&#34;}
+
+    m = app_config[&#39;master&#39;]
+
+    # ── 2. Verify credentials precisely ──────────────────────────────────────────────
+    registrar_log(f&#34;[SISTEMA] Verificando credenciales MT5 para cuenta {m[&#39;login&#39;]} en {m[&#39;server&#39;]}...&#34;)
+    resultado_ver = verificar_credenciales_mt5(
+        login=int(m[&#39;login&#39;]),
+        password=m[&#39;password&#39;],
+        server=m[&#39;server&#39;]
+    )
+
+    if not resultado_ver[&#39;valido&#39;]:
+        tipo  = resultado_ver[&#39;tipo&#39;]
+        msg   = resultado_ver[&#39;mensaje&#39;]
+        registrar_log(f&#34;[CREDENCIAL] ✗ Fallo de autenticación MT5 ({tipo}): {msg}&#34;)
+        mt5.shutdown()
+        return {&#34;status&#34;: &#34;mt5_error&#34;, &#34;tipo&#34;: tipo, &#34;message&#34;: msg}
+
+    registrar_log(f&#34;[SISTEMA] ✓ Credenciales válidas. Cuenta {m[&#39;login&#39;]} autenticada en {m[&#39;server&#39;]}.&#34;)
+
+    # ── 3. Boot the engine ─────────────────────────────────────────────────────────────
+    bot_activo = 1
+    registrar_log(&#34;[SISTEMA] Iniciando rutinas de sincronización Edge...&#34;)
+
+    registrar_log(&#34;[NUBE] Verificando integridad de datos con Supabase...&#34;)
+    from modules.database import sincronizar_historial_con_nube
+    sincronizar_historial_con_nube()
+    registrar_log(&#34;[NUBE] Sincronización completada.&#34;)
+
+    memoria_db = cargar_mapa_a_ram()
+    cuenta_conectada, memoria_db = sincronizar_inicio(app_config, cuenta_conectada, memoria_db, registrar_log)
+    guardar_ram_a_disco(memoria_db)
+
+    ops_iniciales = obtener_estado_maestro()
+    tickets_maestros_abiertos = [str(op[&#39;ticket&#39;]) for op in ops_iniciales]
+
+    n_ops = len(tickets_maestros_abiertos)
+    registrar_log(f&#34;[SISTEMA] Motor RPA iniciado. {n_ops} operación(es) dete{&#39;ctada&#39; if n_ops==1 else &#39;ctadas&#39;} en maestra.&#34;)
+
+    threading.Thread(target=ciclo_trading_recursivo, daemon=True).start()
+    return {&#34;status&#34;: &#34;ok&#34;}</code></pre>
+</details>
+<div class="desc"><p>Initialises the MT5 connection and starts the trading loop thread.</p>
+<p>Validates master credentials with :func:<code>verificar_credenciales_mt5</code> before
+starting the loop, surfacing a specific error type (wrong login number,
+wrong password, unreachable server, terminal not running).</p>
+<h2 id="returns">Returns</h2>
+<p>A dict with a <code>status</code> key:</p>
+<ul>
+<li><code>{'status': 'ok'}</code> — engine started.</li>
+<li><code>{'status': 'config_error', 'message': str}</code> — credentials missing.</li>
+<li><code>{'status': 'mt5_error', 'tipo': str, 'message': str}</code> — MT5 failure with category.</li>
+</ul></div>
+</dd>
+<dt id="main.registrar_log"><code class="name flex">
+<span>def <span class="ident">registrar_log</span></span>(<span>mensaje: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def registrar_log(mensaje: str) -&gt; None:
+    &#34;&#34;&#34;Sends a timestamped log message to both the terminal and the web UI console.
+
+    Prepends an ``HH:MM:SS`` timestamp so the terminal panel can display it.
+    Escapes single quotes to prevent JavaScript syntax errors. Silently ignores
+    failures if the pywebview window is not yet initialised.
+
+    Args:
+        mensaje: The log message string to display.
+    &#34;&#34;&#34;
+    import datetime
+    ts = datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;)
+    mensaje_ts = f&#34;[{ts}] {mensaje}&#34;
+    print(mensaje_ts)
+    global _stat_errores
+    if &#34;[ERROR]&#34; in mensaje or &#34;[CREDENCIAL]&#34; in mensaje:
+        _stat_errores += 1
+    if window:
+        msg_seguro = mensaje_ts.replace(&#34;\\&#34;, &#34;\\\\&#34;).replace(&#34;&#39;&#34;, &#34;\\&#39;&#34;)
+        try:
+            window.evaluate_js(f&#34;if(typeof window.log_sys===&#39;function&#39;) window.log_sys(&#39;{msg_seguro}&#39;);&#34;)
+        except Exception:
+            pass</code></pre>
+</details>
+<div class="desc"><p>Sends a timestamped log message to both the terminal and the web UI console.</p>
+<p>Prepends an <code>HH:MM:SS</code> timestamp so the terminal panel can display it.
+Escapes single quotes to prevent JavaScript syntax errors. Silently ignores
+failures if the pywebview window is not yet initialised.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>mensaje</code></strong></dt>
+<dd>The log message string to display.</dd>
+</dl></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="main.BridgeAPI"><code class="flex name class">
+<span>class <span class="ident">BridgeAPI</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BridgeAPI:
+    &#34;&#34;&#34;JavaScript-to-Python API bridge exposed via pywebview.
+
+    All public methods of this class are callable from the web frontend
+    using ``await window.pywebview.api.method_name(args)``. Methods run
+    synchronously in the Python main process and their return values are
+    automatically serialised to JSON for the JavaScript caller.
+
+    Attributes:
+        None (all state is managed via module-level globals).
+    &#34;&#34;&#34;
+    def obtener_claves_js(self) -&gt; dict:
+        &#34;&#34;&#34;Returns Supabase credentials to the JavaScript frontend at runtime.
+
+        Credentials are never hardcoded in JS files; they are passed through
+        this bridge method after being loaded from the gitignored ``secrets.json``.
+
+        Returns:
+            A dict with keys ``url`` and ``key`` containing the Supabase
+            project URL and anonymous API key respectively.
+        &#34;&#34;&#34;
+        return {&#34;url&#34;: URL_NUBE, &#34;key&#34;: KEY_NUBE}
+        
+    def conectar(self, email: str, password: str) -&gt; dict:
+        &#34;&#34;&#34;Authenticates the user against Supabase and starts the trading engine.
+
+        Attempts Supabase email/password authentication, stores the user email
+        in an environment variable for session-scoped cloud operations, then
+        calls :func:`iniciar_motor_trading`. Returns a structured result so
+        the frontend can handle partial failures (e.g., auth OK but MT5 down).
+
+        Args:
+            email: The user&#39;s Supabase account email address.
+            password: The user&#39;s Supabase account password.
+
+        Returns:
+            A dict with a ``status`` key:
+
+            * ``{&#39;status&#39;: &#39;success&#39;, &#39;email&#39;: str}`` — fully operational.
+            * ``{&#39;status&#39;: &#39;mt5_error&#39;, &#39;email&#39;: str, &#39;message&#39;: str}`` — auth OK, MT5 failed.
+            * ``{&#39;status&#39;: &#39;error&#39;, &#39;message&#39;: str}`` — Supabase auth failed.
+        &#34;&#34;&#34;
+        global supabase, URL_NUBE, KEY_NUBE
+        try:
+            # 1. Forzamos la lectura para ver si el JSON realmente pasa a Python
+            s_dict = cargar_secrets()
+            URL_NUBE = s_dict.get(&#34;SUPABASE_URL&#34;, &#34;&#34;)
+            KEY_NUBE = s_dict.get(&#34;SUPABASE_KEY&#34;, &#34;&#34;)
+            
+            if URL_NUBE == &#34;&#34; or KEY_NUBE == &#34;&#34;:
+                return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Python detectó el JSON pero no encontró las claves &#39;SUPABASE_URL&#39;. ¿Hay alguna coma extra?&#34;}
+            
+            # 2. Forzamos la creación del cliente para capturar errores de URL
+            if not supabase:
+                supabase = create_client(URL_NUBE, KEY_NUBE)
+                
+            # 3. Intentamos el Login
+            res = supabase.auth.sign_in_with_password({&#34;email&#34;: email, &#34;password&#34;: password})
+            os.environ[&#34;PROPSYNC_USER_EMAIL&#34;] = res.user.email
+            
+            # 4. Intentamos iniciar el motor de trading
+            resultado_motor = iniciar_motor_trading()
+            
+            if resultado_motor[&#34;status&#34;] == &#34;ok&#34;:
+                return {&#34;status&#34;: &#34;success&#34;, &#34;email&#34;: res.user.email}
+            elif resultado_motor[&#34;status&#34;] == &#34;mt5_error&#34;:
+                # Auth nube OK pero MT5 fallo — informamos al frontend
+                return {
+                    &#34;status&#34;: &#34;mt5_error&#34;,
+                    &#34;email&#34;: res.user.email,
+                    &#34;message&#34;: resultado_motor[&#34;message&#34;]
+                }
+            else:
+                # config_error u otro
+                return {
+                    &#34;status&#34;: &#34;mt5_error&#34;,
+                    &#34;email&#34;: res.user.email,
+                    &#34;message&#34;: resultado_motor.get(&#34;message&#34;, &#34;Error de configuración del motor.&#34;)
+                }
+                
+        except Exception as e:
+            return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;DEBUG ROOT: {str(e)}&#34;}
+
+    def registrar(self, email: str, password: str) -&gt; dict:
+        &#34;&#34;&#34;Registers a new user account in Supabase Auth.
+
+        Args:
+            email: The desired email address for the new account.
+            password: The desired password (Supabase enforces a minimum length).
+
+        Returns:
+            ``{&#39;status&#39;: &#39;success&#39;}`` on success, or
+            ``{&#39;status&#39;: &#39;error&#39;, &#39;message&#39;: str}`` on failure.
+        &#34;&#34;&#34;
+        global supabase, URL_NUBE, KEY_NUBE
+        try:
+            if not supabase:
+                s_dict = cargar_secrets()
+                supabase = create_client(s_dict.get(&#34;SUPABASE_URL&#34;, &#34;&#34;), s_dict.get(&#34;SUPABASE_KEY&#34;, &#34;&#34;))
+                
+            supabase.auth.sign_up({&#34;email&#34;: email, &#34;password&#34;: password})
+            return {&#34;status&#34;: &#34;success&#34;}
+        except Exception as e:
+            return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;DEBUG ROOT: {str(e)}&#34;}
+
+    def apagar_motor(self) -&gt; str:
+        &#34;&#34;&#34;Stops the trading engine from the frontend.
+
+        Returns:
+            The string ``&#39;ok&#39;`` after :func:`detener_motor_trading` completes.
+        &#34;&#34;&#34;
+        detener_motor_trading()
+        return &#34;ok&#34;
+    
+    def encender_motor(self) -&gt; dict:
+        &#34;&#34;&#34;Restarts the trading engine without requiring re-authentication.
+
+        Useful when the user stops the service temporarily and wants to
+        resume without logging out. Calls :func:`iniciar_motor_trading`
+        and passes its result dict directly to the frontend.
+
+        Returns:
+            The result dict from :func:`iniciar_motor_trading`.
+        &#34;&#34;&#34;
+        resultado = iniciar_motor_trading()
+        return resultado
+
+    def obtener_configuracion(self) -&gt; dict:
+        &#34;&#34;&#34;Returns the current application configuration to the frontend.
+
+        Returns:
+            The ``app_config`` dict (master + slaves), or a default empty
+            structure if no configuration has been loaded.
+        &#34;&#34;&#34;
+        global app_config
+        if not app_config:
+            return {&#34;master&#34;: {}, &#34;slaves&#34;: []}
+        return app_config
+    
+    def obtener_telemetria(self) -&gt; dict:
+        &#34;&#34;&#34;Returns live telemetry data for the dashboard.
+
+        Combines the closed trade history from disk with the current
+        floating P&amp;L metrics captured from the last trading loop iteration.
+
+        Returns:
+            A dict with keys:
+
+            * ``historial``: list of closed trade records.
+            * ``flotante``: dict with ``equity``, ``balance``, ``profit``
+              floats from the master account.
+        &#34;&#34;&#34;
+        try:
+            historial = cargar_historial()
+            return {
+                &#34;historial&#34;: historial,
+                &#34;flotante&#34;: {
+                    &#34;equity&#34;: eq_master_global,
+                    &#34;balance&#34;: bal_master_global,
+                    &#34;profit&#34;: profit_master_global
+                }
+            }
+        except Exception as e:
+            return {&#34;historial&#34;: [], &#34;flotante&#34;: {&#34;equity&#34;: 0, &#34;balance&#34;: 0, &#34;profit&#34;: 0}}
+
+    def guardar_maestra(self, datos_master: dict) -&gt; str:
+        &#34;&#34;&#34;Saves the master account configuration and syncs it to the cloud.
+
+        Updates the in-memory ``app_config`` with the new master parameters,
+        persists to disk via :func:`guardar_credenciales`, and triggers a
+        cloud config upload via :meth:`db_push_user_config`.
+
+        Args:
+            datos_master: A dict with master account fields
+                (``login``, ``password``, ``server``, ``initial_balance``).
+
+        Returns:
+            The string ``&#39;ok&#39;`` on success.
+        &#34;&#34;&#34;
+        global app_config
+        app_config[&#39;master&#39;] = datos_master
+        guardar_credenciales(app_config)
+        self.db_push_user_config()
+        registrar_log(&#34;[INFO] Configuracion Maestra principal actualizada y enviada a la nube.&#34;)
+        return &#34;ok&#34;
+
+    def guardar_esclava(self, datos_slave: dict) -&gt; str:
+        &#34;&#34;&#34;Adds or updates a slave node in the configuration.
+
+        If a slave with the same ``id`` already exists, it is replaced.
+        Otherwise, the new slave is appended to the list. Persists to disk
+        and syncs to the cloud.
+
+        Args:
+            datos_slave: A dict with slave node fields
+                (``id``, ``login``, ``password``, ``server``, ``risk_factor``,
+                ``initial_balance``).
+
+        Returns:
+            The string ``&#39;ok&#39;`` on success.
+        &#34;&#34;&#34;
+        global app_config
+        ind_actualizar = -1
+        for i in range(len(app_config[&#39;slaves&#39;])):
+            if app_config[&#39;slaves&#39;][i][&#39;id&#39;] == datos_slave[&#39;id&#39;]:
+                ind_actualizar = i
+                
+        if ind_actualizar != -1:
+            app_config[&#39;slaves&#39;][ind_actualizar] = datos_slave
+            registrar_log(f&#34;[INFO] Nodo esclavo &#39;{datos_slave[&#39;id&#39;]}&#39; actualizado.&#34;)
+        else:
+            app_config[&#39;slaves&#39;].append(datos_slave)
+            registrar_log(f&#34;[INFO] Nodo esclavo &#39;{datos_slave[&#39;id&#39;]}&#39; acoplado a la red.&#34;)
+            
+        guardar_credenciales(app_config)
+        self.db_push_user_config()
+        return &#34;ok&#34;
+
+    def eliminar_esclava(self, id_borrar: str) -&gt; str:
+        &#34;&#34;&#34;Removes a slave node from the configuration.
+
+        Filters the slave list to exclude the node with the given ID and
+        persists the updated configuration to disk.
+
+        Args:
+            id_borrar: The unique identifier of the slave node to remove.
+
+        Returns:
+            The string ``&#39;ok&#39;`` on success.
+        &#34;&#34;&#34;
+        global app_config
+        n_lista = []
+        for s in app_config[&#39;slaves&#39;]:
+            if s[&#39;id&#39;] != id_borrar: n_lista.append(s)
+        app_config[&#39;slaves&#39;] = n_lista
+        guardar_credenciales(app_config)
+        registrar_log(f&#34;[INFO] Nodo &#39;{id_borrar}&#39; eliminado de la red.&#34;)
+        return &#34;ok&#34;
+
+    def db_get_prop_firms(self) -&gt; list:
+        &#34;&#34;&#34;Fetches all prop firm records from Supabase via the database module.
+
+        Returns:
+            A list of prop firm dicts, or an empty list if unavailable.
+        &#34;&#34;&#34;
+        from modules.database import fetch_prop_firms
+        return fetch_prop_firms()
+
+    def db_add_prop_firm(self, firm_data: dict) -&gt; dict:
+        &#34;&#34;&#34;Inserts a new prop firm record into Supabase.
+
+        Args:
+            firm_data: The prop firm configuration dict.
+
+        Returns:
+            A result dict with ``status`` and optional ``data`` or ``message``.
+        &#34;&#34;&#34;
+        from modules.database import add_prop_firm
+        return add_prop_firm(firm_data)
+
+    def verificar_cuenta_mt5(self, login: int, password: str, server: str) -&gt; dict:
+        &#34;&#34;&#34;Validates MT5 credentials on-demand from the configuration panel.
+
+        Calls :func:`verificar_credenciales_mt5` and returns the structured
+        result so the frontend can display a precise, actionable error message
+        (e.g., &#39;wrong password&#39; vs &#39;server not found&#39; vs &#39;terminal not running&#39;).
+
+        Args:
+            login: Numeric MT5 account number.
+            password: Plaintext account password.
+            server: Broker server name.
+
+        Returns:
+            ``{&#39;valido&#39;: True}`` on success, or
+            ``{&#39;valido&#39;: False, &#39;tipo&#39;: str, &#39;mensaje&#39;: str}`` on failure.
+        &#34;&#34;&#34;
+        resultado = verificar_credenciales_mt5(
+            login=int(login), password=password, server=server
+        )
+        if resultado[&#39;valido&#39;]:
+            registrar_log(f&#34;[SISTEMA] ✓ Verificación manual: cuenta {login} válida en {server}.&#34;)
+        else:
+            registrar_log(f&#34;[CREDENCIAL] ✗ Verificación manual fallida ({resultado[&#39;tipo&#39;]}): {resultado[&#39;mensaje&#39;]}&#34;)
+        return resultado
+
+    def obtener_estado_motor(self) -&gt; dict:
+        &#34;&#34;&#34;Returns live engine statistics for the terminal status bar.
+
+        Returns:
+            A dict with keys ``activo`` (bool), ``ciclos`` (int),
+            ``replicaciones`` (int), ``errores`` (int), ``ultimo_sync`` (str).
+        &#34;&#34;&#34;
+        return {
+            &#34;activo&#34;:        bot_activo == 1,
+            &#34;ciclos&#34;:        _stat_ciclos,
+            &#34;replicaciones&#34;: _stat_replicaciones,
+            &#34;errores&#34;:       _stat_errores,
+            &#34;ultimo_sync&#34;:   _stat_ultimo_sync
+        }
+
+    def guardar_logs_en_archivo(self, texto_logs: str) -&gt; dict:
+        &#34;&#34;&#34;Opens a save file dialog and writes the provided log text to disk.
+
+        Used as a fallback for the JavaScript &#39;Exportar&#39; button to ensure
+        reliable file saving across all pywebview platforms.
+
+        Args:
+            texto_logs: The full block of log text to be saved.
+
+        Returns:
+            A result dict with a ``status`` key (&#39;success&#39; or &#39;error&#39;).
+        &#34;&#34;&#34;
+        try:
+            # pywebview has a built-in file dialog
+            file_path = window.create_file_dialog(
+                webview.SAVE_DIALOG, 
+                directory=os.path.expanduser(&#34;~&#34;), 
+                save_filename=&#39;PropSync_Terminal_Logs.txt&#39;
+            )
+            if file_path:
+                # If the list of paths is returned, take the first one
+                target = file_path[0] if isinstance(file_path, (list, tuple)) else file_path
+                with open(target, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
+                    f.write(texto_logs)
+                registrar_log(f&#34;[SISTEMA] Logs exportados correctamente a: {target}&#34;)
+                return {&#34;status&#34;: &#34;success&#34;}
+            return {&#34;status&#34;: &#34;cancelled&#34;}
+        except Exception as e:
+            return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def db_push_user_config(self) -&gt; None:
+        &#34;&#34;&#34;Uploads the current ``app_config`` to Supabase for the authenticated user.
+
+        Uses the ``PROPSYNC_USER_EMAIL`` environment variable set during
+        :meth:`conectar` to identify the target cloud record. Silently skips
+        if no user is currently authenticated.
+        &#34;&#34;&#34;
+        from modules.database import upload_user_config
+        import os
+        email = os.environ.get(&#34;PROPSYNC_USER_EMAIL&#34;, &#34;&#34;)
+        if email != &#34;&#34;:
+            upload_user_config(email, app_config)
+            registrar_log(&#34;[NUBE] Configuración Edge sincronizada hacia Supabase.&#34;)</code></pre>
+</details>
+<div class="desc"><p>JavaScript-to-Python API bridge exposed via pywebview.</p>
+<p>All public methods of this class are callable from the web frontend
+using <code>await window.pywebview.api.method_name(args)</code>. Methods run
+synchronously in the Python main process and their return values are
+automatically serialised to JSON for the JavaScript caller.</p>
+<h2 id="attributes">Attributes</h2>
+<p>None (all state is managed via module-level globals).</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="main.BridgeAPI.apagar_motor"><code class="name flex">
+<span>def <span class="ident">apagar_motor</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def apagar_motor(self) -&gt; str:
+    &#34;&#34;&#34;Stops the trading engine from the frontend.
+
+    Returns:
+        The string ``&#39;ok&#39;`` after :func:`detener_motor_trading` completes.
+    &#34;&#34;&#34;
+    detener_motor_trading()
+    return &#34;ok&#34;</code></pre>
+</details>
+<div class="desc"><p>Stops the trading engine from the frontend.</p>
+<h2 id="returns">Returns</h2>
+<p>The string <code>'ok'</code> after :func:<code><a title="main.detener_motor_trading" href="#main.detener_motor_trading">detener_motor_trading()</a></code> completes.</p></div>
+</dd>
+<dt id="main.BridgeAPI.conectar"><code class="name flex">
+<span>def <span class="ident">conectar</span></span>(<span>self, email: str, password: str) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def conectar(self, email: str, password: str) -&gt; dict:
+    &#34;&#34;&#34;Authenticates the user against Supabase and starts the trading engine.
+
+    Attempts Supabase email/password authentication, stores the user email
+    in an environment variable for session-scoped cloud operations, then
+    calls :func:`iniciar_motor_trading`. Returns a structured result so
+    the frontend can handle partial failures (e.g., auth OK but MT5 down).
+
+    Args:
+        email: The user&#39;s Supabase account email address.
+        password: The user&#39;s Supabase account password.
+
+    Returns:
+        A dict with a ``status`` key:
+
+        * ``{&#39;status&#39;: &#39;success&#39;, &#39;email&#39;: str}`` — fully operational.
+        * ``{&#39;status&#39;: &#39;mt5_error&#39;, &#39;email&#39;: str, &#39;message&#39;: str}`` — auth OK, MT5 failed.
+        * ``{&#39;status&#39;: &#39;error&#39;, &#39;message&#39;: str}`` — Supabase auth failed.
+    &#34;&#34;&#34;
+    global supabase, URL_NUBE, KEY_NUBE
+    try:
+        # 1. Forzamos la lectura para ver si el JSON realmente pasa a Python
+        s_dict = cargar_secrets()
+        URL_NUBE = s_dict.get(&#34;SUPABASE_URL&#34;, &#34;&#34;)
+        KEY_NUBE = s_dict.get(&#34;SUPABASE_KEY&#34;, &#34;&#34;)
+        
+        if URL_NUBE == &#34;&#34; or KEY_NUBE == &#34;&#34;:
+            return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Python detectó el JSON pero no encontró las claves &#39;SUPABASE_URL&#39;. ¿Hay alguna coma extra?&#34;}
+        
+        # 2. Forzamos la creación del cliente para capturar errores de URL
+        if not supabase:
+            supabase = create_client(URL_NUBE, KEY_NUBE)
+            
+        # 3. Intentamos el Login
+        res = supabase.auth.sign_in_with_password({&#34;email&#34;: email, &#34;password&#34;: password})
+        os.environ[&#34;PROPSYNC_USER_EMAIL&#34;] = res.user.email
+        
+        # 4. Intentamos iniciar el motor de trading
+        resultado_motor = iniciar_motor_trading()
+        
+        if resultado_motor[&#34;status&#34;] == &#34;ok&#34;:
+            return {&#34;status&#34;: &#34;success&#34;, &#34;email&#34;: res.user.email}
+        elif resultado_motor[&#34;status&#34;] == &#34;mt5_error&#34;:
+            # Auth nube OK pero MT5 fallo — informamos al frontend
+            return {
+                &#34;status&#34;: &#34;mt5_error&#34;,
+                &#34;email&#34;: res.user.email,
+                &#34;message&#34;: resultado_motor[&#34;message&#34;]
+            }
+        else:
+            # config_error u otro
+            return {
+                &#34;status&#34;: &#34;mt5_error&#34;,
+                &#34;email&#34;: res.user.email,
+                &#34;message&#34;: resultado_motor.get(&#34;message&#34;, &#34;Error de configuración del motor.&#34;)
+            }
+            
+    except Exception as e:
+        return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;DEBUG ROOT: {str(e)}&#34;}</code></pre>
+</details>
+<div class="desc"><p>Authenticates the user against Supabase and starts the trading engine.</p>
+<p>Attempts Supabase email/password authentication, stores the user email
+in an environment variable for session-scoped cloud operations, then
+calls :func:<code><a title="main.iniciar_motor_trading" href="#main.iniciar_motor_trading">iniciar_motor_trading()</a></code>. Returns a structured result so
+the frontend can handle partial failures (e.g., auth OK but MT5 down).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>email</code></strong></dt>
+<dd>The user's Supabase account email address.</dd>
+<dt><strong><code>password</code></strong></dt>
+<dd>The user's Supabase account password.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A dict with a <code>status</code> key:</p>
+<ul>
+<li><code>{'status': 'success', 'email': str}</code> — fully operational.</li>
+<li><code>{'status': 'mt5_error', 'email': str, 'message': str}</code> — auth OK, MT5 failed.</li>
+<li><code>{'status': 'error', 'message': str}</code> — Supabase auth failed.</li>
+</ul></div>
+</dd>
+<dt id="main.BridgeAPI.db_add_prop_firm"><code class="name flex">
+<span>def <span class="ident">db_add_prop_firm</span></span>(<span>self, firm_data: dict) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def db_add_prop_firm(self, firm_data: dict) -&gt; dict:
+    &#34;&#34;&#34;Inserts a new prop firm record into Supabase.
+
+    Args:
+        firm_data: The prop firm configuration dict.
+
+    Returns:
+        A result dict with ``status`` and optional ``data`` or ``message``.
+    &#34;&#34;&#34;
+    from modules.database import add_prop_firm
+    return add_prop_firm(firm_data)</code></pre>
+</details>
+<div class="desc"><p>Inserts a new prop firm record into Supabase.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>firm_data</code></strong></dt>
+<dd>The prop firm configuration dict.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A result dict with <code>status</code> and optional <code>data</code> or <code>message</code>.</p></div>
+</dd>
+<dt id="main.BridgeAPI.db_get_prop_firms"><code class="name flex">
+<span>def <span class="ident">db_get_prop_firms</span></span>(<span>self) ‑> list</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def db_get_prop_firms(self) -&gt; list:
+    &#34;&#34;&#34;Fetches all prop firm records from Supabase via the database module.
+
+    Returns:
+        A list of prop firm dicts, or an empty list if unavailable.
+    &#34;&#34;&#34;
+    from modules.database import fetch_prop_firms
+    return fetch_prop_firms()</code></pre>
+</details>
+<div class="desc"><p>Fetches all prop firm records from Supabase via the database module.</p>
+<h2 id="returns">Returns</h2>
+<p>A list of prop firm dicts, or an empty list if unavailable.</p></div>
+</dd>
+<dt id="main.BridgeAPI.db_push_user_config"><code class="name flex">
+<span>def <span class="ident">db_push_user_config</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def db_push_user_config(self) -&gt; None:
+    &#34;&#34;&#34;Uploads the current ``app_config`` to Supabase for the authenticated user.
+
+    Uses the ``PROPSYNC_USER_EMAIL`` environment variable set during
+    :meth:`conectar` to identify the target cloud record. Silently skips
+    if no user is currently authenticated.
+    &#34;&#34;&#34;
+    from modules.database import upload_user_config
+    import os
+    email = os.environ.get(&#34;PROPSYNC_USER_EMAIL&#34;, &#34;&#34;)
+    if email != &#34;&#34;:
+        upload_user_config(email, app_config)
+        registrar_log(&#34;[NUBE] Configuración Edge sincronizada hacia Supabase.&#34;)</code></pre>
+</details>
+<div class="desc"><p>Uploads the current <code>app_config</code> to Supabase for the authenticated user.</p>
+<p>Uses the <code>PROPSYNC_USER_EMAIL</code> environment variable set during
+:meth:<code>conectar</code> to identify the target cloud record. Silently skips
+if no user is currently authenticated.</p></div>
+</dd>
+<dt id="main.BridgeAPI.eliminar_esclava"><code class="name flex">
+<span>def <span class="ident">eliminar_esclava</span></span>(<span>self, id_borrar: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def eliminar_esclava(self, id_borrar: str) -&gt; str:
+    &#34;&#34;&#34;Removes a slave node from the configuration.
+
+    Filters the slave list to exclude the node with the given ID and
+    persists the updated configuration to disk.
+
+    Args:
+        id_borrar: The unique identifier of the slave node to remove.
+
+    Returns:
+        The string ``&#39;ok&#39;`` on success.
+    &#34;&#34;&#34;
+    global app_config
+    n_lista = []
+    for s in app_config[&#39;slaves&#39;]:
+        if s[&#39;id&#39;] != id_borrar: n_lista.append(s)
+    app_config[&#39;slaves&#39;] = n_lista
+    guardar_credenciales(app_config)
+    registrar_log(f&#34;[INFO] Nodo &#39;{id_borrar}&#39; eliminado de la red.&#34;)
+    return &#34;ok&#34;</code></pre>
+</details>
+<div class="desc"><p>Removes a slave node from the configuration.</p>
+<p>Filters the slave list to exclude the node with the given ID and
+persists the updated configuration to disk.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>id_borrar</code></strong></dt>
+<dd>The unique identifier of the slave node to remove.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The string <code>'ok'</code> on success.</p></div>
+</dd>
+<dt id="main.BridgeAPI.encender_motor"><code class="name flex">
+<span>def <span class="ident">encender_motor</span></span>(<span>self) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encender_motor(self) -&gt; dict:
+    &#34;&#34;&#34;Restarts the trading engine without requiring re-authentication.
+
+    Useful when the user stops the service temporarily and wants to
+    resume without logging out. Calls :func:`iniciar_motor_trading`
+    and passes its result dict directly to the frontend.
+
+    Returns:
+        The result dict from :func:`iniciar_motor_trading`.
+    &#34;&#34;&#34;
+    resultado = iniciar_motor_trading()
+    return resultado</code></pre>
+</details>
+<div class="desc"><p>Restarts the trading engine without requiring re-authentication.</p>
+<p>Useful when the user stops the service temporarily and wants to
+resume without logging out. Calls :func:<code><a title="main.iniciar_motor_trading" href="#main.iniciar_motor_trading">iniciar_motor_trading()</a></code>
+and passes its result dict directly to the frontend.</p>
+<h2 id="returns">Returns</h2>
+<p>The result dict from :func:<code><a title="main.iniciar_motor_trading" href="#main.iniciar_motor_trading">iniciar_motor_trading()</a></code>.</p></div>
+</dd>
+<dt id="main.BridgeAPI.guardar_esclava"><code class="name flex">
+<span>def <span class="ident">guardar_esclava</span></span>(<span>self, datos_slave: dict) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def guardar_esclava(self, datos_slave: dict) -&gt; str:
+    &#34;&#34;&#34;Adds or updates a slave node in the configuration.
+
+    If a slave with the same ``id`` already exists, it is replaced.
+    Otherwise, the new slave is appended to the list. Persists to disk
+    and syncs to the cloud.
+
+    Args:
+        datos_slave: A dict with slave node fields
+            (``id``, ``login``, ``password``, ``server``, ``risk_factor``,
+            ``initial_balance``).
+
+    Returns:
+        The string ``&#39;ok&#39;`` on success.
+    &#34;&#34;&#34;
+    global app_config
+    ind_actualizar = -1
+    for i in range(len(app_config[&#39;slaves&#39;])):
+        if app_config[&#39;slaves&#39;][i][&#39;id&#39;] == datos_slave[&#39;id&#39;]:
+            ind_actualizar = i
+            
+    if ind_actualizar != -1:
+        app_config[&#39;slaves&#39;][ind_actualizar] = datos_slave
+        registrar_log(f&#34;[INFO] Nodo esclavo &#39;{datos_slave[&#39;id&#39;]}&#39; actualizado.&#34;)
+    else:
+        app_config[&#39;slaves&#39;].append(datos_slave)
+        registrar_log(f&#34;[INFO] Nodo esclavo &#39;{datos_slave[&#39;id&#39;]}&#39; acoplado a la red.&#34;)
+        
+    guardar_credenciales(app_config)
+    self.db_push_user_config()
+    return &#34;ok&#34;</code></pre>
+</details>
+<div class="desc"><p>Adds or updates a slave node in the configuration.</p>
+<p>If a slave with the same <code>id</code> already exists, it is replaced.
+Otherwise, the new slave is appended to the list. Persists to disk
+and syncs to the cloud.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>datos_slave</code></strong></dt>
+<dd>A dict with slave node fields
+(<code>id</code>, <code>login</code>, <code>password</code>, <code>server</code>, <code>risk_factor</code>,
+<code>initial_balance</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The string <code>'ok'</code> on success.</p></div>
+</dd>
+<dt id="main.BridgeAPI.guardar_logs_en_archivo"><code class="name flex">
+<span>def <span class="ident">guardar_logs_en_archivo</span></span>(<span>self, texto_logs: str) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def guardar_logs_en_archivo(self, texto_logs: str) -&gt; dict:
+    &#34;&#34;&#34;Opens a save file dialog and writes the provided log text to disk.
+
+    Used as a fallback for the JavaScript &#39;Exportar&#39; button to ensure
+    reliable file saving across all pywebview platforms.
+
+    Args:
+        texto_logs: The full block of log text to be saved.
+
+    Returns:
+        A result dict with a ``status`` key (&#39;success&#39; or &#39;error&#39;).
+    &#34;&#34;&#34;
+    try:
+        # pywebview has a built-in file dialog
+        file_path = window.create_file_dialog(
+            webview.SAVE_DIALOG, 
+            directory=os.path.expanduser(&#34;~&#34;), 
+            save_filename=&#39;PropSync_Terminal_Logs.txt&#39;
+        )
+        if file_path:
+            # If the list of paths is returned, take the first one
+            target = file_path[0] if isinstance(file_path, (list, tuple)) else file_path
+            with open(target, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
+                f.write(texto_logs)
+            registrar_log(f&#34;[SISTEMA] Logs exportados correctamente a: {target}&#34;)
+            return {&#34;status&#34;: &#34;success&#34;}
+        return {&#34;status&#34;: &#34;cancelled&#34;}
+    except Exception as e:
+        return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>Opens a save file dialog and writes the provided log text to disk.</p>
+<p>Used as a fallback for the JavaScript 'Exportar' button to ensure
+reliable file saving across all pywebview platforms.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>texto_logs</code></strong></dt>
+<dd>The full block of log text to be saved.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A result dict with a <code>status</code> key ('success' or 'error').</p></div>
+</dd>
+<dt id="main.BridgeAPI.guardar_maestra"><code class="name flex">
+<span>def <span class="ident">guardar_maestra</span></span>(<span>self, datos_master: dict) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def guardar_maestra(self, datos_master: dict) -&gt; str:
+    &#34;&#34;&#34;Saves the master account configuration and syncs it to the cloud.
+
+    Updates the in-memory ``app_config`` with the new master parameters,
+    persists to disk via :func:`guardar_credenciales`, and triggers a
+    cloud config upload via :meth:`db_push_user_config`.
+
+    Args:
+        datos_master: A dict with master account fields
+            (``login``, ``password``, ``server``, ``initial_balance``).
+
+    Returns:
+        The string ``&#39;ok&#39;`` on success.
+    &#34;&#34;&#34;
+    global app_config
+    app_config[&#39;master&#39;] = datos_master
+    guardar_credenciales(app_config)
+    self.db_push_user_config()
+    registrar_log(&#34;[INFO] Configuracion Maestra principal actualizada y enviada a la nube.&#34;)
+    return &#34;ok&#34;</code></pre>
+</details>
+<div class="desc"><p>Saves the master account configuration and syncs it to the cloud.</p>
+<p>Updates the in-memory <code>app_config</code> with the new master parameters,
+persists to disk via :func:<code>guardar_credenciales</code>, and triggers a
+cloud config upload via :meth:<code>db_push_user_config</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>datos_master</code></strong></dt>
+<dd>A dict with master account fields
+(<code>login</code>, <code>password</code>, <code>server</code>, <code>initial_balance</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The string <code>'ok'</code> on success.</p></div>
+</dd>
+<dt id="main.BridgeAPI.obtener_claves_js"><code class="name flex">
+<span>def <span class="ident">obtener_claves_js</span></span>(<span>self) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obtener_claves_js(self) -&gt; dict:
+    &#34;&#34;&#34;Returns Supabase credentials to the JavaScript frontend at runtime.
+
+    Credentials are never hardcoded in JS files; they are passed through
+    this bridge method after being loaded from the gitignored ``secrets.json``.
+
+    Returns:
+        A dict with keys ``url`` and ``key`` containing the Supabase
+        project URL and anonymous API key respectively.
+    &#34;&#34;&#34;
+    return {&#34;url&#34;: URL_NUBE, &#34;key&#34;: KEY_NUBE}</code></pre>
+</details>
+<div class="desc"><p>Returns Supabase credentials to the JavaScript frontend at runtime.</p>
+<p>Credentials are never hardcoded in JS files; they are passed through
+this bridge method after being loaded from the gitignored <code>secrets.json</code>.</p>
+<h2 id="returns">Returns</h2>
+<p>A dict with keys <code>url</code> and <code>key</code> containing the Supabase
+project URL and anonymous API key respectively.</p></div>
+</dd>
+<dt id="main.BridgeAPI.obtener_configuracion"><code class="name flex">
+<span>def <span class="ident">obtener_configuracion</span></span>(<span>self) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obtener_configuracion(self) -&gt; dict:
+    &#34;&#34;&#34;Returns the current application configuration to the frontend.
+
+    Returns:
+        The ``app_config`` dict (master + slaves), or a default empty
+        structure if no configuration has been loaded.
+    &#34;&#34;&#34;
+    global app_config
+    if not app_config:
+        return {&#34;master&#34;: {}, &#34;slaves&#34;: []}
+    return app_config</code></pre>
+</details>
+<div class="desc"><p>Returns the current application configuration to the frontend.</p>
+<h2 id="returns">Returns</h2>
+<p>The <code>app_config</code> dict (master + slaves), or a default empty
+structure if no configuration has been loaded.</p></div>
+</dd>
+<dt id="main.BridgeAPI.obtener_estado_motor"><code class="name flex">
+<span>def <span class="ident">obtener_estado_motor</span></span>(<span>self) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obtener_estado_motor(self) -&gt; dict:
+    &#34;&#34;&#34;Returns live engine statistics for the terminal status bar.
+
+    Returns:
+        A dict with keys ``activo`` (bool), ``ciclos`` (int),
+        ``replicaciones`` (int), ``errores`` (int), ``ultimo_sync`` (str).
+    &#34;&#34;&#34;
+    return {
+        &#34;activo&#34;:        bot_activo == 1,
+        &#34;ciclos&#34;:        _stat_ciclos,
+        &#34;replicaciones&#34;: _stat_replicaciones,
+        &#34;errores&#34;:       _stat_errores,
+        &#34;ultimo_sync&#34;:   _stat_ultimo_sync
+    }</code></pre>
+</details>
+<div class="desc"><p>Returns live engine statistics for the terminal status bar.</p>
+<h2 id="returns">Returns</h2>
+<p>A dict with keys <code>activo</code> (bool), <code>ciclos</code> (int),
+<code>replicaciones</code> (int), <code>errores</code> (int), <code>ultimo_sync</code> (str).</p></div>
+</dd>
+<dt id="main.BridgeAPI.obtener_telemetria"><code class="name flex">
+<span>def <span class="ident">obtener_telemetria</span></span>(<span>self) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obtener_telemetria(self) -&gt; dict:
+    &#34;&#34;&#34;Returns live telemetry data for the dashboard.
+
+    Combines the closed trade history from disk with the current
+    floating P&amp;L metrics captured from the last trading loop iteration.
+
+    Returns:
+        A dict with keys:
+
+        * ``historial``: list of closed trade records.
+        * ``flotante``: dict with ``equity``, ``balance``, ``profit``
+          floats from the master account.
+    &#34;&#34;&#34;
+    try:
+        historial = cargar_historial()
+        return {
+            &#34;historial&#34;: historial,
+            &#34;flotante&#34;: {
+                &#34;equity&#34;: eq_master_global,
+                &#34;balance&#34;: bal_master_global,
+                &#34;profit&#34;: profit_master_global
+            }
+        }
+    except Exception as e:
+        return {&#34;historial&#34;: [], &#34;flotante&#34;: {&#34;equity&#34;: 0, &#34;balance&#34;: 0, &#34;profit&#34;: 0}}</code></pre>
+</details>
+<div class="desc"><p>Returns live telemetry data for the dashboard.</p>
+<p>Combines the closed trade history from disk with the current
+floating P&amp;L metrics captured from the last trading loop iteration.</p>
+<h2 id="returns">Returns</h2>
+<p>A dict with keys:</p>
+<ul>
+<li><code>historial</code>: list of closed trade records.</li>
+<li><code>flotante</code>: dict with <code>equity</code>, <code>balance</code>, <code>profit</code>
+floats from the master account.</li>
+</ul></div>
+</dd>
+<dt id="main.BridgeAPI.registrar"><code class="name flex">
+<span>def <span class="ident">registrar</span></span>(<span>self, email: str, password: str) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def registrar(self, email: str, password: str) -&gt; dict:
+    &#34;&#34;&#34;Registers a new user account in Supabase Auth.
+
+    Args:
+        email: The desired email address for the new account.
+        password: The desired password (Supabase enforces a minimum length).
+
+    Returns:
+        ``{&#39;status&#39;: &#39;success&#39;}`` on success, or
+        ``{&#39;status&#39;: &#39;error&#39;, &#39;message&#39;: str}`` on failure.
+    &#34;&#34;&#34;
+    global supabase, URL_NUBE, KEY_NUBE
+    try:
+        if not supabase:
+            s_dict = cargar_secrets()
+            supabase = create_client(s_dict.get(&#34;SUPABASE_URL&#34;, &#34;&#34;), s_dict.get(&#34;SUPABASE_KEY&#34;, &#34;&#34;))
+            
+        supabase.auth.sign_up({&#34;email&#34;: email, &#34;password&#34;: password})
+        return {&#34;status&#34;: &#34;success&#34;}
+    except Exception as e:
+        return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;DEBUG ROOT: {str(e)}&#34;}</code></pre>
+</details>
+<div class="desc"><p>Registers a new user account in Supabase Auth.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>email</code></strong></dt>
+<dd>The desired email address for the new account.</dd>
+<dt><strong><code>password</code></strong></dt>
+<dd>The desired password (Supabase enforces a minimum length).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code>{'status': 'success'}</code> on success, or
+<code>{'status': 'error', 'message': str}</code> on failure.</p></div>
+</dd>
+<dt id="main.BridgeAPI.verificar_cuenta_mt5"><code class="name flex">
+<span>def <span class="ident">verificar_cuenta_mt5</span></span>(<span>self, login: int, password: str, server: str) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verificar_cuenta_mt5(self, login: int, password: str, server: str) -&gt; dict:
+    &#34;&#34;&#34;Validates MT5 credentials on-demand from the configuration panel.
+
+    Calls :func:`verificar_credenciales_mt5` and returns the structured
+    result so the frontend can display a precise, actionable error message
+    (e.g., &#39;wrong password&#39; vs &#39;server not found&#39; vs &#39;terminal not running&#39;).
+
+    Args:
+        login: Numeric MT5 account number.
+        password: Plaintext account password.
+        server: Broker server name.
+
+    Returns:
+        ``{&#39;valido&#39;: True}`` on success, or
+        ``{&#39;valido&#39;: False, &#39;tipo&#39;: str, &#39;mensaje&#39;: str}`` on failure.
+    &#34;&#34;&#34;
+    resultado = verificar_credenciales_mt5(
+        login=int(login), password=password, server=server
+    )
+    if resultado[&#39;valido&#39;]:
+        registrar_log(f&#34;[SISTEMA] ✓ Verificación manual: cuenta {login} válida en {server}.&#34;)
+    else:
+        registrar_log(f&#34;[CREDENCIAL] ✗ Verificación manual fallida ({resultado[&#39;tipo&#39;]}): {resultado[&#39;mensaje&#39;]}&#34;)
+    return resultado</code></pre>
+</details>
+<div class="desc"><p>Validates MT5 credentials on-demand from the configuration panel.</p>
+<p>Calls :func:<code>verificar_credenciales_mt5</code> and returns the structured
+result so the frontend can display a precise, actionable error message
+(e.g., 'wrong password' vs 'server not found' vs 'terminal not running').</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>login</code></strong></dt>
+<dd>Numeric MT5 account number.</dd>
+<dt><strong><code>password</code></strong></dt>
+<dd>Plaintext account password.</dd>
+<dt><strong><code>server</code></strong></dt>
+<dd>Broker server name.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code>{'valido': True}</code> on success, or
+<code>{'valido': False, 'tipo': str, 'mensaje': str}</code> on failure.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="main.ciclo_trading_recursivo" href="#main.ciclo_trading_recursivo">ciclo_trading_recursivo</a></code></li>
+<li><code><a title="main.detener_motor_trading" href="#main.detener_motor_trading">detener_motor_trading</a></code></li>
+<li><code><a title="main.iniciar_motor_trading" href="#main.iniciar_motor_trading">iniciar_motor_trading</a></code></li>
+<li><code><a title="main.registrar_log" href="#main.registrar_log">registrar_log</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="main.BridgeAPI" href="#main.BridgeAPI">BridgeAPI</a></code></h4>
+<ul class="">
+<li><code><a title="main.BridgeAPI.apagar_motor" href="#main.BridgeAPI.apagar_motor">apagar_motor</a></code></li>
+<li><code><a title="main.BridgeAPI.conectar" href="#main.BridgeAPI.conectar">conectar</a></code></li>
+<li><code><a title="main.BridgeAPI.db_add_prop_firm" href="#main.BridgeAPI.db_add_prop_firm">db_add_prop_firm</a></code></li>
+<li><code><a title="main.BridgeAPI.db_get_prop_firms" href="#main.BridgeAPI.db_get_prop_firms">db_get_prop_firms</a></code></li>
+<li><code><a title="main.BridgeAPI.db_push_user_config" href="#main.BridgeAPI.db_push_user_config">db_push_user_config</a></code></li>
+<li><code><a title="main.BridgeAPI.eliminar_esclava" href="#main.BridgeAPI.eliminar_esclava">eliminar_esclava</a></code></li>
+<li><code><a title="main.BridgeAPI.encender_motor" href="#main.BridgeAPI.encender_motor">encender_motor</a></code></li>
+<li><code><a title="main.BridgeAPI.guardar_esclava" href="#main.BridgeAPI.guardar_esclava">guardar_esclava</a></code></li>
+<li><code><a title="main.BridgeAPI.guardar_logs_en_archivo" href="#main.BridgeAPI.guardar_logs_en_archivo">guardar_logs_en_archivo</a></code></li>
+<li><code><a title="main.BridgeAPI.guardar_maestra" href="#main.BridgeAPI.guardar_maestra">guardar_maestra</a></code></li>
+<li><code><a title="main.BridgeAPI.obtener_claves_js" href="#main.BridgeAPI.obtener_claves_js">obtener_claves_js</a></code></li>
+<li><code><a title="main.BridgeAPI.obtener_configuracion" href="#main.BridgeAPI.obtener_configuracion">obtener_configuracion</a></code></li>
+<li><code><a title="main.BridgeAPI.obtener_estado_motor" href="#main.BridgeAPI.obtener_estado_motor">obtener_estado_motor</a></code></li>
+<li><code><a title="main.BridgeAPI.obtener_telemetria" href="#main.BridgeAPI.obtener_telemetria">obtener_telemetria</a></code></li>
+<li><code><a title="main.BridgeAPI.registrar" href="#main.BridgeAPI.registrar">registrar</a></code></li>
+<li><code><a title="main.BridgeAPI.verificar_cuenta_mt5" href="#main.BridgeAPI.verificar_cuenta_mt5">verificar_cuenta_mt5</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>modules.config API documentation</title>
+<meta name="description" content="Credential management and configuration I/O module …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>modules.config</code></h1>
+</header>
+<section id="section-intro">
+<p>Credential management and configuration I/O module.</p>
+<p>This module handles all disk I/O related to user credentials, cloud secrets,
+and prop firm rule sets. Passwords are stored with Base64 obfuscation to
+prevent casual plaintext exposure on the local filesystem.</p>
+<p>Typical usage example::</p>
+<pre><code>config = cargar_credenciales()
+config['master']['login'] = '12345678'
+guardar_credenciales(config)
+</code></pre>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="modules.config.cargar_credenciales"><code class="name flex">
+<span>def <span class="ident">cargar_credenciales</span></span>(<span>) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cargar_credenciales() -&gt; dict:
+    &#34;&#34;&#34;Loads the application configuration from disk, decoding stored passwords.
+
+    Reads ``data/credenciales.json`` and decodes all Base64-encoded password
+    fields. If the file does not exist or is malformed, returns a safe default
+    configuration with empty credential fields.
+
+    Returns:
+        A dict with the structure::
+
+            {
+                &#34;master&#34;: {
+                    &#34;login&#34;: str,
+                    &#34;password&#34;: str,  # plaintext after decoding
+                    &#34;server&#34;: str,
+                    &#34;initial_balance&#34;: float
+                },
+                &#34;slaves&#34;: [
+                    {&#34;id&#34;: str, &#34;login&#34;: str, &#34;password&#34;: str, ...}
+                ]
+            }
+    &#34;&#34;&#34;
+    config_default = {
+        &#34;master&#34;: {&#34;login&#34;: &#34;&#34;, &#34;password&#34;: &#34;&#34;, &#34;server&#34;: &#34;&#34;, &#34;initial_balance&#34;: 0},
+        &#34;slaves&#34;: []
+    }
+    config_cargada = config_default
+    
+    if os.path.exists(FILE_CREDS): 
+        try:
+            with open(FILE_CREDS, &#39;r&#39;) as f: 
+                data = json.load(f)
+                if isinstance(data, dict):
+                    config_cargada = data
+                
+            if &#39;master&#39; in config_cargada and &#39;password&#39; in config_cargada[&#39;master&#39;]:
+                config_cargada[&#39;master&#39;][&#39;password&#39;] = decodificar(config_cargada[&#39;master&#39;][&#39;password&#39;])
+                
+            if &#39;slaves&#39; in config_cargada:
+                for s in config_cargada[&#39;slaves&#39;]:
+                    if &#39;password&#39; in s:
+                        s[&#39;password&#39;] = decodificar(s[&#39;password&#39;])
+        except Exception:
+            config_cargada = config_default
+                        
+    return config_cargada</code></pre>
+</details>
+<div class="desc"><p>Loads the application configuration from disk, decoding stored passwords.</p>
+<p>Reads <code>data/credenciales.json</code> and decodes all Base64-encoded password
+fields. If the file does not exist or is malformed, returns a safe default
+configuration with empty credential fields.</p>
+<h2 id="returns">Returns</h2>
+<p>A dict with the structure::</p>
+<pre><code>{
+    "master": {
+        "login": str,
+        "password": str,  # plaintext after decoding
+        "server": str,
+        "initial_balance": float
+    },
+    "slaves": [
+        {"id": str, "login": str, "password": str, ...}
+    ]
+}
+</code></pre></div>
+</dd>
+<dt id="modules.config.cargar_empresas"><code class="name flex">
+<span>def <span class="ident">cargar_empresas</span></span>(<span>) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cargar_empresas() -&gt; dict:
+    &#34;&#34;&#34;Loads prop firm rule sets from disk, creating defaults if absent.
+
+    Reads ``data/prop_firms.json``. If the file does not exist, populates it
+    with built-in defaults for FTMO, WSF, and Axi Select.
+
+    Returns:
+        A dict mapping firm name to its rule parameters::
+
+            {
+                &#34;FTMO&#34;: {
+                    &#34;dd_diario&#34;: 5.0,
+                    &#34;dd_total&#34;: 10.0,
+                    &#34;target_f1&#34;: 10.0,
+                    &#34;target_f2&#34;: 5.0
+                },
+                ...
+            }
+    &#34;&#34;&#34;
+    if os.path.exists(FILE_FIRMS):
+        try:
+            with open(FILE_FIRMS, &#39;r&#39;) as f:
+                return json.load(f)
+        except Exception:
+            error_lectura = 1
+            
+    default_firms = {
+        &#34;FTMO&#34;: {&#34;dd_diario&#34;: 5.0, &#34;dd_total&#34;: 10.0, &#34;target_f1&#34;: 10.0, &#34;target_f2&#34;: 5.0},
+        &#34;WSF&#34;: {&#34;dd_diario&#34;: 4.0, &#34;dd_total&#34;: 8.0, &#34;target_f1&#34;: 8.0, &#34;target_f2&#34;: 5.0},
+        &#34;Axi Select&#34;: {&#34;dd_diario&#34;: 10.0, &#34;dd_total&#34;: 10.0, &#34;target_f1&#34;: 7.0, &#34;target_f2&#34;: 7.0}
+    }
+    guardar_empresas(default_firms)
+    return default_firms</code></pre>
+</details>
+<div class="desc"><p>Loads prop firm rule sets from disk, creating defaults if absent.</p>
+<p>Reads <code>data/prop_firms.json</code>. If the file does not exist, populates it
+with built-in defaults for FTMO, WSF, and Axi Select.</p>
+<h2 id="returns">Returns</h2>
+<p>A dict mapping firm name to its rule parameters::</p>
+<pre><code>{
+    "FTMO": {
+        "dd_diario": 5.0,
+        "dd_total": 10.0,
+        "target_f1": 10.0,
+        "target_f2": 5.0
+    },
+    ...
+}
+</code></pre></div>
+</dd>
+<dt id="modules.config.cargar_secrets"><code class="name flex">
+<span>def <span class="ident">cargar_secrets</span></span>(<span>) ‑> dict</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cargar_secrets() -&gt; dict:
+    &#34;&#34;&#34;Loads cloud service credentials from ``secrets.json``.
+
+    Reads the ``secrets.json`` file at the project root. This file is gitignored
+    and must never be committed to version control.
+
+    Returns:
+        A dict with Supabase connection parameters::
+
+            {
+                &#34;SUPABASE_URL&#34;: &#34;https://project.supabase.co&#34;,
+                &#34;SUPABASE_KEY&#34;: &#34;anon-key-string&#34;
+            }
+
+        Returns empty strings for both keys if the file is missing or unreadable.
+    &#34;&#34;&#34;
+    if os.path.exists(FILE_SECRETS_NUBE):
+        try:
+            with open(FILE_SECRETS_NUBE, &#39;r&#39;, encoding=&#39;utf-8&#39;) as f:
+                return json.load(f)
+        except Exception as e:
+            print(f&#34;&gt;&gt;&gt; Fallo al leer secrets.json: {str(e)}&#34;)
+            return {&#34;SUPABASE_URL&#34;: &#34;&#34;, &#34;SUPABASE_KEY&#34;: &#34;&#34;}
+    else:
+        print(f&#34;&gt;&gt;&gt; No se encuentra secrets.json en: {FILE_SECRETS_NUBE}&#34;)
+        
+    return {&#34;SUPABASE_URL&#34;: &#34;&#34;, &#34;SUPABASE_KEY&#34;: &#34;&#34;}</code></pre>
+</details>
+<div class="desc"><p>Loads cloud service credentials from <code>secrets.json</code>.</p>
+<p>Reads the <code>secrets.json</code> file at the project root. This file is gitignored
+and must never be committed to version control.</p>
+<h2 id="returns">Returns</h2>
+<p>A dict with Supabase connection parameters::</p>
+<pre><code>{
+    "SUPABASE_URL": "https://project.supabase.co",
+    "SUPABASE_KEY": "anon-key-string"
+}
+</code></pre>
+<p>Returns empty strings for both keys if the file is missing or unreadable.</p></div>
+</dd>
+<dt id="modules.config.codificar"><code class="name flex">
+<span>def <span class="ident">codificar</span></span>(<span>texto: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def codificar(texto: str) -&gt; str:
+    &#34;&#34;&#34;Encodes a plaintext string using Base64.
+
+    Args:
+        texto: The plaintext string to encode (e.g., a broker password).
+
+    Returns:
+        A Base64-encoded string safe for storage in JSON files.
+    &#34;&#34;&#34;
+    return base64.b64encode(texto.encode(&#39;utf-8&#39;)).decode(&#39;utf-8&#39;)</code></pre>
+</details>
+<div class="desc"><p>Encodes a plaintext string using Base64.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>texto</code></strong></dt>
+<dd>The plaintext string to encode (e.g., a broker password).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A Base64-encoded string safe for storage in JSON files.</p></div>
+</dd>
+<dt id="modules.config.decodificar"><code class="name flex">
+<span>def <span class="ident">decodificar</span></span>(<span>texto_codificado: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decodificar(texto_codificado: str) -&gt; str:
+    &#34;&#34;&#34;Decodes a Base64-encoded string back to plaintext.
+
+    If decoding fails (e.g., the value was stored as plaintext in a previous
+    version), the original string is returned unchanged to preserve
+    backwards compatibility.
+
+    Args:
+        texto_codificado: A Base64-encoded string, or a legacy plaintext string.
+
+    Returns:
+        The decoded plaintext string, or the original input on failure.
+    &#34;&#34;&#34;
+    try:
+        return base64.b64decode(texto_codificado.encode(&#39;utf-8&#39;)).decode(&#39;utf-8&#39;)
+    except Exception:
+        error_ignorado = 1
+        return texto_codificado</code></pre>
+</details>
+<div class="desc"><p>Decodes a Base64-encoded string back to plaintext.</p>
+<p>If decoding fails (e.g., the value was stored as plaintext in a previous
+version), the original string is returned unchanged to preserve
+backwards compatibility.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>texto_codificado</code></strong></dt>
+<dd>A Base64-encoded string, or a legacy plaintext string.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The decoded plaintext string, or the original input on failure.</p></div>
+</dd>
+<dt id="modules.config.guardar_credenciales"><code class="name flex">
+<span>def <span class="ident">guardar_credenciales</span></span>(<span>nueva_config: dict) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def guardar_credenciales(nueva_config: dict) -&gt; None:
+    &#34;&#34;&#34;Persists the application configuration to disk with encoded passwords.
+
+    Creates a deep copy of ``nueva_config``, encodes all password fields with
+    Base64, then writes the result to ``data/credenciales.json``. The original
+    dict passed in is never modified.
+
+    Args:
+        nueva_config: The configuration dict as returned by
+            :func:`cargar_credenciales`, with plaintext passwords.
+    &#34;&#34;&#34;
+    if not os.path.exists(DIR_DATA): os.makedirs(DIR_DATA)
+    
+    config_segura = json.loads(json.dumps(nueva_config))
+    
+    if &#39;master&#39; in config_segura and &#39;password&#39; in config_segura[&#39;master&#39;]:
+        config_segura[&#39;master&#39;][&#39;password&#39;] = codificar(config_segura[&#39;master&#39;][&#39;password&#39;])
+        
+    if &#39;slaves&#39; in config_segura:
+        for s in config_segura[&#39;slaves&#39;]:
+            if &#39;password&#39; in s:
+                s[&#39;password&#39;] = codificar(s[&#39;password&#39;])
+
+    try:
+        with open(FILE_CREDS, &#39;w&#39;) as f:
+            json.dump(config_segura, f, indent=4)
+    except Exception:
+        error_escritura = 1</code></pre>
+</details>
+<div class="desc"><p>Persists the application configuration to disk with encoded passwords.</p>
+<p>Creates a deep copy of <code>nueva_config</code>, encodes all password fields with
+Base64, then writes the result to <code>data/credenciales.json</code>. The original
+dict passed in is never modified.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>nueva_config</code></strong></dt>
+<dd>The configuration dict as returned by
+:func:<code><a title="modules.config.cargar_credenciales" href="#modules.config.cargar_credenciales">cargar_credenciales()</a></code>, with plaintext passwords.</dd>
+</dl></div>
+</dd>
+<dt id="modules.config.guardar_empresas"><code class="name flex">
+<span>def <span class="ident">guardar_empresas</span></span>(<span>data: dict) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def guardar_empresas(data: dict) -&gt; None:
+    &#34;&#34;&#34;Persists prop firm rule sets to disk.
+
+    Args:
+        data: A dict of prop firm names to rule parameters, as returned by
+            :func:`cargar_empresas`.
+    &#34;&#34;&#34;
+    if not os.path.exists(DIR_DATA): os.makedirs(DIR_DATA)
+    try:
+        with open(FILE_FIRMS, &#39;w&#39;) as f:
+            json.dump(data, f, indent=4)
+    except Exception:
+        error_escritura = 1</code></pre>
+</details>
+<div class="desc"><p>Persists prop firm rule sets to disk.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>data</code></strong></dt>
+<dd>A dict of prop firm names to rule parameters, as returned by
+:func:<code><a title="modules.config.cargar_empresas" href="#modules.config.cargar_empresas">cargar_empresas()</a></code>.</dd>
+</dl></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="modules" href="index.html">modules</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="modules.config.cargar_credenciales" href="#modules.config.cargar_credenciales">cargar_credenciales</a></code></li>
+<li><code><a title="modules.config.cargar_empresas" href="#modules.config.cargar_empresas">cargar_empresas</a></code></li>
+<li><code><a title="modules.config.cargar_secrets" href="#modules.config.cargar_secrets">cargar_secrets</a></code></li>
+<li><code><a title="modules.config.codificar" href="#modules.config.codificar">codificar</a></code></li>
+<li><code><a title="modules.config.decodificar" href="#modules.config.decodificar">decodificar</a></code></li>
+<li><code><a title="modules.config.guardar_credenciales" href="#modules.config.guardar_credenciales">guardar_credenciales</a></code></li>
+<li><code><a title="modules.config.guardar_empresas" href="#modules.config.guardar_empresas">guardar_empresas</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

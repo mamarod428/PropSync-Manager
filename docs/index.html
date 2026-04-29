@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PropSync Manager — API Reference and Developer Documentation">
+  <title>PropSync Manager — Developer Docs</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --brand: #4f8eff;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --success: #22c55e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .container { max-width: 800px; width: 100%; text-align: center; }
+    h1 { font-size: 2.5rem; font-weight: 800; color: var(--brand); margin-bottom: 0.5rem; }
+    .subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 3rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(79,142,255,0.15);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: block;
+    }
+    .card:hover { border-color: var(--brand); transform: translateY(-2px); }
+    .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+    .badge {
+      display: inline-block;
+      background: rgba(34,197,94,0.1);
+      color: var(--success);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    footer { color: var(--muted); font-size: 0.8rem; margin-top: 2rem; }
+    footer a { color: var(--brand); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">MIT Open Source</span>
+    <h1>PropSync Manager</h1>
+    <p class="subtitle">RPA engine for MetaTrader 5 trade synchronisation · Developer Documentation</p>
+
+    <div class="grid">
+      <a class="card" href="api/modules/index.html">
+        <div class="card-icon">📦</div>
+        <h3>Python API Reference</h3>
+        <p>Auto-generated docs for all modules: config, trading, database, and main.</p>
+      </a>
+      <a class="card" href="https://github.com/mamarod428/PropSync-Manager/wiki/Developer-Guide">
+        <div class="card-icon">🏗️</div>
+        <h3>Developer Guide</h3>
+        <p>Architecture overview, module responsibilities, data flow, and bridge API.</p>
+      </a>
+      <a class="card" href="https://github.com/mamarod428/PropSync-Manager/wiki/Security-Guide">
+        <div class="card-icon">🔒</div>
+        <h3>Security Guide</h3>
+        <p>Threat model, implemented controls, and recommended hardening steps.</p>
+      </a>
+      <a class="card" href="https://github.com/mamarod428/PropSync-Manager/wiki/Devlog">
+        <div class="card-icon">📋</div>
+        <h3>Devlog</h3>
+        <p>Chronological development history with strategic context for each change.</p>
+      </a>
+      <a class="card" href="https://github.com/mamarod428/PropSync-Manager/blob/main/CONTRIBUTING.md">
+        <div class="card-icon">🤝</div>
+        <h3>Contributing</h3>
+        <p>How to contribute, coding standards, roadmap, and skills matrix.</p>
+      </a>
+      <a class="card" href="https://propsync-manager.netlify.app">
+        <div class="card-icon">🌐</div>
+        <h3>Live Demo</h3>
+        <p>Full cloud dashboard interface deployed on Netlify.</p>
+      </a>
+    </div>
+
+    <footer>
+      <a href="https://github.com/mamarod428/PropSync-Manager">GitHub Repository</a> ·
+      MIT License · PropSync Manager v1.0.0
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,5 +1,46 @@
+# ==============================================================================
+# PropSync Manager — .gitignore
+# CRITICAL: secrets.json and credenciales.json contain live credentials.
+# They must NEVER be committed to version control.
+# ==============================================================================
+
+# --- Sensitive credentials & secrets ---
 secrets.json
 data/credenciales.json
+data/prop_firms.json
+
+# --- Live operational data (user-specific, not for version control) ---
 data/mapa_operaciones.json
+data/historial_operaciones.json
+
+# --- Python ---
+.venv/
+venv/
 __pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# --- Node / npm (for JSDoc generation) ---
+node_modules/
+package-lock.json
+
+# --- IDE ---
+.vscode/settings.json
+.idea/
+*.suo
+*.user
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- pdoc / JSDoc generated output (regenerate with make docs) ---
+# docs/api/ is committed for GitHub Pages; local builds are fine to ignore if preferred
+
 *.pyc

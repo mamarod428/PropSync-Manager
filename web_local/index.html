@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,30 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-    
+
     <div id="auth-view" class="auth-container">
         <div class="login-box">
             <div class="login-header">
-                <img src="propsync_icon.ico" alt="Logo PropSync" class="brand-logo-large">
+                <img src="propsync_icon.ico" alt="PropSync Logo" class="brand-logo-large">
                 <h2 class="brand-title">PropSync Enterprise</h2>
-                <p class="brand-subtitle">Terminal Analitica Hibrida</p>
+                <p class="brand-subtitle">Hybrid Analytics Terminal</p>
             </div>
-            
-            <input type="text" id="email" placeholder="Usuario o correo electronico">
-            <input type="password" id="password" placeholder="Clave de acceso">
-            
+
+            <input type="text" id="email" placeholder="Username or email address">
+            <input type="password" id="password" placeholder="Access token">
+
             <div class="auth-buttons">
-                <button onclick="loginLocal()" class="btn-primary">Inicializar Motor RPA</button>
-                <button onclick="registroLocal()" class="btn-secondary" style="margin-top: 12px;">Crear Cuenta Administrativa</button>
+                <button onclick="loginLocal()" class="btn-primary">Initialize RPA Engine</button>
+                <button onclick="registroLocal()" class="btn-secondary" style="margin-top: 12px;">Create Admin Account</button>
             </div>
             <p id="auth-msg" class="auth-message"></p>
         </div>
     </div>
 
     <div id="dashboard-view" class="layout-wrapper" style="display: none;">
-        
+
         <div id="sidebar" class="sidebar">
             <div class="brand-section">
                 <img src="propsync_icon.ico" alt="Logo" class="brand-logo-small">
@@ -38,18 +40,18 @@
                     <p>Edge Node</p>
                 </div>
             </div>
-            
-            <div class="status-badge" id="sys-status">SISTEMA DETENIDO</div>
-            
+
+            <div class="status-badge" id="sys-status">SYSTEM STOPPED</div>
+
             <nav class="nav-menu">
-                <button class="nav-btn active" onclick="mostrarTab('tab-dash', this)">Panel Analitico</button>
-                <button class="nav-btn" onclick="mostrarTab('tab-stats', this)">Historial Backtest</button>
-                <button class="nav-btn" onclick="mostrarTab('tab-config', this)">Topologia de Red</button>
-                <button class="nav-btn" onclick="mostrarTab('tab-logs', this)">Terminal Motor</button>
+                <button class="nav-btn active" onclick="mostrarTab('tab-dash', this)">Analytics Dashboard</button>
+                <button class="nav-btn" onclick="mostrarTab('tab-stats', this)">Backtest History</button>
+                <button class="nav-btn" onclick="mostrarTab('tab-config', this)">Network Topology</button>
+                <button class="nav-btn" onclick="mostrarTab('tab-logs', this)">Engine Terminal</button>
             </nav>
-            
+
             <div class="sidebar-footer">
-                <button id="btn-toggle-motor" onclick="toggleMotor()" class="btn-logout">Apagar Sistema</button>
+                <button id="btn-toggle-motor" onclick="toggleMotor()" class="btn-logout">Shutdown System</button>
             </div>
         </div>
 
@@ -60,38 +62,60 @@
                     <div class="hamburger-line"></div>
                     <div class="hamburger-line"></div>
                 </button>
-                <div class="top-bar-title" id="current-tab-title">Panel Analitico Global</div>
+                <div class="top-bar-title" id="current-tab-title">Global Analytics Panel</div>
             </div>
 
             <div class="content-area">
-                
-                <!-- PANEL ANALITICO -->
+
+                <!-- ANALYTICS PANEL -->
                 <div id="tab-dash" class="tab-content">
-                    
+
+                    <!-- ── TREE TOPOLOGY (always top) ── -->
+                    <h2 class="section-title" style="margin-top:0; padding-top:0;">Active Node Network</h2>
+                    <div id="network-tree-container" class="network-tree-container"></div>
+
+                    <!-- ── PROP FIRM TRACKER (Only in Analytics) ── -->
+                    <div id="prop-firm-tracker-section" class="hidden" style="margin-bottom: 2rem; width: 100%;">
+                        <h2 class="section-title">Prop Firm Tracker — Drawdown &amp; Targets</h2>
+                        <div id="prop-firm-tracker-grid" class="pft-grid"></div>
+                    </div>
+
                     <div class="node-balances-container" id="node-balances-grid">
                     </div>
 
-                    <h2 class="section-title">Metricas de Ejecucion en Tiempo Real</h2>
+                    <h2 class="section-title">Real-Time Execution Metrics</h2>
                     <div class="kpi-grid">
                         <div class="kpi-card">
-                            <h3>Balance Base (Master)</h3>
+                            <h3>Base Balance (Master)</h3>
                             <h2 id="kpi-balance" class="text-neutral">$0.00</h2>
                         </div>
                         <div class="kpi-card highlight-card">
-                            <h3>Equidad Flotante (Live)</h3>
+                            <h3>Floating Equity (Live)</h3>
                             <h2 id="kpi-equity" class="text-neutral">$0.00</h2>
                         </div>
                         <div class="kpi-card highlight-card">
-                            <h3>P/L Flotante (Activo)</h3>
+                            <h3>Floating P/L (Active)</h3>
                             <h2 id="kpi-floating-pnl" class="text-neutral">$0.00</h2>
                         </div>
                         <div class="kpi-card">
-                            <h3>Beneficio Neto (Cerrado)</h3>
+                            <h3>Net Profit (Closed)</h3>
                             <h2 id="kpi-profit" class="text-neutral">$0.00</h2>
                         </div>
                     </div>
 
-                    <h2 class="section-title">Analisis de Backtesting Avanzado</h2>
+                    <div class="kpi-card highlight-card" style="margin-bottom: 32px; background: linear-gradient(135deg, rgba(79, 142, 255, 0.15) 0%, rgba(14, 21, 41, 0.9) 100%); border: 1px solid var(--brand); padding: 30px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h3 style="color: var(--brand); text-transform: uppercase; letter-spacing: 1px; font-size: 12px; margin-bottom: 8px;">Total Managed Capital (Master + Slaves)</h3>
+                                <h2 id="kpi-total-capital" class="text-neutral" style="font-size: 42px; font-weight: 800; letter-spacing: -1.5px;">$0.00</h2>
+                            </div>
+                            <div style="background: var(--brand-muted); padding: 15px; border-radius: 12px; border: 1px solid var(--brand);">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Advanced Backtesting Analysis</h2>
                     <div class="kpi-grid-small">
                         <div class="kpi-card-small">
                             <h3>Win Rate</h3>
@@ -117,32 +141,32 @@
 
                     <div class="charts-grid">
                         <div class="chart-box main-chart">
-                            <h3>Curva de Equidad Acumulada</h3>
+                            <h3>Cumulative Equity Curve</h3>
                             <div class="canvas-wrapper"><canvas id="equityChart"></canvas></div>
                         </div>
-                        
+
                         <div class="chart-box side-chart">
-                            <h3>Distribucion de Direccionalidad</h3>
+                            <h3>Directionality Distribution</h3>
                             <div class="canvas-wrapper"><canvas id="directionChart"></canvas></div>
                         </div>
-                        
+
                         <div class="chart-box side-chart">
-                            <h3>Asignacion por Activo (Simbolos)</h3>
+                            <h3>Asset Allocation (Symbols)</h3>
                             <div class="canvas-wrapper"><canvas id="symbolChart"></canvas></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- HISTORIAL BACKTEST -->
+                <!-- BACKTEST HISTORY -->
                 <div id="tab-stats" class="tab-content" style="display: none;">
                     <div class="table-container">
                         <table id="tabla-historial" class="data-table">
                             <thead>
                                 <tr>
                                     <th>Ticket</th>
-                                    <th>Simbolo</th>
-                                    <th>Direccion</th>
-                                    <th>P/L Final ($)</th>
+                                    <th>Symbol</th>
+                                    <th>Direction</th>
+                                    <th>Final P/L ($)</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -150,38 +174,110 @@
                     </div>
                 </div>
 
-                <!-- CONFIGURACION DE RED -->
+                <!-- NETWORK TOPOLOGY -->
                 <div id="tab-config" class="tab-content" style="display: none;">
-                    <h2 class="section-title">Nodo Origen (Master)</h2>
-                    <div class="form-grid">
-                        <input type="number" id="m_login" placeholder="Login MT5">
-                        <input type="password" id="m_pass" placeholder="Password MT5">
-                        <input type="text" id="m_server" placeholder="Servidor (Broker)">
-                        <input type="number" id="m_bal" placeholder="Balance Base Asignado ($)">
-                        <button onclick="guardarMaestra()" class="btn-primary span-full">Asegurar Credenciales Maestras</button>
+
+                    <!-- ── PROP FIRMS DATABASE ── -->
+                    <div class="section-title-row" style="margin-bottom: 16px;">
+                        <h2 class="section-title" style="margin-bottom:0;">Prop Firms Database</h2>
+                        <button onclick="togglePanelNuevaPropFirm()" class="btn-nuevo-nodo" id="btn-toggle-new-firm">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Register New Firm
+                        </button>
                     </div>
 
-                    <h2 class="section-title">Anadir / Modificar Nodo Destino (Slave)</h2>
-                    <div class="form-grid">
-                        <input type="text" id="s_id" placeholder="Identificador Unico (Ej: Nodo_01)">
-                        <input type="number" id="s_login" placeholder="Login MT5">
-                        <input type="password" id="s_pass" placeholder="Password MT5">
-                        <input type="text" id="s_server" placeholder="Servidor (Broker)">
-                        <input type="number" id="s_bal" placeholder="Balance Base Asignado ($)">
-                        <input type="number" id="s_risk" placeholder="Multiplicador de Riesgo (Ej: 1.0)">
-                        <button onclick="guardarEsclava()" class="btn-warning span-full">Acoplar Nodo a la Red</button>
+                    <!-- Collapsible panel for adding new Prop Firm -->
+                    <div id="panel-nueva-prop-firm" class="hidden" style="background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.3); border-radius: 10px; padding: 20px; margin-bottom: 24px;">
+                        <h3 style="color: var(--warning); font-size: 13px; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase;">New Community Prop Firm</h3>
+                        <div class="form-grid">
+                            <input type="text" id="pf_name" placeholder="Prop Firm Name (e.g. FunderPro)" class="span-full">
+                            <input type="number" id="pf_dd_daily" placeholder="Max Daily Drawdown (%)" step="0.1">
+                            <input type="number" id="pf_dd_total" placeholder="Max Total Drawdown (%)" step="0.1">
+                            <input type="number" id="pf_target_f1" placeholder="Phase 1 Profit Target (%)" step="0.1">
+                            <input type="number" id="pf_target_f2" placeholder="Phase 2 Profit Target (%)" step="0.1">
+                            <button onclick="guardarNuevaPropFirm()" class="btn-warning span-full" id="btn-save-prop-firm">Publish to Community Database</button>
+                        </div>
+                        <p id="prop-firm-msg" style="font-size:12px; margin-top:10px; min-height:16px; text-align:center;"></p>
                     </div>
-                    
-                    <h2 class="section-title">Mapa de Nodos Activos</h2>
+
+                    <!-- List of available Prop Firms -->
+                    <div id="prop-firms-list" style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:28px; min-height: 48px;">
+                        <p style="color:var(--text-muted); font-size:13px; padding:12px 0;">Loading firms from cloud...</p>
+                    </div>
+
+                    <hr style="border-color: var(--border-color); margin-bottom: 28px;">
+
+                    <!-- ── SOURCE NODE (MASTER) ── -->
+                    <h2 class="section-title">Source Node (Master)</h2>
+                    <div class="form-grid">
+                        <select id="m_type" onchange="onTipoChange(this, 'm_prop_id', 'm_phase')" class="span-full"
+                            style="padding:12px; background:var(--bg-panel); border:1px solid var(--border-color); color:white; border-radius:6px; margin-bottom:10px;">
+                            <option value="demo">🧪 Demo / Simulation Mode</option>
+                            <option value="fondeo">🏆 Evaluated Account (Prop Firm)</option>
+                            <option value="propio">💼 Own Capital (Physical)</option>
+                        </select>
+                        <div id="m_prop_id_wrap" class="span-full hidden">
+                            <input type="text" id="m_prop_search" placeholder="Search Prop Firm..." oninput="filtrarSelectorFirm('m_prop_id', this.value)" style="width:100%; padding:10px 12px; background:var(--bg-panel); border:1px solid var(--border-color); color:white; border-radius:6px 6px 0 0; font-size:13px; margin-bottom:0;">
+                            <select id="m_prop_id" size="4" style="width:100%; padding:8px; background:var(--bg-panel); border:1px solid var(--border-color); border-top:none; color:var(--warning); border-radius:0 0 6px 6px; margin-bottom:10px;"></select>
+                        </div>
+                        <select id="m_phase" class="span-full hidden"
+                            style="padding:12px; background:var(--bg-panel); border:1px solid var(--border-color); color:var(--warning); border-radius:6px; margin-bottom:10px;">
+                            <option value="1">📋 Phase 1 — Challenge</option>
+                            <option value="2">🎯 Phase 2 — Verification</option>
+                            <option value="3">🚀 Funded Account</option>
+                        </select>
+                        <input type="number" id="m_login" placeholder="MT5 Login">
+                        <input type="password" id="m_pass" placeholder="MT5 Password">
+                        <input type="text" id="m_server" placeholder="Server (Broker)">
+                        <input type="number" id="m_bal" placeholder="Assigned Base Balance ($)">
+                        <button onclick="guardarMaestra()" class="btn-primary span-full">Secure Master Credentials</button>
+                    </div>
+
+                    <!-- ── TARGET NODE (SLAVE) ── -->
+                    <div class="section-title-row" style="margin-top: 8px;">
+                        <h2 class="section-title" id="slave-form-title">Add Target Node (Slave)</h2>
+                        <button id="btn-cancel-edit" onclick="cancelarEdicion()" class="btn-nuevo-nodo hidden">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Back to Add New
+                        </button>
+                    </div>
+                    <div class="form-grid">
+                        <select id="s_type" onchange="onTipoChange(this, 's_prop_id', 's_phase')" class="span-full"
+                            style="padding:12px; background:var(--bg-panel); border:1px solid var(--border-color); color:white; border-radius:6px; margin-bottom:10px;">
+                            <option value="demo">🧪 Demo / Simulation Mode</option>
+                            <option value="fondeo">🏆 Evaluated Account (Prop Firm)</option>
+                            <option value="propio">💼 Own Capital (Physical)</option>
+                        </select>
+                        <div id="s_prop_id_wrap" class="span-full hidden">
+                            <input type="text" id="s_prop_search" placeholder="Search Prop Firm..." oninput="filtrarSelectorFirm('s_prop_id', this.value)" style="width:100%; padding:10px 12px; background:var(--bg-panel); border:1px solid var(--border-color); color:white; border-radius:6px 6px 0 0; font-size:13px; margin-bottom:0;">
+                            <select id="s_prop_id" size="4" style="width:100%; padding:8px; background:var(--bg-panel); border:1px solid var(--border-color); border-top:none; color:var(--warning); border-radius:0 0 6px 6px; margin-bottom:10px;"></select>
+                        </div>
+                        <select id="s_phase" class="span-full hidden"
+                            style="padding:12px; background:var(--bg-panel); border:1px solid var(--border-color); color:var(--warning); border-radius:6px; margin-bottom:10px;">
+                            <option value="1">📋 Phase 1 — Challenge</option>
+                            <option value="2">🎯 Phase 2 — Verification</option>
+                            <option value="3">🚀 Funded Account</option>
+                        </select>
+                        <input type="text" id="s_id" placeholder="Unique Identifier (e.g. Node_01)">
+                        <input type="number" id="s_login" placeholder="MT5 Login">
+                        <input type="password" id="s_pass" placeholder="MT5 Password">
+                        <input type="text" id="s_server" placeholder="Server (Broker)">
+                        <input type="number" id="s_bal" placeholder="Assigned Base Balance ($)">
+                        <input type="number" id="s_risk" placeholder="Risk Multiplier (e.g. 1.0)">
+                        <button id="btn-save-slave" onclick="guardarEsclava()" class="btn-warning span-full">Attach Node to Network</button>
+                    </div>
+
+                    <!-- ── ACTIVE NODES MAP ── -->
+                    <h2 class="section-title" style="margin-top:8px;">Active Nodes Map</h2>
                     <div class="table-container">
                         <table id="tabla-esclavas" class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Identificador</th>
-                                    <th>Login MT5</th>
-                                    <th>Balance Asignado</th>
-                                    <th>Riesgo</th>
-                                    <th>Mantenimiento</th>
+                                    <th>Identifier</th>
+                                    <th>MT5 Login</th>
+                                    <th>Assigned Balance</th>
+                                    <th>Risk</th>
+                                    <th>Maintenance</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -189,10 +285,47 @@
                     </div>
                 </div>
 
-                <!-- CONSOLA TERMINAL -->
+                <!-- TERMINAL CONSOLE -->
                 <div id="tab-logs" class="tab-content" style="display: none;">
-                    <textarea id="system-console" readonly></textarea>
-                    <button onclick="document.getElementById('system-console').value=''" class="btn-secondary" style="margin-top: 15px; width: auto;">Limpiar Bufer Visual</button>
+                    <!-- Status bar -->
+                    <div class="terminal-statusbar">
+                        <div class="terminal-status-left">
+                            <span class="status-indicator"></span>
+                            <span style="font-weight:600;">MT5 RPA Engine</span>
+                        </div>
+                        <div class="terminal-status-right">
+                            <button class="terminal-btn-small" onclick="exportarLogs()">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                Export
+                            </button>
+                            <button class="terminal-btn-small" onclick="limpiarConsola()">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6" />
+                                    <path
+                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                </svg>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Filter Toolbar -->
+                    <div class="terminal-toolbar">
+                        <span class="toolbar-label">Filters:</span>
+                        <button class="terminal-filter-btn active" onclick="filtrarLogs('ALL')">ALL</button>
+                        <button class="terminal-filter-btn" onclick="filtrarLogs('ERROR')">ERROR</button>
+                        <button class="terminal-filter-btn" onclick="filtrarLogs('WARN')">WARN</button>
+                        <button class="terminal-filter-btn" onclick="filtrarLogs('SYSTEM')">SYSTEM</button>
+                        <button class="terminal-filter-btn" onclick="filtrarLogs('ACTION')">ACTION</button>
+                        <button class="terminal-filter-btn" onclick="filtrarLogs('CLOUD')">CLOUD</button>
+                    </div>
+                    <!-- Log Container -->
+                    <div id="system-console" class="terminal-logs-container"></div>
                 </div>
 
             </div>
@@ -201,4 +334,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>

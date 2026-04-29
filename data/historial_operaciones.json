@@ -145,5 +145,103 @@
         "type": "SELL",
         "profit": 1.71,
         "time_close": 1775761187.5150409
+    },
+    {
+        "ticket": "56421384219",
+        "symbol": "EURUSD",
+        "type": "SELL",
+        "profit": 1.6,
+        "time_close": 1777370002.9589217
+    },
+    {
+        "ticket": "56421412284",
+        "symbol": "EURUSD",
+        "type": "BUY",
+        "profit": -3.3,
+        "time_close": 1777371362.9421163
+    },
+    {
+        "ticket": "56423344004",
+        "symbol": "EURUSD",
+        "type": "BUY",
+        "profit": -0.8,
+        "time_close": 1777376238.705132
+    },
+    {
+        "ticket": "56424510088",
+        "symbol": "EURUSD",
+        "type": "BUY",
+        "profit": 1.9,
+        "time_close": 1777378406.3847103
+    },
+    {
+        "ticket": "56427701156",
+        "symbol": "EURUSD",
+        "type": "SELL",
+        "profit": 0.1,
+        "time_close": 1777386193.1831343
+    },
+    {
+        "ticket": "56429809144",
+        "symbol": "EURUSD",
+        "type": "SELL",
+        "profit": 200.0,
+        "time_close": 1777392922.3940275
+    },
+    {
+        "ticket": "56429823902",
+        "symbol": "EURUSD",
+        "type": "SELL",
+        "profit": 240.0,
+        "time_close": 1777392923.0595329
+    },
+    {
+        "ticket": "56429850220",
+        "symbol": "EURUSD",
+        "type": "SELL",
+        "profit": 190.0,
+        "time_close": 1777392923.1474628
+    },
+    {
+        "ticket": "56430816520",
+        "symbol": "EURUSD",
+        "type": "BUY",
+        "profit": 5.0,
+        "time_close": 1777396015.4101572
+    },
+    {
+        "ticket": "56430964141",
+        "symbol": "EURUSD",
+        "type": "BUY",
+        "profit": 35.0,
+        "time_close": 1777397086.0049691
+    },
+    {
+        "ticket": "56432914600",
+        "symbol": "EURUSD",
+        "type": "SELL",
+        "profit": -165.0,
+        "time_close": 1777412948.705291
+    },
+    {
+        "ticket": "56432929648",
+        "symbol": "GBPUSD",
+        "type": "SELL",
+        "profit": -145.0,
+        "time_close": 1777413752.1108468
+    },
+    {
+        "ticket": "56433111621",
+        "symbol": "GBPUSD",
+        "type": "SELL",
+        "profit": -95.0,
+        "time_close": 1777420571.3008842
+    },
+    {
+        "ticket": "56433392291",
+        "symbol": "GBPUSD",
+        "type": "SELL",
+        "profit": -89.91,
+        "time_close": 1777420574.0540347
     }
 ]
