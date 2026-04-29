@@ -398,9 +398,14 @@
          DASHBOARD VIEW
          ============================================================ -->
     <div id="dashboard-view" class="layout-wrapper" style="display: none;">
+        <!-- Backdrop Overlay for Mobile -->
+        <div id="sidebar-overlay" class="sidebar-overlay hidden" onclick="toggleSidebar()"></div>
+        
+        <!-- Detection area for "passing the finger" (edge swipe) -->
+        <div id="sidebar-trigger" class="sidebar-trigger" onmouseenter="openSidebar()" ontouchstart="openSidebar()"></div>
 
         <!-- Sidebar -->
-        <div id="sidebar" class="sidebar">
+        <div id="sidebar" class="sidebar collapsed">
             <div class="brand-section">
                 <svg class="brand-logo-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

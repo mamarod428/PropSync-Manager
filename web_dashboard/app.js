@@ -734,7 +734,33 @@ function mostrarTab(tabId, btnElement) {
 
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
-    sidebar.classList.toggle('collapsed');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (!sidebar) return;
+
+    const isCollapsed = sidebar.classList.toggle('collapsed');
+    
+    if (overlay) {
+        if (isCollapsed) {
+            overlay.classList.add('hidden');
+            document.body.classList.remove('no-scroll');
+        } else {
+            overlay.classList.remove('hidden');
+            if (window.innerWidth <= 768) {
+                document.body.classList.add('no-scroll');
+            }
+        }
+    }
+}
+
+/**
+ * Opens the sidebar if it is currently collapsed.
+ * Triggered by edge-swipe gesture detection.
+ */
+function openSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar && sidebar.classList.contains('collapsed')) {
+        toggleSidebar();
+    }
 }
 
 
