@@ -3,7 +3,14 @@
 # Full functionality requires the local Python engine (main.py) running on Windows with MetaTrader 5.
 
 [build]
+  command = "echo 'Skipping Python build for static dashboard'"
   publish = "web_dashboard"
+
+[build.environment]
+  # Prevent Netlify from trying to install Python dependencies
+  NETLIFY_SKIP_PYTHON_INSTALL = "true"
+  PYTHON_VERSION = "3.11"
+
 
 [[headers]]
   for = "/*"
