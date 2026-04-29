@@ -2668,3 +2668,134 @@ button:active {
 .lp-bar-profit { background: linear-gradient(90deg, var(--success), #34d399); }
 .lp-bar-daily  { background: linear-gradient(90deg, var(--warning), #fbbf24); }
 .lp-bar-total  { background: linear-gradient(90deg, var(--danger), #f87171); }
+
+/* ===================================================================
+   SECTION: RESPONSIVE OVERRIDES (MOBILE & TABLET)
+   =================================================================== */
+
+@media (max-width: 1200px) {
+    .charts-grid-new { grid-template-columns: 1fr; }
+    .charts-pies-col { flex-direction: row; gap: 20px; }
+    .chart-pie-sm { flex: 1; }
+}
+
+@media (max-width: 992px) {
+    :root {
+        --sidebar-width: 240px;
+    }
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: auto;
+    }
+    .bento-span-2 { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 280px;
+        --space-xl: 16px;
+    }
+
+    /* Prevent body scroll locking while allowing dashboard to scroll */
+    body { overflow-x: hidden; height: 100vh; }
+
+    .layout-wrapper { position: relative; }
+
+    /* Mobile Sidebar as Overlay Drawer */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 2000;
+        transform: translateX(0);
+        transition: transform 0.4s var(--ease-smooth);
+        box-shadow: 20px 0 50px rgba(0,0,0,0.8);
+        border-right: 1px solid var(--border-color);
+        background: var(--bg-panel);
+    }
+    
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+        width: var(--sidebar-width);
+        min-width: var(--sidebar-width);
+        opacity: 1;
+        border-right: none;
+    }
+
+    .content-wrapper { width: 100%; }
+    
+    .top-bar {
+        padding: 0 16px;
+        position: sticky;
+        top: 0;
+        background: rgba(6, 10, 22, 0.95);
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .top-bar-title { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+    .top-bar-clock { display: none; }
+
+    .content-area { padding: 16px; }
+
+    .kpi-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        gap: 12px;
+    }
+    .bento-span-2 { grid-column: span 1; }
+    .kpi-card { padding: 20px; height: auto; min-height: 110px; }
+    .kpi-card h2 { font-size: 28px; }
+
+    .kpi-grid-small {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .charts-grid-new {
+        grid-template-columns: 1fr;
+    }
+    
+    .charts-pies-col {
+        flex-direction: column;
+    }
+
+    .chart-main-equity { min-height: 300px; }
+    .chart-pie-sm { min-height: 250px; }
+
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-right: -16px;
+        padding-right: 16px;
+    }
+    
+    .data-table {
+        min-width: 500px;
+    }
+
+    /* Tree Topology Scaling */
+    .network-tree-container {
+        overflow-x: auto;
+        padding-bottom: 20px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .tree-branches {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        padding: 0 20px;
+    }
+
+    /* Landing Page Specifics */
+    .lp-hero-title { font-size: 34px; letter-spacing: -1px; }
+    .lp-hero-subtitle { font-size: 14px; }
+    .lp-demo-kpis { grid-template-columns: repeat(2, 1fr); }
+    .lp-demo-section { padding: 0 16px; }
+    
+    .section-title { font-size: 16px; margin-bottom: 12px; }
+}
+
+@media (max-width: 480px) {
+    .kpi-grid-small { grid-template-columns: 1fr; }
+    .lp-auth-dropdown { width: 90vw; right: 5vw; left: 5vw; }
+}
